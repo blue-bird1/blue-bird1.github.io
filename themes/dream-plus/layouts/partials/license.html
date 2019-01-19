@@ -1,0 +1,14 @@
+{{ $fullForms := dict "by" "" "by-sa" "ShareAlike" " by-nd" "NoDerivs" "by-nc" "NonCommercial" "by-nc-sa" "NonCommercial-ShareAlike" "by-nc-nd" " NonCommercial-NoDerivs" }}
+{{/*License link*/}}
+{{ $link := printf "https://creativecommons.org/licenses/%s/4.0/" .license }}
+{{/*Image link*/}}
+{{ $image := printf "https://licensebuttons.net/l/%s/3.0/88x31.png" .license }}
+<div class="row box">
+	<a rel="license" class="license image none flexbox" target="_blank" href="{{ $link }}">
+		<img alt="Creative Commons License" src="{{ $image }}" style="border-width: 0"></img>
+	</a>
+	<span class="license statement both flexbox">
+		This work is licensed under a
+		<a rel="license" href="{{ $link }}">Creative Commons Attribution-{{ index $fullForms .license }} 4.0 International License</a>.
+	</span>
+</div>

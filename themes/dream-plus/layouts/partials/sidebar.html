@@ -1,0 +1,30 @@
+<div id="sidebar" class="ui sidebar inverted vertical menu">
+	{{/*Author*/}}
+	<section id="author" class="ui top attached center aligned inverted segment">
+		{{ partial "author.html" . }}
+	</section>
+
+	{{/*Tags*/}}
+	{{ if and $.Site.Params.tags.enabled $.Site.Taxonomies.tags }}
+		<section class="ui attached center aligned inverted segment sidebar-dream-tags">
+			{{/*Call 'tags' partial and pass parameters*/}}
+			{{ $limit := $.Site.Params.tags.tagLimit | default 8 }}
+			{{ $args := dict "context" . "isPost" false "tags" $.Site.Taxonomies.tags "limit" $limit }}
+			{{ partial "tags.html" $args }}
+		</section>
+	{{ end }}
+
+	{{/*Categories*/}}
+	{{ if and $.Site.Params.categories.enabled $.Site.Taxonomies.categories }}
+		<section class="ui attached inverted segment sidebar-dream-categories both flexbox">
+			<div class="ui inverted accordion">
+				{{ partial "categories.html" . }}
+			</div>
+		</section>
+	{{ end }}
+
+	{{/*Footer*/}}
+	<section id="footer" class="ui bottom attached center aligned inverted segment">
+		{{ partial "footer.html" . }}
+	</section>
+</div>

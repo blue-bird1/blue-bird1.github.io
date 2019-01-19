@@ -1,0 +1,21 @@
+{{/*Content*/}}
+{{ define "content"}}
+	{{ partial "nav.html" (dict "context" . "rssButton" true "section" "") }}
+
+	<div class="ui centered grid">
+		{{/*Header*/}}
+		<div class="fifteen wide mobile fifteen wide tablet four wide computer column">
+			{{ partial "header.html" . }}
+		</div>
+
+		{{/*Cards*/}}
+		<div class="fifteen wide mobile fifteen wide tablet eleven wide computer column post-list">
+			<div class="cards row box">
+				{{ $paginator := .Paginate (where .Data.Pages "Type" $.Site.Params.contentType) }}
+				{{ range $paginator.Pages }}
+					{{ .Render "summary" }}
+				{{ end }}
+			</div>
+		</div>
+	</div>
+{{ end }}

@@ -1,0 +1,47 @@
+[home]
+other = "Beranda"
+
+[showSidebar]
+other = "Tampilkan Sidebar"
+
+[rssFeed]
+other = "Feed RSS"
+
+[prevPage]
+other = "Halaman sebelumnya"
+
+[nextPage]
+other = "Halaman berikutnya"
+
+[flip]
+other = "Tentang Saya"
+
+[popTagsCategories]
+other = "Tampilkan/sembunyikan tag dan kategori"
+
+[lastUpdate]
+other = "Terakhir diperbarui"
+
+[returnHome]
+other = "Kembali ke Beranda"
+
+[archive]
+other = "Arsip"
+
+[allCards]
+other = "Semua Kartu"
+
+[noTag]
+other = "Tidak ada Tag"
+
+[tag]
+one = "Semua Tag"
+other = "Tag"
+
+[category]
+one = "Semua Kategori"
+other = "Kategori"
+
+[article]
+one = "1 artikel"
+other = "{{ .Count }} artikel"

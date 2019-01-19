@@ -1,0 +1,47 @@
+[home]
+other = "Inicio"
+
+[showSidebar]
+other = "Mostrar barra lateral"
+
+[rssFeed]
+other = "RSS Feed"
+
+[prevPage]
+other = "Página anterior"
+
+[nextPage]
+other = "Página siguiente"
+
+[flip]
+other = "Sobre mi"
+
+[popTagsCategories]
+other = "Mostrar/ocultar tags y categorías"
+
+[lastUpdate]
+other = "Actualizado por última vez"
+
+[returnHome]
+other = "Volver a la página inicial"
+
+[allCards]
+other = "Todas las tarjetas"
+
+[noTag]
+other = "No hay tag"
+
+[archive]
+other = "Archivo"
+
+[tag]
+one = "Todos los Tags"
+other = "Tag"
+
+[category]
+one = "Todas las categorías"
+other = "Categoría"
+
+[article]
+one = "1 artículo"
+other = "{{ .Count }} artículo"

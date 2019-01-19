@@ -1,0 +1,47 @@
+[home]
+other = "首页"
+
+[showSidebar]
+other = "显示补充工具栏"
+
+[rssFeed]
+other = "RSS Feed"
+
+[prevPage]
+other = "前一页"
+
+[nextPage]
+other = "后一页"
+
+[flip]
+other = "翻转"
+
+[popTagsCategories]
+other = "显示/隐藏标签和类别"
+
+[lastUpdate]
+other = "更新于"
+
+[returnHome]
+other = "返回首页"
+
+[archive]
+other = "档案"
+
+[allCards]
+other = "所有卡片"
+
+[noTag]
+other = "暂无标签"
+
+[tag]
+one = "所有标签"
+other = "标签"
+
+[category]
+one = "所有类别"
+other = "类别"
+
+[article]
+one = "文章"
+other = "{{ .Count }} 用品"

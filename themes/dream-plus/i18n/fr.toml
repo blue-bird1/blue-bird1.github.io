@@ -1,0 +1,47 @@
+[home]
+other = "Accueil"
+
+[showSidebar]
+other = "RSS Feed"
+
+[rssFeed]
+other = ""
+
+[prevPage]
+other = "Page précédente"
+
+[nextPage]
+other = "Page suivante"
+
+[flip]
+other = "A propos de moi"
+
+[popTagsCategories]
+other = "Afficher / masquer les balises et les catégories"
+
+[lastUpdate]
+other = "Dernière actualisation"
+
+[returnHome]
+other = "Retourner à la page d'accueil"
+
+[archive]
+other = "Archives"
+
+[allCards]
+other = "Toutes les cartes"
+
+[noTag]
+other = "Pas de tag"
+
+[tag]
+one = "Tous les Tags"
+other = "Tag"
+
+[category]
+one = "Toutes les Catégories"
+other = "Catégorie"
+
+[article]
+one = "1 article"
+other = "{{ .Count }} articles"
