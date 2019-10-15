@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<title>
+	Electron软件简单破解
+</title>
+		<style>
+	body {
+		display: block;
+		--colorBG: "#40e0d0, #ff8c00, #ff0080";
+		
+			background: linear-gradient(to right, var(--colorBG)) !important;
+		
+	}
+
+	body, body.pushable {
+		background-repeat: no-repeat;
+	  	background-attachment: fixed;
+	  	background-size: cover !important;
+	}
+</style>
+
+		<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+	
+	<meta name="author" content="" />
+	<meta name="description" content="" />
+
+
+
+<meta name="generator" content="Hugo 0.58.3" />
+
+
+<link rel="shortcut icon" href="/img/defaultFav.ico">
+<script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+
+    for(i = 0; all.length > i; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+
+
+
+		
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+<script
+	src="https://code.jquery.com/jquery-3.3.1.min.js"
+	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+	crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/site.css">
+
+
+
+
+
+
+
+
+<style>
+	body.pushable {
+		display: block;
+		
+			background: linear-gradient(to right, var(--colorBG)) !important;
+		 ;
+	}
+</style>
+
+
+
+<script>
+	var colorBG =  true 
+	var enabledPost =  false 
+	
+	var isMobile = ( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) )
+	console.log("The client device is a "+(isMobile?"mobile":"PC")+".")
+</script>
+
+	</head>
+
+	<body>
+		<script>
+var prevBgIndex = 0;
+var bodyBgSwitchIndex = 0;
+
+
+
+
+
+
+	var gradients = [
+	  [],
+	  ['#40e0d0', '#ff8c00', '#ff0080'], 
+	  ['#3e5151', '#decba4'], 
+	  ['#11998e', '#38ef7d'], 
+	  ['#108dc7', '#ef8e38'], 
+	  ['#fc5c7d', '#6a82fb'], 
+	  ['#fc466b', '#3f5efb'], 
+	  ['#c94b4b', '#4b134f'], 
+	  ['#23074d', '#cc5333'] 
+	];
+	document.body.style.setProperty('--colorBG', connect(gradients[getRandomInt(0, gradients.length)]));
+
+
+	function getRandomInt(min, max) {
+	  min = Math.ceil(min);
+	  max = Math.floor(max);
+	  var random;
+	  while (1) {
+	    random = Math.floor(Math.random() * (max - min)) + min;
+	    if (random !== prevBgIndex) {
+	      prevBgIndex = random;
+	      break;
+	    }
+	  }
+	  return random;
+	}
+
+	function connect(arr) {
+	  var str = '';
+	  for (var i = 0; i < arr.length; i++) {
+	    if (i !== arr.length - 1) {
+	      str += arr[i] + ', ';
+	    } else {
+	      str += arr[i];
+	    }
+	  }
+	  return str;
+	}
+</script>
+
+
+
+
+		<div id="sidebar" class="ui sidebar inverted vertical menu">
+	
+	<section id="author" class="ui top attached center aligned inverted segment">
+		
+<div class="ui small circular image">
+	
+		<img src="http://www.gravatar.com/avatar/36cc0b77102e4b4e776f444f95525703?s=512">
+	
+</div>
+
+
+<h3 class="ui header">
+	
+	<div class="sub header">code and security</div>
+</h3>
+
+	</section>
+
+	
+	
+		<section class="ui attached center aligned inverted segment sidebar-dream-tags">
+			
+			
+			
+			
+
+
+
+
+	
+	
+		
+			
+			<a class="ui label red " href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0" title="学习笔记">学习笔记</a>
+		
+			
+			<a class="ui label blue " href="/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90" title="漏洞分析">漏洞分析</a>
+		
+			
+			<a class="ui label green " href="/tags/%E5%AE%A1%E8%AE%A1" title="审计">审计</a>
+		
+			
+			<a class="ui label yellow " href="/tags/fuzz" title="fuzz">fuzz</a>
+		
+			
+			<a class="ui label pink " href="/tags/sql%E6%B3%A8%E5%85%A5" title="sql注入">sql注入</a>
+		
+			
+			<a class="ui label brown " href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1" title="代码审计">代码审计</a>
+		
+			
+			<a class="ui label purple " href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8" title="网络安全">网络安全</a>
+		
+			
+			<a class="ui label blue " href="/tags/%E8%BD%AF%E4%BB%B6%E7%A0%B4%E8%A7%A3" title="软件破解">软件破解</a>
+		
+	
+
+
+		</section>
+	
+
+	
+	
+		<section class="ui attached inverted segment sidebar-dream-categories both flexbox">
+			<div class="ui inverted accordion">
+				
+	
+	<div class="title">
+		<i class="dropdown icon"></i>
+		<a class="link" href="/categories/docker">docker</a>
+	</div>
+
+	
+	<div class="content">
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/dockertopoc/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>docker搭建复现环境</p>
+				</div>
+			</a>
+		
+	</div>
+
+	
+	<div class="title">
+		<i class="dropdown icon"></i>
+		<a class="link" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7">开发工具</a>
+	</div>
+
+	
+	<div class="content">
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/go-bazel/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>在golang项目开始使用Bazel</p>
+				</div>
+			</a>
+		
+	</div>
+
+	
+	<div class="title">
+		<i class="dropdown icon"></i>
+		<a class="link" href="/categories/%E7%BB%9F%E8%AE%A1%E5%AD%A6">统计学</a>
+	</div>
+
+	
+	<div class="content">
+		
+			<a class="item" href="http://blue-bird1.github.io/statistics2/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Statistics2</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/statistics2/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>统计学2:现代概率</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/statistics1/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>统计与概率1 古典概率</p>
+				</div>
+			</a>
+		
+	</div>
+
+	
+	<div class="title">
+		<i class="dropdown icon"></i>
+		<a class="link" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8">网络安全</a>
+	</div>
+
+	
+	<div class="content">
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/mysql/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Mysql 储存过程注入</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/location-xss/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>XSS实战 跳转XSS</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/srcbug/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>挖掘src漏洞</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/newsitethink/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>现代化网站的渗透测试</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/electroncrack/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Electron软件简单破解</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/iwebshopsql/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Iwebshop sql注入</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/thinkphp5-1/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>think5审计与调试技巧1</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/thinkphp5-1/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>think5审计与调试技巧1</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/fuzz/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Fuzz</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/metasploit1/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>metasploit python 模块</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/metasploit2/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>metasploit python 模块是如何运行</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/metinfogetshell/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Metinfo3.5.19 getshell</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/metinfoexp/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>metinfo3.5.18后台getshell分析</p>
+				</div>
+			</a>
+		
+	</div>
+
+
+			</div>
+		</section>
+	
+
+	
+	<section id="footer" class="ui bottom attached center aligned inverted segment">
+		
+
+	<p>© 2017 - 2019 青鸟的博客</p>
+
+
+<p>Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a> with <a href="https://github.com/UtkarshVerma/hugo-dream-plus" target="_blank">Dream Plus</a> theme.</p>
+
+	</section>
+</div>
+
+
+		<div class="pusher">
+			<div class="flipper">
+				<div class="front">
+					
+	<nav class="ui top secondary menu bar">
+	
+	<div class="item">
+		<i class="inverted big link bullseye icon dream-flip-toggle" title="About Me"></i>
+	</div>
+
+	
+	
+		<div class="item">
+			<a href="/">
+				<i class="inverted big link home icon" title="Home"></i>
+			</a>
+		</div>
+	
+
+	
+	
+		<div class="item">
+			<a href="/posts">
+				<i class="inverted big link archive icon" title="Archive"></i>
+			</a>
+		</div>
+	
+
+	
+	
+		<div class="item">
+			<a href="/tags">
+				<i class="inverted big link tags icon" title="All Tags"></i>
+			</a>
+		</div>
+	
+
+	
+	
+		<div class="item">
+			<a href="/categories">
+				<i class="inverted big link cubes icon" title="All Categories"></i>
+			</a>
+    	</div>
+	
+
+	
+	
+
+	
+	
+		<div class="ui container tablet computer only grid">
+			<div class="item" onClick="$('.ui.sidebar').sidebar('setting', 'transition', 'overlay').sidebar('toggle');">
+				<i class="inverted big link sidebar icon" title="Show Sidebar"></i>
+			</div>
+		</div>
+	
+
+	
+	
+		<div class="item right">
+			<a href="/posts/index.xml">
+				<i class="inverted big link rss icon" title="RSS Feed"></i>
+			</a>
+		</div>
+	
+</nav>
+
+
+	<div class="ui centered grid">
+		
+		<div class="sixteen wide mobile only column">
+				<div class="ui inverted accordion">
+	<div id="header" class="ui inverted segment column box">		
+		
+		<header id="author" class="ui top attached center aligned inverted segment">
+			
+<div class="ui small circular image">
+	
+		<img src="http://www.gravatar.com/avatar/36cc0b77102e4b4e776f444f95525703?s=512">
+	
+</div>
+
+
+<h3 class="ui header">
+	
+	<div class="sub header">code and security</div>
+</h3>
+
+		</header>
+
+		
+		<div class=" title header-title">
+			
+				<div id="tag-category-pop" class="ui red right corner label">
+					<i class="hand point icon down" title="Show/hide tags and categories"></i>
+				</div>
+			
+		</div>
+		
+		
+		<div id="tag-category" class=" content">
+			
+				<section class="ui attached center aligned inverted segment dream-tags none flexbox">
+					
+					
+					
+
+
+
+
+	
+	
+		
+			
+			<a class="ui label blue " href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0" title="学习笔记">学习笔记</a>
+		
+			
+			<a class="ui label purple " href="/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90" title="漏洞分析">漏洞分析</a>
+		
+			
+			<a class="ui label violet " href="/tags/%E5%AE%A1%E8%AE%A1" title="审计">审计</a>
+		
+			
+			<a class="ui label green " href="/tags/fuzz" title="fuzz">fuzz</a>
+		
+			
+			<a class="ui label yellow " href="/tags/sql%E6%B3%A8%E5%85%A5" title="sql注入">sql注入</a>
+		
+			
+			<a class="ui label blue " href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1" title="代码审计">代码审计</a>
+		
+			
+			<a class="ui label purple " href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8" title="网络安全">网络安全</a>
+		
+			
+			<a class="ui label violet " href="/tags/%E8%BD%AF%E4%BB%B6%E7%A0%B4%E8%A7%A3" title="软件破解">软件破解</a>
+		
+	
+
+
+				</section>
+			
+
+			
+				<section class="ui attached inverted segment dream-categories both flexbox">
+					<div class="inverted accordion">
+						
+	
+	<div class="title">
+		<i class="dropdown icon"></i>
+		<a class="link" href="/categories/docker">docker</a>
+	</div>
+
+	
+	<div class="content">
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/dockertopoc/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>docker搭建复现环境</p>
+				</div>
+			</a>
+		
+	</div>
+
+	
+	<div class="title">
+		<i class="dropdown icon"></i>
+		<a class="link" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7">开发工具</a>
+	</div>
+
+	
+	<div class="content">
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/go-bazel/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>在golang项目开始使用Bazel</p>
+				</div>
+			</a>
+		
+	</div>
+
+	
+	<div class="title">
+		<i class="dropdown icon"></i>
+		<a class="link" href="/categories/%E7%BB%9F%E8%AE%A1%E5%AD%A6">统计学</a>
+	</div>
+
+	
+	<div class="content">
+		
+			<a class="item" href="http://blue-bird1.github.io/statistics2/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Statistics2</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/statistics2/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>统计学2:现代概率</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/statistics1/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>统计与概率1 古典概率</p>
+				</div>
+			</a>
+		
+	</div>
+
+	
+	<div class="title">
+		<i class="dropdown icon"></i>
+		<a class="link" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8">网络安全</a>
+	</div>
+
+	
+	<div class="content">
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/mysql/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Mysql 储存过程注入</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/location-xss/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>XSS实战 跳转XSS</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/srcbug/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>挖掘src漏洞</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/newsitethink/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>现代化网站的渗透测试</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/electroncrack/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Electron软件简单破解</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/iwebshopsql/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Iwebshop sql注入</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/thinkphp5-1/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>think5审计与调试技巧1</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/thinkphp5-1/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>think5审计与调试技巧1</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/fuzz/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Fuzz</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/metasploit1/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>metasploit python 模块</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/metasploit2/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>metasploit python 模块是如何运行</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/metinfogetshell/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Metinfo3.5.19 getshell</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/metinfoexp/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>metinfo3.5.18后台getshell分析</p>
+				</div>
+			</a>
+		
+	</div>
+
+
+					</div>
+				</section>
+			
+		</div>
+
+		
+		<footer class="ui bottom attached center aligned inverted segment">
+			
+
+	<p>© 2017 - 2019 青鸟的博客</p>
+
+
+<p>Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a> with <a href="https://github.com/UtkarshVerma/hugo-dream-plus" target="_blank">Dream Plus</a> theme.</p>
+
+		</footer>
+	</div>
+</div>
+
+		</div>
+
+		<div class="sixteen wide mobile fifteen wide tablet twelve wide computer column post-list">
+			
+			<section class="ui secondary top attached black segment post-head">
+				<h1 class="post-title">
+					Electron软件简单破解
+				</h1>
+
+				<div class="sub header">
+					<div><span><i class="calendar outline icon"></i>Jan 24, 2019</span></div>
+					
+					<div><span><i class="clock outline icon"></i>3 min read</span></div>
+					<div><span><i class="angle double up icon"></i>Last updated on Jan 24, 2019</span></div>
+				</div>
+				<hr>
+
+				
+
+				<article class="post-content twemoji">
+					
+
+<h3 id="electron-软件破解与修改入门">electron 软件破解与修改入门&nbsp;<a class="anchor" href="#electron-软件破解与修改入门"><i class="small linkify icon"></i></a> </h3>
+
+<p>electron是一款流行的桌面软件框架, 可以用js来写桌面软件, 快速开发.为了提高开发效率,不少公司比如白帽汇直接采用了这种技术编写客户端,而不是传统的c++,c#.. 以下均采用白帽汇的fofa客户端作为例子讲解,目的是让fofa客户端的扫描功能无需验证. 这个功能命令是直接调用cli的, 并不需要网络验证.</p>
+
+<h4 id="解包">解包&nbsp;<a class="anchor" href="#解包"><i class="small linkify icon"></i></a> </h4>
+
+<p>electron的代码在<code>resources</code>目录,根据打包方式的不同, 可能看到<code>app</code>目录或者<code>app.asar</code>. 目录就不需要解包了.</p>
+
+<p><code>asar</code>并不是加密格式, 只是压缩格式. 可以使用<code>asar</code>工具直接解包.</p>
+
+<p>下载方式</p>
+
+<p><code>npm install -g asar</code></p>
+
+<p>解包命令</p>
+
+<p><code>asar extract app.asar  &lt;目录名&gt;</code></p>
+
+<p>例如<code>asar extract app.asar  fofa</code></p>
+
+<h4 id="代码目录">代码目录&nbsp;<a class="anchor" href="#代码目录"><i class="small linkify icon"></i></a> </h4>
+
+<p>代码目录是什么样子全看开发者. 通常都会存在<code>main.js</code>和<code>node_modules</code>目录.<code>main.js</code>是启动文件</p>
+
+<pre><code>»»»» ls                                                                       
+com  css  data  fonts  images  js  main.js  myjs  node_modules  package.json  tpl
+</code></pre>
+
+<p>目录命名很清晰</p>
+
+<h4 id="调试功能">调试功能&nbsp;<a class="anchor" href="#调试功能"><i class="small linkify icon"></i></a> </h4>
+
+<p>electron自带调试. 而且fofa的开发非常友好, 所有代码只有<code>com</code>目录的代码混淆了, 而且用的还是</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="cm">/*  This obfuscated code was created by Javascript Obfuscator Free Version.*/</span>
+<span class="cm">/*  Javascript Obfuscator Free Version can be downloaded here              */</span>
+<span class="cm">/*  http://javascriptobfuscator.com                                        */</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>注释也很友好,直接打开就看到</p>
+
+<pre><code>  // 指定一个入口的html文件
+  mainWindow.loadURL('file://' + __dirname + '/tpl/login.html');
+
+  // 打开调试工具，其实就是chrome的那套调试工具
+    //  mainWindow.webContents.openDevTools();
+</code></pre>
+
+<p>直接解开注释就行了.</p>
+
+<p><code>mainWindow.webContents.openDevTools();</code></p>
+
+<h4 id="重打包">重打包&nbsp;<a class="anchor" href="#重打包"><i class="small linkify icon"></i></a> </h4>
+
+<p>重打包很简单</p>
+
+<p><code>asar pack fofa app.asar</code></p>
+
+<p>直接覆盖原<code>app.asar</code>就行了</p>
+
+<p>上面的修改效果如下</p>
+
+<p><img src="https://i.loli.net/2019/01/25/5c4b21a447162.png" alt="Screenshot_5.png" /></p>
+
+<p>很眼熟吧, 就是chrome的调试功能</p>
+
+<p>然后我们需要寻找功能点.其实很简单,fofa的网页都放在<code>tpl</code>目录了. 在页面查看元素对比一下就知道了.  我们找到<code>tpl\edit-poc.html</code></p>
+
+<p>网页没混淆&hellip; 功能点也没在混淆的js里,直接在<code>script</code>标签里了(我白解密了)..</p>
+
+<p>看扫描按钮的文字是<code>开始扫描</code>, 直接在网页搜索一下, 直接搜到功能代码了..开发有良好的注释习惯,让我们为fofa开发点赞</p>
+
+<pre><code>$(&quot;.start_scan&quot;).click(function() {//开始扫描
+		bugnum = 0;
+		$('#san_result').html('');//默认清空 ,显数据
+		$('#san_result1').html('');//默认清空 ,显提示
+		isvipaaaa();
+		$('#san_result1').html('');
+		$('#san_result_have').html('');
+		$('#san_result_no').html('');
+		cvs_content = [];
+	    Buglist = '';
+	});
+</code></pre>
+
+<p>查看<code>isvipaaa</code>函数</p>
+
+<p>主要代码</p>
+
+<pre><code>        if(data.fcoin == 0 &amp;&amp; $(&quot;#scan_free&quot;).val() != 100 &amp;&amp; UserInfo.vip_level != 2) {                                    $('#san_result1').append('&lt;tr&gt;&lt;td colspan=&quot;4&quot;rowspan=&quot;4&quot;&gt;你的账号fofa币不足不能进行扫描。&lt;/td&gt;&lt;/tr&gt;');                    return;                
+        }                
+        if(($(&quot;#scan_free&quot;).val() != 100 &amp;&amp; UserInfo.vip_level !=2)||($(&quot;#scan_free&quot;).val() =='' &amp;&amp; UserInfo.vip_level == 2) ) {                    var scanok = scan_sure();                   
+        if(scanok == false) {    
+        return         
+        }               
+        }
+        if(data.is_verified){
+            /*扫描代码*/
+        }else{
+              $('#contentarea').html(&quot;&quot;);
+                    wrongmas1(&quot;对不起你还没有通过审核,请联系管理员!!&quot;);
+        }
+</code></pre>
+
+<p>可以看到就是三个<code>if</code>, 直接删除验证代码就完了..</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-javascript" data-lang="javascript">	<span class="kd">function</span> <span class="nx">isvipaaaa</span><span class="p">()</span> <span class="p">{</span> <span class="c1">//扫描
+</span><span class="c1"></span>		<span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+			<span class="nx">url</span><span class="o">:</span> <span class="nx">login_url</span> <span class="o">+</span> <span class="s1">&#39;?email=&#39;</span> <span class="o">+</span> <span class="nx">UserInfo</span><span class="p">.</span><span class="nx">email</span> <span class="o">+</span> <span class="s1">&#39;&amp;key=&#39;</span> <span class="o">+</span> <span class="nx">UserInfo</span><span class="p">.</span><span class="nx">key</span><span class="p">,</span>
+			<span class="nx">dataType</span><span class="o">:</span> <span class="s1">&#39;json&#39;</span><span class="p">,</span>
+			<span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;get&#39;</span><span class="p">,</span>
+			<span class="nx">success</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+					<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#query_loading_tr&#39;</span><span class="p">).</span><span class="nx">css</span><span class="p">(</span><span class="s1">&#39;display&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">);</span>
+					<span class="nx">$</span><span class="p">(</span><span class="s2">&#34;.but_bc&#34;</span><span class="p">).</span><span class="nx">click</span><span class="p">();</span>
+					<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#scan_rate&#39;</span><span class="p">).</span><span class="nx">css</span><span class="p">(</span><span class="s1">&#39;width&#39;</span><span class="p">,</span> <span class="s1">&#39;0%&#39;</span><span class="p">);</span>
+					<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#scan_rate_value&#39;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="s1">&#39;0%&#39;</span><span class="p">);</span>
+					<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#san_result&#39;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
+					<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.start_scan&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&#34;disabled&#34;</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+					<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.stop_scan&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&#34;disabled&#34;</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+					<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.export_scan&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&#34;disabled&#34;</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+					<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.Report_scan&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&#34;disabled&#34;</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+					<span class="c1">// $(&#39;#graphbox&#39;).css(&#39;display&#39;,&#39;&#39;);
+</span><span class="c1"></span>					<span class="kd">var</span> <span class="nx">FileName</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#FileName&#39;</span><span class="p">).</span><span class="nx">val</span><span class="p">();</span>
+					
+					<span class="k">if</span><span class="p">(</span><span class="nx">from</span> <span class="o">==</span> <span class="s1">&#39;store&#39;</span><span class="p">)</span> <span class="p">{</span>
+						<span class="nx">scanPoc</span><span class="p">(</span><span class="nx">temp_params2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&#34;#scan_free&#34;</span><span class="p">).</span><span class="nx">val</span><span class="p">());</span>
+					<span class="p">}</span><span class="k">else</span><span class="p">{</span>
+						<span class="nx">scanPoc</span><span class="p">(</span><span class="nx">temp_params2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&#34;#scan_free&#34;</span><span class="p">).</span><span class="nx">val</span><span class="p">());</span>
+					<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>让我们看看效果,重打包替换</p>
+
+<p><img src="https://i.loli.net/2019/01/25/5c4b2518939b5.png" alt="Screenshot_6.png" /></p>
+
+<h4 id="尾声">尾声&nbsp;<a class="anchor" href="#尾声"><i class="small linkify icon"></i></a> </h4>
+
+<p>感觉这个功能限制并没有什么意义, 本质上是执行一条系统命令用fofascan扫描而已</p>
+
+				</article>				
+			</section>
+
+			
+			<section class="ui secondary attached segment dream-tags">
+				
+					
+
+
+
+
+	
+		<a class="ui label yellow " href="/tags/%E8%BD%AF%E4%BB%B6%E7%A0%B4%E8%A7%A3" title="软件破解">软件破解</a>
+	
+
+
+				
+			</section>
+
+			
+			
+
+			
+			
+			
+
+			
+			
+		</div>
+	</div>
+
+				</div>
+				<div class="back">
+					
+<nav class="ui top secondary menu bar">
+	<div class="item">
+		<i class="inverted big link bullseye icon dream-flip-toggle" title="About Me"></i>
+	</div>
+	
+		
+	
+		
+	
+
+	
+	
+	
+	
+	
+	
+	
+		
+		
+			<div class="item">
+				<a href="https://github.com/blue-bird1" target="	_blank">
+					<i id="ico" class="inverted big link github icon" title="GitHub"></i>
+				</a>
+			</div>
+		
+	
+		
+		
+	
+		
+		
+			<div class="item">
+				<a href="https://twitter.com/blue_bird__hc" target="	_blank">
+					<i id="ico" class="inverted big link twitter icon" title="Twitter"></i>
+				</a>
+			</div>
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+</nav>
+
+
+
+<div class="ui centered grid about">
+	<div class="sixteen wide mobile fifteen wide tablet fifteen wide computer column about">
+		<section class="ui stacked segments">
+			<div class="ui inverted segment">
+				<article class="twemoji">
+					<p>青鸟 一名无业游民</p>
+
+<p>主要技能是编程 擅长CV大法 主要使用的编程语言</p>
+
+<ul>
+<li>python</li>
+<li>golang</li>
+</ul>
+
+<p>主要使用的工具</p>
+
+<ul>
+<li>docker</li>
+<li>vim</li>
+<li>msf</li>
+</ul>
+
+				</article>
+			</div>
+		</section>
+	</div>
+</div>
+
+				</div>
+			</div>
+		</div>
+
+		
+
+<script src="/js/site.js"></script>
+
+
+
+
+
+
+
+
+
+
+	<script id="dsq-count-scr" src="//.disqus.com/count.js" async></script>
+
+
+
+
+	
+	<script>
+		window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+		ga('create', 'UA-110301700-1', 'auto');
+		ga('send', 'pageview');
+	</script>
+	<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+		
+
+
+		
+
+
+	</body>
+</html>

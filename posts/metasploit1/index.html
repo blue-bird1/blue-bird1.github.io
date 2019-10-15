@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<title>
+	metasploit python 模块
+</title>
+		<style>
+	body {
+		display: block;
+		--colorBG: "#40e0d0, #ff8c00, #ff0080";
+		
+			background: linear-gradient(to right, var(--colorBG)) !important;
+		
+	}
+
+	body, body.pushable {
+		background-repeat: no-repeat;
+	  	background-attachment: fixed;
+	  	background-size: cover !important;
+	}
+</style>
+
+		<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+	
+	<meta name="author" content="" />
+	<meta name="description" content="metasploit在2017年尾将python作为官方支持语言,并且已经有python模块加入主分支.这使得我们开发metasploit模" />
+
+
+
+<meta name="generator" content="Hugo 0.58.3" />
+
+
+<link rel="shortcut icon" href="/img/defaultFav.ico">
+<script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+
+    for(i = 0; all.length > i; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+
+
+
+		
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+<script
+	src="https://code.jquery.com/jquery-3.3.1.min.js"
+	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+	crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/site.css">
+
+
+
+
+
+
+
+
+<style>
+	body.pushable {
+		display: block;
+		
+			background: linear-gradient(to right, var(--colorBG)) !important;
+		 ;
+	}
+</style>
+
+
+
+<script>
+	var colorBG =  true 
+	var enabledPost =  false 
+	
+	var isMobile = ( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) )
+	console.log("The client device is a "+(isMobile?"mobile":"PC")+".")
+</script>
+
+	</head>
+
+	<body>
+		<script>
+var prevBgIndex = 0;
+var bodyBgSwitchIndex = 0;
+
+
+
+
+
+
+	var gradients = [
+	  [],
+	  ['#40e0d0', '#ff8c00', '#ff0080'], 
+	  ['#3e5151', '#decba4'], 
+	  ['#11998e', '#38ef7d'], 
+	  ['#108dc7', '#ef8e38'], 
+	  ['#fc5c7d', '#6a82fb'], 
+	  ['#fc466b', '#3f5efb'], 
+	  ['#c94b4b', '#4b134f'], 
+	  ['#23074d', '#cc5333'] 
+	];
+	document.body.style.setProperty('--colorBG', connect(gradients[getRandomInt(0, gradients.length)]));
+
+
+	function getRandomInt(min, max) {
+	  min = Math.ceil(min);
+	  max = Math.floor(max);
+	  var random;
+	  while (1) {
+	    random = Math.floor(Math.random() * (max - min)) + min;
+	    if (random !== prevBgIndex) {
+	      prevBgIndex = random;
+	      break;
+	    }
+	  }
+	  return random;
+	}
+
+	function connect(arr) {
+	  var str = '';
+	  for (var i = 0; i < arr.length; i++) {
+	    if (i !== arr.length - 1) {
+	      str += arr[i] + ', ';
+	    } else {
+	      str += arr[i];
+	    }
+	  }
+	  return str;
+	}
+</script>
+
+
+
+
+		<div id="sidebar" class="ui sidebar inverted vertical menu">
+	
+	<section id="author" class="ui top attached center aligned inverted segment">
+		
+<div class="ui small circular image">
+	
+		<img src="http://www.gravatar.com/avatar/36cc0b77102e4b4e776f444f95525703?s=512">
+	
+</div>
+
+
+<h3 class="ui header">
+	
+	<div class="sub header">code and security</div>
+</h3>
+
+	</section>
+
+	
+	
+		<section class="ui attached center aligned inverted segment sidebar-dream-tags">
+			
+			
+			
+			
+
+
+
+
+	
+	
+		
+			
+			<a class="ui label purple " href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0" title="学习笔记">学习笔记</a>
+		
+			
+			<a class="ui label violet " href="/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90" title="漏洞分析">漏洞分析</a>
+		
+			
+			<a class="ui label orange " href="/tags/%E5%AE%A1%E8%AE%A1" title="审计">审计</a>
+		
+			
+			<a class="ui label red " href="/tags/fuzz" title="fuzz">fuzz</a>
+		
+			
+			<a class="ui label teal " href="/tags/sql%E6%B3%A8%E5%85%A5" title="sql注入">sql注入</a>
+		
+			
+			<a class="ui label pink " href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1" title="代码审计">代码审计</a>
+		
+			
+			<a class="ui label yellow " href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8" title="网络安全">网络安全</a>
+		
+			
+			<a class="ui label pink " href="/tags/%E8%BD%AF%E4%BB%B6%E7%A0%B4%E8%A7%A3" title="软件破解">软件破解</a>
+		
+	
+
+
+		</section>
+	
+
+	
+	
+		<section class="ui attached inverted segment sidebar-dream-categories both flexbox">
+			<div class="ui inverted accordion">
+				
+	
+	<div class="title">
+		<i class="dropdown icon"></i>
+		<a class="link" href="/categories/docker">docker</a>
+	</div>
+
+	
+	<div class="content">
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/dockertopoc/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>docker搭建复现环境</p>
+				</div>
+			</a>
+		
+	</div>
+
+	
+	<div class="title">
+		<i class="dropdown icon"></i>
+		<a class="link" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7">开发工具</a>
+	</div>
+
+	
+	<div class="content">
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/go-bazel/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>在golang项目开始使用Bazel</p>
+				</div>
+			</a>
+		
+	</div>
+
+	
+	<div class="title">
+		<i class="dropdown icon"></i>
+		<a class="link" href="/categories/%E7%BB%9F%E8%AE%A1%E5%AD%A6">统计学</a>
+	</div>
+
+	
+	<div class="content">
+		
+			<a class="item" href="http://blue-bird1.github.io/statistics2/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Statistics2</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/statistics2/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>统计学2:现代概率</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/statistics1/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>统计与概率1 古典概率</p>
+				</div>
+			</a>
+		
+	</div>
+
+	
+	<div class="title">
+		<i class="dropdown icon"></i>
+		<a class="link" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8">网络安全</a>
+	</div>
+
+	
+	<div class="content">
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/mysql/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Mysql 储存过程注入</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/location-xss/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>XSS实战 跳转XSS</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/srcbug/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>挖掘src漏洞</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/newsitethink/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>现代化网站的渗透测试</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/electroncrack/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Electron软件简单破解</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/iwebshopsql/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Iwebshop sql注入</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/thinkphp5-1/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>think5审计与调试技巧1</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/thinkphp5-1/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>think5审计与调试技巧1</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/fuzz/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Fuzz</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/metasploit1/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>metasploit python 模块</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/metasploit2/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>metasploit python 模块是如何运行</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/metinfogetshell/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Metinfo3.5.19 getshell</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/metinfoexp/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>metinfo3.5.18后台getshell分析</p>
+				</div>
+			</a>
+		
+	</div>
+
+
+			</div>
+		</section>
+	
+
+	
+	<section id="footer" class="ui bottom attached center aligned inverted segment">
+		
+
+	<p>© 2017 - 2019 青鸟的博客</p>
+
+
+<p>Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a> with <a href="https://github.com/UtkarshVerma/hugo-dream-plus" target="_blank">Dream Plus</a> theme.</p>
+
+	</section>
+</div>
+
+
+		<div class="pusher">
+			<div class="flipper">
+				<div class="front">
+					
+	<nav class="ui top secondary menu bar">
+	
+	<div class="item">
+		<i class="inverted big link bullseye icon dream-flip-toggle" title="About Me"></i>
+	</div>
+
+	
+	
+		<div class="item">
+			<a href="/">
+				<i class="inverted big link home icon" title="Home"></i>
+			</a>
+		</div>
+	
+
+	
+	
+		<div class="item">
+			<a href="/posts">
+				<i class="inverted big link archive icon" title="Archive"></i>
+			</a>
+		</div>
+	
+
+	
+	
+		<div class="item">
+			<a href="/tags">
+				<i class="inverted big link tags icon" title="All Tags"></i>
+			</a>
+		</div>
+	
+
+	
+	
+		<div class="item">
+			<a href="/categories">
+				<i class="inverted big link cubes icon" title="All Categories"></i>
+			</a>
+    	</div>
+	
+
+	
+	
+
+	
+	
+		<div class="ui container tablet computer only grid">
+			<div class="item" onClick="$('.ui.sidebar').sidebar('setting', 'transition', 'overlay').sidebar('toggle');">
+				<i class="inverted big link sidebar icon" title="Show Sidebar"></i>
+			</div>
+		</div>
+	
+
+	
+	
+		<div class="item right">
+			<a href="/posts/index.xml">
+				<i class="inverted big link rss icon" title="RSS Feed"></i>
+			</a>
+		</div>
+	
+</nav>
+
+
+	<div class="ui centered grid">
+		
+		<div class="sixteen wide mobile only column">
+				<div class="ui inverted accordion">
+	<div id="header" class="ui inverted segment column box">		
+		
+		<header id="author" class="ui top attached center aligned inverted segment">
+			
+<div class="ui small circular image">
+	
+		<img src="http://www.gravatar.com/avatar/36cc0b77102e4b4e776f444f95525703?s=512">
+	
+</div>
+
+
+<h3 class="ui header">
+	
+	<div class="sub header">code and security</div>
+</h3>
+
+		</header>
+
+		
+		<div class=" title header-title">
+			
+				<div id="tag-category-pop" class="ui red right corner label">
+					<i class="hand point icon down" title="Show/hide tags and categories"></i>
+				</div>
+			
+		</div>
+		
+		
+		<div id="tag-category" class=" content">
+			
+				<section class="ui attached center aligned inverted segment dream-tags none flexbox">
+					
+					
+					
+
+
+
+
+	
+	
+		
+			
+			<a class="ui label pink " href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0" title="学习笔记">学习笔记</a>
+		
+			
+			<a class="ui label teal " href="/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90" title="漏洞分析">漏洞分析</a>
+		
+			
+			<a class="ui label yellow " href="/tags/%E5%AE%A1%E8%AE%A1" title="审计">审计</a>
+		
+			
+			<a class="ui label blue " href="/tags/fuzz" title="fuzz">fuzz</a>
+		
+			
+			<a class="ui label green " href="/tags/sql%E6%B3%A8%E5%85%A5" title="sql注入">sql注入</a>
+		
+			
+			<a class="ui label purple " href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1" title="代码审计">代码审计</a>
+		
+			
+			<a class="ui label olive " href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8" title="网络安全">网络安全</a>
+		
+			
+			<a class="ui label violet " href="/tags/%E8%BD%AF%E4%BB%B6%E7%A0%B4%E8%A7%A3" title="软件破解">软件破解</a>
+		
+	
+
+
+				</section>
+			
+
+			
+				<section class="ui attached inverted segment dream-categories both flexbox">
+					<div class="inverted accordion">
+						
+	
+	<div class="title">
+		<i class="dropdown icon"></i>
+		<a class="link" href="/categories/docker">docker</a>
+	</div>
+
+	
+	<div class="content">
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/dockertopoc/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>docker搭建复现环境</p>
+				</div>
+			</a>
+		
+	</div>
+
+	
+	<div class="title">
+		<i class="dropdown icon"></i>
+		<a class="link" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7">开发工具</a>
+	</div>
+
+	
+	<div class="content">
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/go-bazel/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>在golang项目开始使用Bazel</p>
+				</div>
+			</a>
+		
+	</div>
+
+	
+	<div class="title">
+		<i class="dropdown icon"></i>
+		<a class="link" href="/categories/%E7%BB%9F%E8%AE%A1%E5%AD%A6">统计学</a>
+	</div>
+
+	
+	<div class="content">
+		
+			<a class="item" href="http://blue-bird1.github.io/statistics2/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Statistics2</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/statistics2/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>统计学2:现代概率</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/statistics1/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>统计与概率1 古典概率</p>
+				</div>
+			</a>
+		
+	</div>
+
+	
+	<div class="title">
+		<i class="dropdown icon"></i>
+		<a class="link" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8">网络安全</a>
+	</div>
+
+	
+	<div class="content">
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/mysql/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Mysql 储存过程注入</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/location-xss/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>XSS实战 跳转XSS</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/srcbug/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>挖掘src漏洞</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/newsitethink/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>现代化网站的渗透测试</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/electroncrack/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Electron软件简单破解</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/iwebshopsql/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Iwebshop sql注入</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/thinkphp5-1/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>think5审计与调试技巧1</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/thinkphp5-1/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>think5审计与调试技巧1</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/fuzz/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Fuzz</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/metasploit1/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>metasploit python 模块</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/metasploit2/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>metasploit python 模块是如何运行</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/metinfogetshell/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Metinfo3.5.19 getshell</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/metinfoexp/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>metinfo3.5.18后台getshell分析</p>
+				</div>
+			</a>
+		
+	</div>
+
+
+					</div>
+				</section>
+			
+		</div>
+
+		
+		<footer class="ui bottom attached center aligned inverted segment">
+			
+
+	<p>© 2017 - 2019 青鸟的博客</p>
+
+
+<p>Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a> with <a href="https://github.com/UtkarshVerma/hugo-dream-plus" target="_blank">Dream Plus</a> theme.</p>
+
+		</footer>
+	</div>
+</div>
+
+		</div>
+
+		<div class="sixteen wide mobile fifteen wide tablet twelve wide computer column post-list">
+			
+			<section class="ui secondary top attached black segment post-head">
+				<h1 class="post-title">
+					metasploit python 模块
+				</h1>
+
+				<div class="sub header">
+					<div><span><i class="calendar outline icon"></i>Feb 2, 2018</span></div>
+					
+					<div><span><i class="clock outline icon"></i>2 min read</span></div>
+					<div><span><i class="angle double up icon"></i>Last updated on Feb 2, 2018</span></div>
+				</div>
+				<hr>
+
+				
+
+				<article class="post-content twemoji">
+					
+
+<p>metasploit在2017年尾将python作为官方支持语言,并且已经有python模块加入主分支.这使得我们开发metasploit模块可以不去学习ruby</p>
+
+<h3 id="为什么将python作为官方支持语言">为什么将python作为官方支持语言&nbsp;<a class="anchor" href="#为什么将python作为官方支持语言"><i class="small linkify icon"></i></a> </h3>
+
+<ol>
+<li>很多不是metasploit官方人员编程的模块都是使用python编写</li>
+<li>现在python流行程度非常高 很多渗透人员python熟练程度比ruby高</li>
+</ol>
+
+<h3 id="metasploit的python模块是什么">metasploit的python模块是什么&nbsp;<a class="anchor" href="#metasploit的python模块是什么"><i class="small linkify icon"></i></a> </h3>
+
+<p>主分支的一个python模块 <a href="https://github.com/rapid7/metasploit-framework/blob/778e69f92912c555e72bc3318278443126704b75/modules/auxiliary/dos/http/slowloris.py">https://github.com/rapid7/metasploit-framework/blob/778e69f92912c555e72bc3318278443126704b75/modules/auxiliary/dos/http/slowloris.py</a></p>
+
+<p>python模块实际是通过json-rpc调用与metasploit通信</p>
+
+<p>metasploit获取元数据如图(来自官方博客)</p>
+
+<pre><code>+------------+
+| Metasploit |
+|            |  Describe yourself  +-------------------+
+|            +-------------------&gt; |  some_module.py   |
+|            |                     |                   |
+|            |                     |                   |
+|            |   Some metadata     |                   |
+|            | &lt;-------------------+                   |
+|            |                     |                   |
+|            |                     +-------------------+
+|            |
+|            |
++------------+
+</code></pre>
+
+<p>模块调用如图</p>
+
+<pre><code>+------------+
+| Metasploit |  Do a thing with
+|            |   these options     +-------------------+
+|            +-------------------&gt; |  some_module.py   |
+|            |                     |                   |
+|            |                     |                   |
+|            |   A bit of status   |                   |
+|            | &lt;-------------------+                   |
+|            |                     |                   |
+|            |  Moar status        |                   |
+|            | &lt;-------------------+                   |
+|            |                     |                   |
+|            |  I found a thing    |                   |
+|            | &lt;-------------------+                   |
+|            |                     |                   |
+|            |                     +-------------------+
+|            |
++------------+
+</code></pre>
+
+<h3 id="将会发生什么">将会发生什么&nbsp;<a class="anchor" href="#将会发生什么"><i class="small linkify icon"></i></a> </h3>
+
+<p>实际上对于原来的开发方式没有影响,完全可以使用原来的ruby编写方式.但是对于不熟悉ruby的开发者可以使用python来方便的编写模块</p>
+
+<h3 id="python在metasploit能做什么">python在metasploit能做什么&nbsp;<a class="anchor" href="#python在metasploit能做什么"><i class="small linkify icon"></i></a> </h3>
+
+<p>可以使用的和ruby模块并没有区别</p>
+
+<h2 id="如何编写一个python模块">如何编写一个python模块&nbsp;<a class="anchor" href="#如何编写一个python模块"><i class="small linkify icon"></i></a> </h2>
+
+<p>首先需要导入需要的模块</p>
+
+<pre><code>#!/usr/bin/env python
+# another:bluebird
+from metasploit import module
+</code></pre>
+
+<p>这个metasploit实际上路径是 <code>lib/msf/core/modules/external/python/</code></p>
+
+<p>然后定义元数据 格式和ruby模块的一样.详细可参考<a href="https://www.kancloud.cn/bluebird/metasploit/486941">这里的文档</a></p>
+
+<pre><code>metadata = {
+	# 模块名字
+    'name': 'metasploit python module demo ',
+    # 模块的描述
+    'description': '''
+        send a http request metasploit python module demo
+     ''',
+     # 模块作者
+    'authors': [
+        'bluebird', 
+    ],
+    # 编写时间
+    'date': '2018-02-02',
+    # 漏洞参考
+    'references': [
+       
+     ],
+     # 漏洞类型 只能在已有的类型选项 
+    'type': 'dos',
+    # 模块选项
+    'options': {
+        'rhost': {'type': 'address', 'description': 'The target address', 'required': True, 'default': None},
+        'rport': {'type': 'port', 'description': 'The target port', 'required': True, 'default': 80},
+     }}
+</code></pre>
+
+<p>然后一般应该定义一个<code>run</code>方法.这个demo输出了helloworld</p>
+
+<pre><code>def run(args):
+    module.log('helloworld')
+   
+</code></pre>
+
+<p>最后定义主方法</p>
+
+<pre><code>if __name__ == &quot;__main__&quot;:
+    module.run(metadata, run)
+</code></pre>
+
+<p>让我们实际跑一下(注意请给你的python文件添加执行权限)</p>
+
+<pre><code>msf5 auxiliary(test/demo) &gt; set rhost 127.0.0.1
+rhost =&gt; 127.0.0.1
+msf5 auxiliary(test/demo) &gt; run
+
+[*] Starting server...
+[*] hello world
+[*] Auxiliary module execution completed
+msf5 auxiliary(test/demo) &gt; 
+</code></pre>
+
+				</article>				
+			</section>
+
+			
+			<section class="ui secondary attached segment dream-tags">
+				
+					<span>No tag</span>
+				
+			</section>
+
+			
+			
+
+			
+			
+			
+
+			
+			
+		</div>
+	</div>
+
+				</div>
+				<div class="back">
+					
+<nav class="ui top secondary menu bar">
+	<div class="item">
+		<i class="inverted big link bullseye icon dream-flip-toggle" title="About Me"></i>
+	</div>
+	
+		
+	
+		
+	
+
+	
+	
+	
+	
+	
+	
+	
+		
+		
+			<div class="item">
+				<a href="https://github.com/blue-bird1" target="	_blank">
+					<i id="ico" class="inverted big link github icon" title="GitHub"></i>
+				</a>
+			</div>
+		
+	
+		
+		
+	
+		
+		
+			<div class="item">
+				<a href="https://twitter.com/blue_bird__hc" target="	_blank">
+					<i id="ico" class="inverted big link twitter icon" title="Twitter"></i>
+				</a>
+			</div>
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+</nav>
+
+
+
+<div class="ui centered grid about">
+	<div class="sixteen wide mobile fifteen wide tablet fifteen wide computer column about">
+		<section class="ui stacked segments">
+			<div class="ui inverted segment">
+				<article class="twemoji">
+					<p>青鸟 一名无业游民</p>
+
+<p>主要技能是编程 擅长CV大法 主要使用的编程语言</p>
+
+<ul>
+<li>python</li>
+<li>golang</li>
+</ul>
+
+<p>主要使用的工具</p>
+
+<ul>
+<li>docker</li>
+<li>vim</li>
+<li>msf</li>
+</ul>
+
+				</article>
+			</div>
+		</section>
+	</div>
+</div>
+
+				</div>
+			</div>
+		</div>
+
+		
+
+<script src="/js/site.js"></script>
+
+
+
+
+
+
+
+
+
+
+	<script id="dsq-count-scr" src="//.disqus.com/count.js" async></script>
+
+
+
+
+	
+	<script>
+		window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+		ga('create', 'UA-110301700-1', 'auto');
+		ga('send', 'pageview');
+	</script>
+	<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+		
+
+
+		
+
+
+	</body>
+</html>

@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<title>
+	Mysql 储存过程注入
+</title>
+		<style>
+	body {
+		display: block;
+		--colorBG: "#40e0d0, #ff8c00, #ff0080";
+		
+			background: linear-gradient(to right, var(--colorBG)) !important;
+		
+	}
+
+	body, body.pushable {
+		background-repeat: no-repeat;
+	  	background-attachment: fixed;
+	  	background-size: cover !important;
+	}
+</style>
+
+		<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+	
+	<meta name="author" content="" />
+	<meta name="description" content="" />
+
+
+
+<meta name="generator" content="Hugo 0.58.3" />
+
+
+<link rel="shortcut icon" href="/img/defaultFav.ico">
+<script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+
+    for(i = 0; all.length > i; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+
+
+
+		
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+<script
+	src="https://code.jquery.com/jquery-3.3.1.min.js"
+	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+	crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/site.css">
+
+
+
+
+
+
+
+
+<style>
+	body.pushable {
+		display: block;
+		
+			background: linear-gradient(to right, var(--colorBG)) !important;
+		 ;
+	}
+</style>
+
+
+
+<script>
+	var colorBG =  true 
+	var enabledPost =  false 
+	
+	var isMobile = ( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) )
+	console.log("The client device is a "+(isMobile?"mobile":"PC")+".")
+</script>
+
+	</head>
+
+	<body>
+		<script>
+var prevBgIndex = 0;
+var bodyBgSwitchIndex = 0;
+
+
+
+
+
+
+	var gradients = [
+	  [],
+	  ['#40e0d0', '#ff8c00', '#ff0080'], 
+	  ['#3e5151', '#decba4'], 
+	  ['#11998e', '#38ef7d'], 
+	  ['#108dc7', '#ef8e38'], 
+	  ['#fc5c7d', '#6a82fb'], 
+	  ['#fc466b', '#3f5efb'], 
+	  ['#c94b4b', '#4b134f'], 
+	  ['#23074d', '#cc5333'] 
+	];
+	document.body.style.setProperty('--colorBG', connect(gradients[getRandomInt(0, gradients.length)]));
+
+
+	function getRandomInt(min, max) {
+	  min = Math.ceil(min);
+	  max = Math.floor(max);
+	  var random;
+	  while (1) {
+	    random = Math.floor(Math.random() * (max - min)) + min;
+	    if (random !== prevBgIndex) {
+	      prevBgIndex = random;
+	      break;
+	    }
+	  }
+	  return random;
+	}
+
+	function connect(arr) {
+	  var str = '';
+	  for (var i = 0; i < arr.length; i++) {
+	    if (i !== arr.length - 1) {
+	      str += arr[i] + ', ';
+	    } else {
+	      str += arr[i];
+	    }
+	  }
+	  return str;
+	}
+</script>
+
+
+
+
+		<div id="sidebar" class="ui sidebar inverted vertical menu">
+	
+	<section id="author" class="ui top attached center aligned inverted segment">
+		
+<div class="ui small circular image">
+	
+		<img src="http://www.gravatar.com/avatar/36cc0b77102e4b4e776f444f95525703?s=512">
+	
+</div>
+
+
+<h3 class="ui header">
+	
+	<div class="sub header">code and security</div>
+</h3>
+
+	</section>
+
+	
+	
+		<section class="ui attached center aligned inverted segment sidebar-dream-tags">
+			
+			
+			
+			
+
+
+
+
+	
+	
+		
+			
+			<a class="ui label purple " href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0" title="学习笔记">学习笔记</a>
+		
+			
+			<a class="ui label yellow " href="/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90" title="漏洞分析">漏洞分析</a>
+		
+			
+			<a class="ui label violet " href="/tags/%E5%AE%A1%E8%AE%A1" title="审计">审计</a>
+		
+			
+			<a class="ui label teal " href="/tags/fuzz" title="fuzz">fuzz</a>
+		
+			
+			<a class="ui label orange " href="/tags/sql%E6%B3%A8%E5%85%A5" title="sql注入">sql注入</a>
+		
+			
+			<a class="ui label olive " href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1" title="代码审计">代码审计</a>
+		
+			
+			<a class="ui label pink " href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8" title="网络安全">网络安全</a>
+		
+			
+			<a class="ui label green " href="/tags/%E8%BD%AF%E4%BB%B6%E7%A0%B4%E8%A7%A3" title="软件破解">软件破解</a>
+		
+	
+
+
+		</section>
+	
+
+	
+	
+		<section class="ui attached inverted segment sidebar-dream-categories both flexbox">
+			<div class="ui inverted accordion">
+				
+	
+	<div class="title">
+		<i class="dropdown icon"></i>
+		<a class="link" href="/categories/docker">docker</a>
+	</div>
+
+	
+	<div class="content">
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/dockertopoc/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>docker搭建复现环境</p>
+				</div>
+			</a>
+		
+	</div>
+
+	
+	<div class="title">
+		<i class="dropdown icon"></i>
+		<a class="link" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7">开发工具</a>
+	</div>
+
+	
+	<div class="content">
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/go-bazel/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>在golang项目开始使用Bazel</p>
+				</div>
+			</a>
+		
+	</div>
+
+	
+	<div class="title">
+		<i class="dropdown icon"></i>
+		<a class="link" href="/categories/%E7%BB%9F%E8%AE%A1%E5%AD%A6">统计学</a>
+	</div>
+
+	
+	<div class="content">
+		
+			<a class="item" href="http://blue-bird1.github.io/statistics2/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Statistics2</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/statistics2/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>统计学2:现代概率</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/statistics1/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>统计与概率1 古典概率</p>
+				</div>
+			</a>
+		
+	</div>
+
+	
+	<div class="title">
+		<i class="dropdown icon"></i>
+		<a class="link" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8">网络安全</a>
+	</div>
+
+	
+	<div class="content">
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/mysql/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Mysql 储存过程注入</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/location-xss/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>XSS实战 跳转XSS</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/srcbug/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>挖掘src漏洞</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/newsitethink/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>现代化网站的渗透测试</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/electroncrack/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Electron软件简单破解</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/iwebshopsql/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Iwebshop sql注入</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/thinkphp5-1/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>think5审计与调试技巧1</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/thinkphp5-1/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>think5审计与调试技巧1</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/fuzz/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Fuzz</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/metasploit1/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>metasploit python 模块</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/metasploit2/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>metasploit python 模块是如何运行</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/metinfogetshell/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Metinfo3.5.19 getshell</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/metinfoexp/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>metinfo3.5.18后台getshell分析</p>
+				</div>
+			</a>
+		
+	</div>
+
+
+			</div>
+		</section>
+	
+
+	
+	<section id="footer" class="ui bottom attached center aligned inverted segment">
+		
+
+	<p>© 2017 - 2019 青鸟的博客</p>
+
+
+<p>Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a> with <a href="https://github.com/UtkarshVerma/hugo-dream-plus" target="_blank">Dream Plus</a> theme.</p>
+
+	</section>
+</div>
+
+
+		<div class="pusher">
+			<div class="flipper">
+				<div class="front">
+					
+	<nav class="ui top secondary menu bar">
+	
+	<div class="item">
+		<i class="inverted big link bullseye icon dream-flip-toggle" title="About Me"></i>
+	</div>
+
+	
+	
+		<div class="item">
+			<a href="/">
+				<i class="inverted big link home icon" title="Home"></i>
+			</a>
+		</div>
+	
+
+	
+	
+		<div class="item">
+			<a href="/posts">
+				<i class="inverted big link archive icon" title="Archive"></i>
+			</a>
+		</div>
+	
+
+	
+	
+		<div class="item">
+			<a href="/tags">
+				<i class="inverted big link tags icon" title="All Tags"></i>
+			</a>
+		</div>
+	
+
+	
+	
+		<div class="item">
+			<a href="/categories">
+				<i class="inverted big link cubes icon" title="All Categories"></i>
+			</a>
+    	</div>
+	
+
+	
+	
+
+	
+	
+		<div class="ui container tablet computer only grid">
+			<div class="item" onClick="$('.ui.sidebar').sidebar('setting', 'transition', 'overlay').sidebar('toggle');">
+				<i class="inverted big link sidebar icon" title="Show Sidebar"></i>
+			</div>
+		</div>
+	
+
+	
+	
+		<div class="item right">
+			<a href="/posts/index.xml">
+				<i class="inverted big link rss icon" title="RSS Feed"></i>
+			</a>
+		</div>
+	
+</nav>
+
+
+	<div class="ui centered grid">
+		
+		<div class="sixteen wide mobile only column">
+				<div class="ui inverted accordion">
+	<div id="header" class="ui inverted segment column box">		
+		
+		<header id="author" class="ui top attached center aligned inverted segment">
+			
+<div class="ui small circular image">
+	
+		<img src="http://www.gravatar.com/avatar/36cc0b77102e4b4e776f444f95525703?s=512">
+	
+</div>
+
+
+<h3 class="ui header">
+	
+	<div class="sub header">code and security</div>
+</h3>
+
+		</header>
+
+		
+		<div class=" title header-title">
+			
+				<div id="tag-category-pop" class="ui red right corner label">
+					<i class="hand point icon down" title="Show/hide tags and categories"></i>
+				</div>
+			
+		</div>
+		
+		
+		<div id="tag-category" class=" content">
+			
+				<section class="ui attached center aligned inverted segment dream-tags none flexbox">
+					
+					
+					
+
+
+
+
+	
+	
+		
+			
+			<a class="ui label red " href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0" title="学习笔记">学习笔记</a>
+		
+			
+			<a class="ui label pink " href="/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90" title="漏洞分析">漏洞分析</a>
+		
+			
+			<a class="ui label olive " href="/tags/%E5%AE%A1%E8%AE%A1" title="审计">审计</a>
+		
+			
+			<a class="ui label violet " href="/tags/fuzz" title="fuzz">fuzz</a>
+		
+			
+			<a class="ui label violet " href="/tags/sql%E6%B3%A8%E5%85%A5" title="sql注入">sql注入</a>
+		
+			
+			<a class="ui label teal " href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1" title="代码审计">代码审计</a>
+		
+			
+			<a class="ui label green " href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8" title="网络安全">网络安全</a>
+		
+			
+			<a class="ui label violet " href="/tags/%E8%BD%AF%E4%BB%B6%E7%A0%B4%E8%A7%A3" title="软件破解">软件破解</a>
+		
+	
+
+
+				</section>
+			
+
+			
+				<section class="ui attached inverted segment dream-categories both flexbox">
+					<div class="inverted accordion">
+						
+	
+	<div class="title">
+		<i class="dropdown icon"></i>
+		<a class="link" href="/categories/docker">docker</a>
+	</div>
+
+	
+	<div class="content">
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/dockertopoc/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>docker搭建复现环境</p>
+				</div>
+			</a>
+		
+	</div>
+
+	
+	<div class="title">
+		<i class="dropdown icon"></i>
+		<a class="link" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7">开发工具</a>
+	</div>
+
+	
+	<div class="content">
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/go-bazel/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>在golang项目开始使用Bazel</p>
+				</div>
+			</a>
+		
+	</div>
+
+	
+	<div class="title">
+		<i class="dropdown icon"></i>
+		<a class="link" href="/categories/%E7%BB%9F%E8%AE%A1%E5%AD%A6">统计学</a>
+	</div>
+
+	
+	<div class="content">
+		
+			<a class="item" href="http://blue-bird1.github.io/statistics2/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Statistics2</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/statistics2/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>统计学2:现代概率</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/statistics1/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>统计与概率1 古典概率</p>
+				</div>
+			</a>
+		
+	</div>
+
+	
+	<div class="title">
+		<i class="dropdown icon"></i>
+		<a class="link" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8">网络安全</a>
+	</div>
+
+	
+	<div class="content">
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/mysql/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Mysql 储存过程注入</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/location-xss/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>XSS实战 跳转XSS</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/srcbug/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>挖掘src漏洞</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/newsitethink/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>现代化网站的渗透测试</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/electroncrack/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Electron软件简单破解</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/iwebshopsql/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Iwebshop sql注入</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/thinkphp5-1/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>think5审计与调试技巧1</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/thinkphp5-1/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>think5审计与调试技巧1</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/fuzz/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Fuzz</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/metasploit1/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>metasploit python 模块</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/metasploit2/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>metasploit python 模块是如何运行</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/metinfogetshell/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Metinfo3.5.19 getshell</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/metinfoexp/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>metinfo3.5.18后台getshell分析</p>
+				</div>
+			</a>
+		
+	</div>
+
+
+					</div>
+				</section>
+			
+		</div>
+
+		
+		<footer class="ui bottom attached center aligned inverted segment">
+			
+
+	<p>© 2017 - 2019 青鸟的博客</p>
+
+
+<p>Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a> with <a href="https://github.com/UtkarshVerma/hugo-dream-plus" target="_blank">Dream Plus</a> theme.</p>
+
+		</footer>
+	</div>
+</div>
+
+		</div>
+
+		<div class="sixteen wide mobile fifteen wide tablet twelve wide computer column post-list">
+			
+			<section class="ui secondary top attached black segment post-head">
+				<h1 class="post-title">
+					Mysql 储存过程注入
+				</h1>
+
+				<div class="sub header">
+					<div><span><i class="calendar outline icon"></i>May 7, 2019</span></div>
+					
+					<div><span><i class="clock outline icon"></i>2 min read</span></div>
+					<div><span><i class="angle double up icon"></i>Last updated on May 7, 2019</span></div>
+				</div>
+				<hr>
+
+				
+
+				<article class="post-content twemoji">
+					
+
+<h3 id="mysql-储存过程注入">Mysql 储存过程注入&nbsp;<a class="anchor" href="#mysql-储存过程注入"><i class="small linkify icon"></i></a> </h3>
+
+<p>mysql有着储存过程这个功能, 这次作者刚好遇到注入点在调用储存过程的sql注入.</p>
+
+<h3 id="基本知识">基本知识&nbsp;<a class="anchor" href="#基本知识"><i class="small linkify icon"></i></a> </h3>
+
+<p>mysql可以通过以下语句创建一个储存过程</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-mysql" data-lang="mysql"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-mysql" data-lang="mysql"><span class="k">CREATE</span> <span class="k">PROCEDURE</span> <span class="nf">sp_name</span><span class="p">(</span><span class="k">IN</span> <span class="n">param1</span> <span class="kt">INT</span><span class="p">,</span><span class="k">OUT</span> <span class="n">param2</span> <span class="kt">INT</span><span class="p">)</span>
+<span class="n">BEGIN</span>
+   <span class="c1"># code
+</span><span class="c1"></span><span class="n">END</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>sp_name是名字, 为IN的参数是入参,为OUT的参数为返回值</p>
+
+<p>调用储存过程的语句</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-mysql" data-lang="mysql"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-mysql" data-lang="mysql"> <span class="k">CALL</span> <span class="nf">sp_name</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="注入分析">注入分析&nbsp;<a class="anchor" href="#注入分析"><i class="small linkify icon"></i></a> </h3>
+
+<p>从语法我们可以分析出我们的输入可能出现在两处,和作为参数进入储存过程</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-mysql" data-lang="mysql"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-mysql" data-lang="mysql"><span class="k">CALL</span> <span class="o">&lt;</span><span class="err">储存过程名注入点</span><span class="o">&gt;</span><span class="p">(</span><span class="o">&lt;</span><span class="err">储存过程参数注入点</span><span class="o">&gt;</span><span class="p">);</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>首先如果对参数过滤不严,无需进入储存过程就可以直接注入.用以下语句为例</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-mysql" data-lang="mysql"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-mysql" data-lang="mysql"><span class="k">CALL</span> <span class="nf">test</span><span class="p">([</span><span class="err">可控点</span><span class="p">])</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>由于是直接执行,所以我们可直接注入语句例如<code>(select 1)</code>.由于语法问题,这个括号是必须的,这语句就变成了</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-mysql" data-lang="mysql"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-mysql" data-lang="mysql"><span class="k">CALL</span> <span class="nf">test</span><span class="p">((</span><span class="k">select</span> <span class="mi">1</span><span class="p">))</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>这种注入和普通注入差别不大,已有技巧基本可以套用.</p>
+
+<p>如果参数不可控,但是方法名可控也可以进行注入.但是首先要得知一个存在的储存过程名,然后通过注释后续语句来进行自己语句</p>
+
+<pre><code>CALL [可控]()
+</code></pre>
+
+<p>示例poc</p>
+
+<pre><code>test((select updatexml(1,concat(0x7e,(select @@version),0x7e),1))) -- 
+</code></pre>
+
+<p>可以看到和参数注入差距不大,只是用于参数不可控,或被安全处理的情况.</p>
+
+<p>最后一种可能,在储存过程中出现.虽然储存过程被认为非常安全,但是实际上如果编写不慎 例如进行动态sql拼接 还是会出现注入的.. 例如</p>
+
+<pre><code># 来自网上的一个例子 _field和_table是参数
+SET @strSql = CONCAT('SELECT ',_field,' FROM ',_table);
+PREPARE stmt FROM @strSql;
+EXECUTE stmt;
+</code></pre>
+
+<p>最后附上我遇上的一个漏洞代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;mode&#39;</span><span class="p">]))</span> <span class="p">{</span>
+    <span class="o">@</span><span class="nv">$m</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">mysqli</span><span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="s1">&#39;root&#39;</span><span class="p">,</span> <span class="s1">&#39;123456&#39;</span><span class="p">,</span> <span class="s1">&#39;UseStudio_Develop&#39;</span><span class="p">);</span>
+    <span class="cm">/*省略错误处理*/</span>
+    <span class="nv">$ary</span> <span class="o">=</span> <span class="nx">explode</span><span class="p">(</span><span class="s1">&#39;&amp;&#39;</span><span class="p">,</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;mode&#39;</span><span class="p">]);</span>
+     <span class="k">if</span> <span class="p">(</span><span class="nx">count</span><span class="p">(</span><span class="nv">$ary</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nv">$sql</span> <span class="o">=</span> <span class="s1">&#39;CALL &#39;</span> <span class="o">.</span> <span class="nv">$m</span><span class="o">-&gt;</span><span class="na">real_escape_string</span><span class="p">(</span><span class="nv">$ary</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">.</span> <span class="s1">&#39;()&#39;</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nv">$sql</span> <span class="o">=</span> <span class="s1">&#39;CALL &#39;</span> <span class="o">.</span> <span class="nv">$m</span><span class="o">-&gt;</span><span class="na">real_escape_string</span><span class="p">(</span><span class="nv">$ary</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">.</span> <span class="s2">&#34;(&#39;&#34;</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;</span> <span class="nx">count</span><span class="p">(</span><span class="nv">$ary</span><span class="p">);</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nv">$sql</span><span class="o">.=</span> <span class="nv">$m</span><span class="o">-&gt;</span><span class="na">real_escape_string</span><span class="p">(</span><span class="nv">$ary</span><span class="p">[</span><span class="nv">$i</span><span class="p">]);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">&lt;</span> <span class="nx">count</span><span class="p">(</span><span class="nv">$ary</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nv">$sql</span><span class="o">.=</span> <span class="s2">&#34;&#39;,&#39;&#34;</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="nv">$sql</span><span class="o">.=</span> <span class="s2">&#34;&#39;)&#34;</span><span class="p">;</span>
+    <span class="p">}</span>
+    
+    <span class="c1">//执行查询，获取结果集
+</span><span class="c1"></span>    <span class="nv">$res</span> <span class="o">=</span> <span class="nv">$m</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="nv">$sql</span><span class="p">);</span>
+    <span class="c1">// 省略返回的代码
+</span><span class="c1"></span><span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+				</article>				
+			</section>
+
+			
+			<section class="ui secondary attached segment dream-tags">
+				
+					
+
+
+
+
+	
+		<a class="ui label violet " href="/tags/sql%E6%B3%A8%E5%85%A5" title="sql注入">sql注入</a>
+	
+
+
+				
+			</section>
+
+			
+			
+
+			
+			
+			
+
+			
+			
+		</div>
+	</div>
+
+				</div>
+				<div class="back">
+					
+<nav class="ui top secondary menu bar">
+	<div class="item">
+		<i class="inverted big link bullseye icon dream-flip-toggle" title="About Me"></i>
+	</div>
+	
+		
+	
+		
+	
+
+	
+	
+	
+	
+	
+	
+	
+		
+		
+			<div class="item">
+				<a href="https://github.com/blue-bird1" target="	_blank">
+					<i id="ico" class="inverted big link github icon" title="GitHub"></i>
+				</a>
+			</div>
+		
+	
+		
+		
+	
+		
+		
+			<div class="item">
+				<a href="https://twitter.com/blue_bird__hc" target="	_blank">
+					<i id="ico" class="inverted big link twitter icon" title="Twitter"></i>
+				</a>
+			</div>
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+</nav>
+
+
+
+<div class="ui centered grid about">
+	<div class="sixteen wide mobile fifteen wide tablet fifteen wide computer column about">
+		<section class="ui stacked segments">
+			<div class="ui inverted segment">
+				<article class="twemoji">
+					<p>青鸟 一名无业游民</p>
+
+<p>主要技能是编程 擅长CV大法 主要使用的编程语言</p>
+
+<ul>
+<li>python</li>
+<li>golang</li>
+</ul>
+
+<p>主要使用的工具</p>
+
+<ul>
+<li>docker</li>
+<li>vim</li>
+<li>msf</li>
+</ul>
+
+				</article>
+			</div>
+		</section>
+	</div>
+</div>
+
+				</div>
+			</div>
+		</div>
+
+		
+
+<script src="/js/site.js"></script>
+
+
+
+
+
+
+
+
+
+
+	<script id="dsq-count-scr" src="//.disqus.com/count.js" async></script>
+
+
+
+
+	
+	<script>
+		window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+		ga('create', 'UA-110301700-1', 'auto');
+		ga('send', 'pageview');
+	</script>
+	<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+		
+
+
+		
+
+
+	</body>
+</html>

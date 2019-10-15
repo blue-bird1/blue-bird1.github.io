@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>代码审计 on 青鸟的博客</title>
+    <link>http://blue-bird1.github.io/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/</link>
+    <description>Recent content in 代码审计 on 青鸟的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sat, 19 Jan 2019 18:12:19 +0800</lastBuildDate>
+    
+	<atom:link href="http://blue-bird1.github.io/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Iwebshop sql注入</title>
+      <link>http://blue-bird1.github.io/posts/iwebshopsql/</link>
+      <pubDate>Sat, 19 Jan 2019 18:12:19 +0800</pubDate>
+      
+      <guid>http://blue-bird1.github.io/posts/iwebshopsql/</guid>
+      <description>&lt;h3 id=&#34;iwebshop-最新版本5-3-1-前台注入&#34;&gt;iwebshop 最新版本5.3.1 前台注入&lt;/h3&gt;
+
+&lt;p&gt;iwebshop最新版存在一个非常弱智的注入漏洞&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

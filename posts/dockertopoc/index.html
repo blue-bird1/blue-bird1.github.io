@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<title>
+	docker搭建复现环境
+</title>
+		<style>
+	body {
+		display: block;
+		--colorBG: "#40e0d0, #ff8c00, #ff0080";
+		
+			background: linear-gradient(to right, var(--colorBG)) !important;
+		
+	}
+
+	body, body.pushable {
+		background-repeat: no-repeat;
+	  	background-attachment: fixed;
+	  	background-size: cover !important;
+	}
+</style>
+
+		<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+	
+	<meta name="author" content="" />
+	<meta name="description" content="" />
+
+
+
+<meta name="generator" content="Hugo 0.58.3" />
+
+
+<link rel="shortcut icon" href="/img/defaultFav.ico">
+<script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+
+    for(i = 0; all.length > i; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+
+
+
+		
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+<script
+	src="https://code.jquery.com/jquery-3.3.1.min.js"
+	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+	crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/site.css">
+
+
+
+
+
+
+
+
+<style>
+	body.pushable {
+		display: block;
+		
+			background: linear-gradient(to right, var(--colorBG)) !important;
+		 ;
+	}
+</style>
+
+
+
+<script>
+	var colorBG =  true 
+	var enabledPost =  false 
+	
+	var isMobile = ( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) )
+	console.log("The client device is a "+(isMobile?"mobile":"PC")+".")
+</script>
+
+	</head>
+
+	<body>
+		<script>
+var prevBgIndex = 0;
+var bodyBgSwitchIndex = 0;
+
+
+
+
+
+
+	var gradients = [
+	  [],
+	  ['#40e0d0', '#ff8c00', '#ff0080'], 
+	  ['#3e5151', '#decba4'], 
+	  ['#11998e', '#38ef7d'], 
+	  ['#108dc7', '#ef8e38'], 
+	  ['#fc5c7d', '#6a82fb'], 
+	  ['#fc466b', '#3f5efb'], 
+	  ['#c94b4b', '#4b134f'], 
+	  ['#23074d', '#cc5333'] 
+	];
+	document.body.style.setProperty('--colorBG', connect(gradients[getRandomInt(0, gradients.length)]));
+
+
+	function getRandomInt(min, max) {
+	  min = Math.ceil(min);
+	  max = Math.floor(max);
+	  var random;
+	  while (1) {
+	    random = Math.floor(Math.random() * (max - min)) + min;
+	    if (random !== prevBgIndex) {
+	      prevBgIndex = random;
+	      break;
+	    }
+	  }
+	  return random;
+	}
+
+	function connect(arr) {
+	  var str = '';
+	  for (var i = 0; i < arr.length; i++) {
+	    if (i !== arr.length - 1) {
+	      str += arr[i] + ', ';
+	    } else {
+	      str += arr[i];
+	    }
+	  }
+	  return str;
+	}
+</script>
+
+
+
+
+		<div id="sidebar" class="ui sidebar inverted vertical menu">
+	
+	<section id="author" class="ui top attached center aligned inverted segment">
+		
+<div class="ui small circular image">
+	
+		<img src="http://www.gravatar.com/avatar/36cc0b77102e4b4e776f444f95525703?s=512">
+	
+</div>
+
+
+<h3 class="ui header">
+	
+	<div class="sub header">code and security</div>
+</h3>
+
+	</section>
+
+	
+	
+		<section class="ui attached center aligned inverted segment sidebar-dream-tags">
+			
+			
+			
+			
+
+
+
+
+	
+	
+		
+			
+			<a class="ui label pink " href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0" title="学习笔记">学习笔记</a>
+		
+			
+			<a class="ui label olive " href="/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90" title="漏洞分析">漏洞分析</a>
+		
+			
+			<a class="ui label pink " href="/tags/%E5%AE%A1%E8%AE%A1" title="审计">审计</a>
+		
+			
+			<a class="ui label red " href="/tags/fuzz" title="fuzz">fuzz</a>
+		
+			
+			<a class="ui label olive " href="/tags/sql%E6%B3%A8%E5%85%A5" title="sql注入">sql注入</a>
+		
+			
+			<a class="ui label olive " href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1" title="代码审计">代码审计</a>
+		
+			
+			<a class="ui label brown " href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8" title="网络安全">网络安全</a>
+		
+			
+			<a class="ui label blue " href="/tags/%E8%BD%AF%E4%BB%B6%E7%A0%B4%E8%A7%A3" title="软件破解">软件破解</a>
+		
+	
+
+
+		</section>
+	
+
+	
+	
+		<section class="ui attached inverted segment sidebar-dream-categories both flexbox">
+			<div class="ui inverted accordion">
+				
+	
+	<div class="title">
+		<i class="dropdown icon"></i>
+		<a class="link" href="/categories/docker">docker</a>
+	</div>
+
+	
+	<div class="content">
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/dockertopoc/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>docker搭建复现环境</p>
+				</div>
+			</a>
+		
+	</div>
+
+	
+	<div class="title">
+		<i class="dropdown icon"></i>
+		<a class="link" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7">开发工具</a>
+	</div>
+
+	
+	<div class="content">
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/go-bazel/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>在golang项目开始使用Bazel</p>
+				</div>
+			</a>
+		
+	</div>
+
+	
+	<div class="title">
+		<i class="dropdown icon"></i>
+		<a class="link" href="/categories/%E7%BB%9F%E8%AE%A1%E5%AD%A6">统计学</a>
+	</div>
+
+	
+	<div class="content">
+		
+			<a class="item" href="http://blue-bird1.github.io/statistics2/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Statistics2</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/statistics2/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>统计学2:现代概率</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/statistics1/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>统计与概率1 古典概率</p>
+				</div>
+			</a>
+		
+	</div>
+
+	
+	<div class="title">
+		<i class="dropdown icon"></i>
+		<a class="link" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8">网络安全</a>
+	</div>
+
+	
+	<div class="content">
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/mysql/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Mysql 储存过程注入</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/location-xss/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>XSS实战 跳转XSS</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/srcbug/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>挖掘src漏洞</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/newsitethink/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>现代化网站的渗透测试</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/electroncrack/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Electron软件简单破解</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/iwebshopsql/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Iwebshop sql注入</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/thinkphp5-1/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>think5审计与调试技巧1</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/thinkphp5-1/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>think5审计与调试技巧1</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/fuzz/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Fuzz</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/metasploit1/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>metasploit python 模块</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/metasploit2/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>metasploit python 模块是如何运行</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/metinfogetshell/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Metinfo3.5.19 getshell</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/metinfoexp/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>metinfo3.5.18后台getshell分析</p>
+				</div>
+			</a>
+		
+	</div>
+
+
+			</div>
+		</section>
+	
+
+	
+	<section id="footer" class="ui bottom attached center aligned inverted segment">
+		
+
+	<p>© 2017 - 2019 青鸟的博客</p>
+
+
+<p>Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a> with <a href="https://github.com/UtkarshVerma/hugo-dream-plus" target="_blank">Dream Plus</a> theme.</p>
+
+	</section>
+</div>
+
+
+		<div class="pusher">
+			<div class="flipper">
+				<div class="front">
+					
+	<nav class="ui top secondary menu bar">
+	
+	<div class="item">
+		<i class="inverted big link bullseye icon dream-flip-toggle" title="About Me"></i>
+	</div>
+
+	
+	
+		<div class="item">
+			<a href="/">
+				<i class="inverted big link home icon" title="Home"></i>
+			</a>
+		</div>
+	
+
+	
+	
+		<div class="item">
+			<a href="/posts">
+				<i class="inverted big link archive icon" title="Archive"></i>
+			</a>
+		</div>
+	
+
+	
+	
+		<div class="item">
+			<a href="/tags">
+				<i class="inverted big link tags icon" title="All Tags"></i>
+			</a>
+		</div>
+	
+
+	
+	
+		<div class="item">
+			<a href="/categories">
+				<i class="inverted big link cubes icon" title="All Categories"></i>
+			</a>
+    	</div>
+	
+
+	
+	
+
+	
+	
+		<div class="ui container tablet computer only grid">
+			<div class="item" onClick="$('.ui.sidebar').sidebar('setting', 'transition', 'overlay').sidebar('toggle');">
+				<i class="inverted big link sidebar icon" title="Show Sidebar"></i>
+			</div>
+		</div>
+	
+
+	
+	
+		<div class="item right">
+			<a href="/posts/index.xml">
+				<i class="inverted big link rss icon" title="RSS Feed"></i>
+			</a>
+		</div>
+	
+</nav>
+
+
+	<div class="ui centered grid">
+		
+		<div class="sixteen wide mobile only column">
+				<div class="ui inverted accordion">
+	<div id="header" class="ui inverted segment column box">		
+		
+		<header id="author" class="ui top attached center aligned inverted segment">
+			
+<div class="ui small circular image">
+	
+		<img src="http://www.gravatar.com/avatar/36cc0b77102e4b4e776f444f95525703?s=512">
+	
+</div>
+
+
+<h3 class="ui header">
+	
+	<div class="sub header">code and security</div>
+</h3>
+
+		</header>
+
+		
+		<div class=" title header-title">
+			
+				<div id="tag-category-pop" class="ui red right corner label">
+					<i class="hand point icon down" title="Show/hide tags and categories"></i>
+				</div>
+			
+		</div>
+		
+		
+		<div id="tag-category" class=" content">
+			
+				<section class="ui attached center aligned inverted segment dream-tags none flexbox">
+					
+					
+					
+
+
+
+
+	
+	
+		
+			
+			<a class="ui label yellow " href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0" title="学习笔记">学习笔记</a>
+		
+			
+			<a class="ui label green " href="/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90" title="漏洞分析">漏洞分析</a>
+		
+			
+			<a class="ui label orange " href="/tags/%E5%AE%A1%E8%AE%A1" title="审计">审计</a>
+		
+			
+			<a class="ui label pink " href="/tags/fuzz" title="fuzz">fuzz</a>
+		
+			
+			<a class="ui label violet " href="/tags/sql%E6%B3%A8%E5%85%A5" title="sql注入">sql注入</a>
+		
+			
+			<a class="ui label purple " href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1" title="代码审计">代码审计</a>
+		
+			
+			<a class="ui label brown " href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8" title="网络安全">网络安全</a>
+		
+			
+			<a class="ui label red " href="/tags/%E8%BD%AF%E4%BB%B6%E7%A0%B4%E8%A7%A3" title="软件破解">软件破解</a>
+		
+	
+
+
+				</section>
+			
+
+			
+				<section class="ui attached inverted segment dream-categories both flexbox">
+					<div class="inverted accordion">
+						
+	
+	<div class="title">
+		<i class="dropdown icon"></i>
+		<a class="link" href="/categories/docker">docker</a>
+	</div>
+
+	
+	<div class="content">
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/dockertopoc/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>docker搭建复现环境</p>
+				</div>
+			</a>
+		
+	</div>
+
+	
+	<div class="title">
+		<i class="dropdown icon"></i>
+		<a class="link" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7">开发工具</a>
+	</div>
+
+	
+	<div class="content">
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/go-bazel/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>在golang项目开始使用Bazel</p>
+				</div>
+			</a>
+		
+	</div>
+
+	
+	<div class="title">
+		<i class="dropdown icon"></i>
+		<a class="link" href="/categories/%E7%BB%9F%E8%AE%A1%E5%AD%A6">统计学</a>
+	</div>
+
+	
+	<div class="content">
+		
+			<a class="item" href="http://blue-bird1.github.io/statistics2/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Statistics2</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/statistics2/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>统计学2:现代概率</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/statistics1/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>统计与概率1 古典概率</p>
+				</div>
+			</a>
+		
+	</div>
+
+	
+	<div class="title">
+		<i class="dropdown icon"></i>
+		<a class="link" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8">网络安全</a>
+	</div>
+
+	
+	<div class="content">
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/mysql/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Mysql 储存过程注入</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/location-xss/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>XSS实战 跳转XSS</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/srcbug/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>挖掘src漏洞</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/newsitethink/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>现代化网站的渗透测试</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/electroncrack/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Electron软件简单破解</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/iwebshopsql/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Iwebshop sql注入</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/thinkphp5-1/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>think5审计与调试技巧1</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/thinkphp5-1/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>think5审计与调试技巧1</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/fuzz/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Fuzz</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/metasploit1/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>metasploit python 模块</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/metasploit2/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>metasploit python 模块是如何运行</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/metinfogetshell/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Metinfo3.5.19 getshell</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/metinfoexp/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>metinfo3.5.18后台getshell分析</p>
+				</div>
+			</a>
+		
+	</div>
+
+
+					</div>
+				</section>
+			
+		</div>
+
+		
+		<footer class="ui bottom attached center aligned inverted segment">
+			
+
+	<p>© 2017 - 2019 青鸟的博客</p>
+
+
+<p>Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a> with <a href="https://github.com/UtkarshVerma/hugo-dream-plus" target="_blank">Dream Plus</a> theme.</p>
+
+		</footer>
+	</div>
+</div>
+
+		</div>
+
+		<div class="sixteen wide mobile fifteen wide tablet twelve wide computer column post-list">
+			
+			<section class="ui secondary top attached black segment post-head">
+				<h1 class="post-title">
+					docker搭建复现环境
+				</h1>
+
+				<div class="sub header">
+					<div><span><i class="calendar outline icon"></i>Jan 19, 2019</span></div>
+					
+					<div><span><i class="clock outline icon"></i>2 min read</span></div>
+					<div><span><i class="angle double up icon"></i>Last updated on Jan 19, 2019</span></div>
+				</div>
+				<hr>
+
+				
+
+				<article class="post-content twemoji">
+					
+
+<h3 id="docker搭建复现环境">docker搭建复现环境&nbsp;<a class="anchor" href="#docker搭建复现环境"><i class="small linkify icon"></i></a> </h3>
+
+<p>安全人员进行漏洞复现经常需要搭建漏洞环境, docker能够很方便搭建漏洞环境,同时提供相当好的性能,管理功能.</p>
+
+<p>docker安装请参照空格表哥的<a href="https://bbs.ichunqiu.com/forum.php?mod=viewthread&amp;tid=47689&amp;highlight=docker">这篇文章</a></p>
+
+<p>搭建漏洞环境也有几种情况</p>
+
+<ul>
+<li><p>已经有现成的docker镜像</p></li>
+
+<li><p>只有源代码压缩包</p></li>
+
+<li><p>漏洞软件开源</p></li>
+</ul>
+
+<h4 id="寻找已有docker镜像">寻找已有docker镜像&nbsp;<a class="anchor" href="#寻找已有docker镜像"><i class="small linkify icon"></i></a> </h4>
+
+<p>dockerhub是官方的镜像仓库, 提供免费的公开镜像储存,也支持搜索   <a href="https://hub.docker.com/">网站url</a></p>
+
+<p>可以直接搜索镜像 <code>https://hub.docker.com/search?q=&lt;keyword&gt;&amp;type=image</code></p>
+
+<p>docker命令行也支持搜索镜像 命令格式 <code>docker search &quot;keyword&quot;</code></p>
+
+<p>例如 <code>docker search &quot;think5&quot;</code></p>
+
+<h4 id="从源代码搭建镜像">从源代码搭建镜像&nbsp;<a class="anchor" href="#从源代码搭建镜像"><i class="small linkify icon"></i></a> </h4>
+
+<p>以zzzphp为例. <a href="https://github.com/Earth-Online/poc_test/tree/master/zzzphp">github地址</a></p>
+
+<h5 id="dockerfile知识快速普及">Dockerfile知识快速普及&nbsp;<a class="anchor" href="#dockerfile知识快速普及"><i class="small linkify icon"></i></a> </h5>
+
+<p>dockerfile是一个描述建造镜像流程的文件 每一行格式</p>
+
+<p><code>&lt;关键字&gt; &lt;n个参数&gt;</code></p>
+
+<p>搭建漏洞环境常用的几个关键字</p>
+
+<p><code>FROM 镜像名</code>  说明是从哪个镜像开始建造</p>
+
+<p><code>COPY 本地路径 镜像路径</code>  拷贝文件到镜像里</p>
+
+<p><code>ENV 变量名 变量值</code> 定义镜像内的环境变量</p>
+
+<p><code>RUN 命令</code> 在镜像运行一条命令</p>
+
+<p><code>WORKDIR 路径</code>   更改之后像<code>RUN</code>这类执行命令的路径</p>
+
+<h5 id="构建镜像">构建镜像&nbsp;<a class="anchor" href="#构建镜像"><i class="small linkify icon"></i></a> </h5>
+
+<p>我挑选<code>webdevops/php-apache-dev:ubuntu-15.10</code>作为基础镜像, 这个镜像提供了非常快捷的搭建方法.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-dockerfile" data-lang="dockerfile"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-dockerfile" data-lang="dockerfile"><span class="k">FROM</span><span class="s"> webdevops/php-apache-dev:ubuntu-15.10</span><span class="err">
+</span><span class="err"></span>COPY --chown<span class="o">=</span>application:application .  /var/www/html<span class="err">
+</span><span class="err"></span><span class="k">ENV</span><span class="s"> WEB_DOCUMENT_ROOT /var/www/html</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>只需要三行就能搭建出一个php环境</p>
+
+<p>第二行 <code>COPY --chown=application:application .  /var/www/html</code> 拷贝当前目录到<code>/var/www/html</code> 并更改所有者成<code>application:application</code> .</p>
+
+<p><code>application:application</code> 是这个镜像的服务器用户, 更改文件权限否则服务器不能读写文件</p>
+
+<p><code>ENV WEB_DOCUMENT_ROOT /var/www/html</code></p>
+
+<p><code>WEB_DOCUMENT_ROOT</code>是这个镜像的一个特殊环境变量 指向web目录</p>
+
+<p>使用 <code>docker build -t site .</code> 建造镜像和命名为<code>site</code></p>
+
+<h4 id="从git构建镜像">从git构建镜像&nbsp;<a class="anchor" href="#从git构建镜像"><i class="small linkify icon"></i></a> </h4>
+
+<p>和从源代码构建的区别只是在于一个用<code>COPY</code> 一个在容器直接用<code>RUN</code>执行命令.</p>
+
+<p>例子</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-dockerfile" data-lang="dockerfile"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-dockerfile" data-lang="dockerfile"><span class="k">FROM</span><span class="s"> webdevops/php-apache-dev:ubuntu-15.10</span><span class="err">
+</span><span class="err"></span><span class="k">RUN</span> git clone https://github.com/DaBoQuan/cmseasy_decode /var/www/cmseasy <span class="o">&amp;&amp;</span> chown -R application:application /var/www/cmseasy<span class="err">
+</span><span class="err"></span><span class="k">ENV</span><span class="s"> WEB_DOCUMENT_ROOT /var/www/cmseasy</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>只是简单的<code>git clone</code>到web目录和 <code>chown -R</code>更改文件权限</p>
+
+<h4 id="运行和数据库">运行和数据库&nbsp;<a class="anchor" href="#运行和数据库"><i class="small linkify icon"></i></a> </h4>
+
+<p>用docker运行很简单<code>docker run -d  -p 外部端口:镜像端口 &lt;镜像名&gt;</code></p>
+
+<p>如果运行site镜像就是 <code>docker run -d  -p 80:80 site</code></p>
+
+<p>一个网站当然需要一个数据库  如果你的服务器有一个外部ip 那么很简单</p>
+
+<p><code>docker run --name mysql -e MYSQL_ROOT_PASSWORD=password -p 3306:3306  mysql:5.6</code></p>
+
+<p>填数据库地址的时候填外部ip即可</p>
+
+<p>如果没有 可以用<code>docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' mysql</code> 获取docker内部ip 填写内部ip即可</p>
+
+				</article>				
+			</section>
+
+			
+			<section class="ui secondary attached segment dream-tags">
+				
+					<span>No tag</span>
+				
+			</section>
+
+			
+			
+
+			
+			
+			
+
+			
+			
+		</div>
+	</div>
+
+				</div>
+				<div class="back">
+					
+<nav class="ui top secondary menu bar">
+	<div class="item">
+		<i class="inverted big link bullseye icon dream-flip-toggle" title="About Me"></i>
+	</div>
+	
+		
+	
+		
+	
+
+	
+	
+	
+	
+	
+	
+	
+		
+		
+			<div class="item">
+				<a href="https://github.com/blue-bird1" target="	_blank">
+					<i id="ico" class="inverted big link github icon" title="GitHub"></i>
+				</a>
+			</div>
+		
+	
+		
+		
+	
+		
+		
+			<div class="item">
+				<a href="https://twitter.com/blue_bird__hc" target="	_blank">
+					<i id="ico" class="inverted big link twitter icon" title="Twitter"></i>
+				</a>
+			</div>
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+</nav>
+
+
+
+<div class="ui centered grid about">
+	<div class="sixteen wide mobile fifteen wide tablet fifteen wide computer column about">
+		<section class="ui stacked segments">
+			<div class="ui inverted segment">
+				<article class="twemoji">
+					<p>青鸟 一名无业游民</p>
+
+<p>主要技能是编程 擅长CV大法 主要使用的编程语言</p>
+
+<ul>
+<li>python</li>
+<li>golang</li>
+</ul>
+
+<p>主要使用的工具</p>
+
+<ul>
+<li>docker</li>
+<li>vim</li>
+<li>msf</li>
+</ul>
+
+				</article>
+			</div>
+		</section>
+	</div>
+</div>
+
+				</div>
+			</div>
+		</div>
+
+		
+
+<script src="/js/site.js"></script>
+
+
+
+
+
+
+
+
+
+
+	<script id="dsq-count-scr" src="//.disqus.com/count.js" async></script>
+
+
+
+
+	
+	<script>
+		window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+		ga('create', 'UA-110301700-1', 'auto');
+		ga('send', 'pageview');
+	</script>
+	<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+		
+
+
+		
+
+
+	</body>
+</html>

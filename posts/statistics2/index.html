@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<title>
+	统计学2:现代概率
+</title>
+		<style>
+	body {
+		display: block;
+		--colorBG: "#40e0d0, #ff8c00, #ff0080";
+		
+			background: linear-gradient(to right, var(--colorBG)) !important;
+		
+	}
+
+	body, body.pushable {
+		background-repeat: no-repeat;
+	  	background-attachment: fixed;
+	  	background-size: cover !important;
+	}
+</style>
+
+		<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+	
+	<meta name="author" content="bluebird" />
+	<meta name="description" content="统计学2: 现代概率 现代概率的一大特征是概率不确定性.古代概率研究的骰子可以认为每面的概率是1/6, 但是统计天气的时候, 就没有理由认为晴天和雨天的概率都是1/2.
+" />
+
+
+
+<meta name="generator" content="Hugo 0.58.3" />
+
+
+<link rel="shortcut icon" href="/img/defaultFav.ico">
+<script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+
+    for(i = 0; all.length > i; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+
+
+
+		
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+<script
+	src="https://code.jquery.com/jquery-3.3.1.min.js"
+	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+	crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/site.css">
+
+
+
+
+
+
+
+
+<style>
+	body.pushable {
+		display: block;
+		
+			background: linear-gradient(to right, var(--colorBG)) !important;
+		 ;
+	}
+</style>
+
+
+
+<script>
+	var colorBG =  true 
+	var enabledPost =  false 
+	
+	var isMobile = ( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) )
+	console.log("The client device is a "+(isMobile?"mobile":"PC")+".")
+</script>
+
+	</head>
+
+	<body>
+		<script>
+var prevBgIndex = 0;
+var bodyBgSwitchIndex = 0;
+
+
+
+
+
+
+	var gradients = [
+	  [],
+	  ['#40e0d0', '#ff8c00', '#ff0080'], 
+	  ['#3e5151', '#decba4'], 
+	  ['#11998e', '#38ef7d'], 
+	  ['#108dc7', '#ef8e38'], 
+	  ['#fc5c7d', '#6a82fb'], 
+	  ['#fc466b', '#3f5efb'], 
+	  ['#c94b4b', '#4b134f'], 
+	  ['#23074d', '#cc5333'] 
+	];
+	document.body.style.setProperty('--colorBG', connect(gradients[getRandomInt(0, gradients.length)]));
+
+
+	function getRandomInt(min, max) {
+	  min = Math.ceil(min);
+	  max = Math.floor(max);
+	  var random;
+	  while (1) {
+	    random = Math.floor(Math.random() * (max - min)) + min;
+	    if (random !== prevBgIndex) {
+	      prevBgIndex = random;
+	      break;
+	    }
+	  }
+	  return random;
+	}
+
+	function connect(arr) {
+	  var str = '';
+	  for (var i = 0; i < arr.length; i++) {
+	    if (i !== arr.length - 1) {
+	      str += arr[i] + ', ';
+	    } else {
+	      str += arr[i];
+	    }
+	  }
+	  return str;
+	}
+</script>
+
+
+
+
+		<div id="sidebar" class="ui sidebar inverted vertical menu">
+	
+	<section id="author" class="ui top attached center aligned inverted segment">
+		
+<div class="ui small circular image">
+	
+		<img src="http://www.gravatar.com/avatar/36cc0b77102e4b4e776f444f95525703?s=512">
+	
+</div>
+
+
+<h3 class="ui header">
+	
+	<div class="sub header">code and security</div>
+</h3>
+
+	</section>
+
+	
+	
+		<section class="ui attached center aligned inverted segment sidebar-dream-tags">
+			
+			
+			
+			
+
+
+
+
+	
+	
+		
+			
+			<a class="ui label green " href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0" title="学习笔记">学习笔记</a>
+		
+			
+			<a class="ui label olive " href="/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90" title="漏洞分析">漏洞分析</a>
+		
+			
+			<a class="ui label pink " href="/tags/%E5%AE%A1%E8%AE%A1" title="审计">审计</a>
+		
+			
+			<a class="ui label purple " href="/tags/fuzz" title="fuzz">fuzz</a>
+		
+			
+			<a class="ui label blue " href="/tags/sql%E6%B3%A8%E5%85%A5" title="sql注入">sql注入</a>
+		
+			
+			<a class="ui label teal " href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1" title="代码审计">代码审计</a>
+		
+			
+			<a class="ui label blue " href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8" title="网络安全">网络安全</a>
+		
+			
+			<a class="ui label purple " href="/tags/%E8%BD%AF%E4%BB%B6%E7%A0%B4%E8%A7%A3" title="软件破解">软件破解</a>
+		
+	
+
+
+		</section>
+	
+
+	
+	
+		<section class="ui attached inverted segment sidebar-dream-categories both flexbox">
+			<div class="ui inverted accordion">
+				
+	
+	<div class="title">
+		<i class="dropdown icon"></i>
+		<a class="link" href="/categories/docker">docker</a>
+	</div>
+
+	
+	<div class="content">
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/dockertopoc/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>docker搭建复现环境</p>
+				</div>
+			</a>
+		
+	</div>
+
+	
+	<div class="title">
+		<i class="dropdown icon"></i>
+		<a class="link" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7">开发工具</a>
+	</div>
+
+	
+	<div class="content">
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/go-bazel/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>在golang项目开始使用Bazel</p>
+				</div>
+			</a>
+		
+	</div>
+
+	
+	<div class="title">
+		<i class="dropdown icon"></i>
+		<a class="link" href="/categories/%E7%BB%9F%E8%AE%A1%E5%AD%A6">统计学</a>
+	</div>
+
+	
+	<div class="content">
+		
+			<a class="item" href="http://blue-bird1.github.io/statistics2/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Statistics2</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/statistics2/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>统计学2:现代概率</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/statistics1/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>统计与概率1 古典概率</p>
+				</div>
+			</a>
+		
+	</div>
+
+	
+	<div class="title">
+		<i class="dropdown icon"></i>
+		<a class="link" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8">网络安全</a>
+	</div>
+
+	
+	<div class="content">
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/mysql/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Mysql 储存过程注入</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/location-xss/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>XSS实战 跳转XSS</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/srcbug/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>挖掘src漏洞</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/newsitethink/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>现代化网站的渗透测试</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/electroncrack/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Electron软件简单破解</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/iwebshopsql/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Iwebshop sql注入</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/thinkphp5-1/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>think5审计与调试技巧1</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/thinkphp5-1/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>think5审计与调试技巧1</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/fuzz/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Fuzz</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/metasploit1/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>metasploit python 模块</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/metasploit2/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>metasploit python 模块是如何运行</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/metinfogetshell/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Metinfo3.5.19 getshell</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/metinfoexp/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>metinfo3.5.18后台getshell分析</p>
+				</div>
+			</a>
+		
+	</div>
+
+
+			</div>
+		</section>
+	
+
+	
+	<section id="footer" class="ui bottom attached center aligned inverted segment">
+		
+
+	<p>© 2017 - 2019 青鸟的博客</p>
+
+
+<p>Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a> with <a href="https://github.com/UtkarshVerma/hugo-dream-plus" target="_blank">Dream Plus</a> theme.</p>
+
+	</section>
+</div>
+
+
+		<div class="pusher">
+			<div class="flipper">
+				<div class="front">
+					
+	<nav class="ui top secondary menu bar">
+	
+	<div class="item">
+		<i class="inverted big link bullseye icon dream-flip-toggle" title="About Me"></i>
+	</div>
+
+	
+	
+		<div class="item">
+			<a href="/">
+				<i class="inverted big link home icon" title="Home"></i>
+			</a>
+		</div>
+	
+
+	
+	
+		<div class="item">
+			<a href="/posts">
+				<i class="inverted big link archive icon" title="Archive"></i>
+			</a>
+		</div>
+	
+
+	
+	
+		<div class="item">
+			<a href="/tags">
+				<i class="inverted big link tags icon" title="All Tags"></i>
+			</a>
+		</div>
+	
+
+	
+	
+		<div class="item">
+			<a href="/categories">
+				<i class="inverted big link cubes icon" title="All Categories"></i>
+			</a>
+    	</div>
+	
+
+	
+	
+
+	
+	
+		<div class="ui container tablet computer only grid">
+			<div class="item" onClick="$('.ui.sidebar').sidebar('setting', 'transition', 'overlay').sidebar('toggle');">
+				<i class="inverted big link sidebar icon" title="Show Sidebar"></i>
+			</div>
+		</div>
+	
+
+	
+	
+		<div class="item right">
+			<a href="/posts/index.xml">
+				<i class="inverted big link rss icon" title="RSS Feed"></i>
+			</a>
+		</div>
+	
+</nav>
+
+
+	<div class="ui centered grid">
+		
+		<div class="sixteen wide mobile only column">
+				<div class="ui inverted accordion">
+	<div id="header" class="ui inverted segment column box">		
+		
+		<header id="author" class="ui top attached center aligned inverted segment">
+			
+<div class="ui small circular image">
+	
+		<img src="http://www.gravatar.com/avatar/36cc0b77102e4b4e776f444f95525703?s=512">
+	
+</div>
+
+
+<h3 class="ui header">
+	
+	<div class="sub header">code and security</div>
+</h3>
+
+		</header>
+
+		
+		<div class=" title header-title">
+			
+				<div id="tag-category-pop" class="ui red right corner label">
+					<i class="hand point icon down" title="Show/hide tags and categories"></i>
+				</div>
+			
+		</div>
+		
+		
+		<div id="tag-category" class=" content">
+			
+				<section class="ui attached center aligned inverted segment dream-tags none flexbox">
+					
+					
+					
+
+
+
+
+	
+	
+		
+			
+			<a class="ui label teal " href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0" title="学习笔记">学习笔记</a>
+		
+			
+			<a class="ui label orange " href="/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90" title="漏洞分析">漏洞分析</a>
+		
+			
+			<a class="ui label brown " href="/tags/%E5%AE%A1%E8%AE%A1" title="审计">审计</a>
+		
+			
+			<a class="ui label violet " href="/tags/fuzz" title="fuzz">fuzz</a>
+		
+			
+			<a class="ui label brown " href="/tags/sql%E6%B3%A8%E5%85%A5" title="sql注入">sql注入</a>
+		
+			
+			<a class="ui label olive " href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1" title="代码审计">代码审计</a>
+		
+			
+			<a class="ui label pink " href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8" title="网络安全">网络安全</a>
+		
+			
+			<a class="ui label brown " href="/tags/%E8%BD%AF%E4%BB%B6%E7%A0%B4%E8%A7%A3" title="软件破解">软件破解</a>
+		
+	
+
+
+				</section>
+			
+
+			
+				<section class="ui attached inverted segment dream-categories both flexbox">
+					<div class="inverted accordion">
+						
+	
+	<div class="title">
+		<i class="dropdown icon"></i>
+		<a class="link" href="/categories/docker">docker</a>
+	</div>
+
+	
+	<div class="content">
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/dockertopoc/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>docker搭建复现环境</p>
+				</div>
+			</a>
+		
+	</div>
+
+	
+	<div class="title">
+		<i class="dropdown icon"></i>
+		<a class="link" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7">开发工具</a>
+	</div>
+
+	
+	<div class="content">
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/go-bazel/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>在golang项目开始使用Bazel</p>
+				</div>
+			</a>
+		
+	</div>
+
+	
+	<div class="title">
+		<i class="dropdown icon"></i>
+		<a class="link" href="/categories/%E7%BB%9F%E8%AE%A1%E5%AD%A6">统计学</a>
+	</div>
+
+	
+	<div class="content">
+		
+			<a class="item" href="http://blue-bird1.github.io/statistics2/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Statistics2</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/statistics2/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>统计学2:现代概率</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/statistics1/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>统计与概率1 古典概率</p>
+				</div>
+			</a>
+		
+	</div>
+
+	
+	<div class="title">
+		<i class="dropdown icon"></i>
+		<a class="link" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8">网络安全</a>
+	</div>
+
+	
+	<div class="content">
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/mysql/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Mysql 储存过程注入</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/location-xss/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>XSS实战 跳转XSS</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/srcbug/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>挖掘src漏洞</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/newsitethink/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>现代化网站的渗透测试</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/electroncrack/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Electron软件简单破解</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/iwebshopsql/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Iwebshop sql注入</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/thinkphp5-1/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>think5审计与调试技巧1</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/thinkphp5-1/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>think5审计与调试技巧1</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/fuzz/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Fuzz</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/metasploit1/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>metasploit python 模块</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/metasploit2/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>metasploit python 模块是如何运行</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/metinfogetshell/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>Metinfo3.5.19 getshell</p>
+				</div>
+			</a>
+		
+			<a class="item" href="http://blue-bird1.github.io/posts/metinfoexp/">
+				<div>
+					<i class="cocktail icon"></i>
+					<p>metinfo3.5.18后台getshell分析</p>
+				</div>
+			</a>
+		
+	</div>
+
+
+					</div>
+				</section>
+			
+		</div>
+
+		
+		<footer class="ui bottom attached center aligned inverted segment">
+			
+
+	<p>© 2017 - 2019 青鸟的博客</p>
+
+
+<p>Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a> with <a href="https://github.com/UtkarshVerma/hugo-dream-plus" target="_blank">Dream Plus</a> theme.</p>
+
+		</footer>
+	</div>
+</div>
+
+		</div>
+
+		<div class="sixteen wide mobile fifteen wide tablet twelve wide computer column post-list">
+			
+			<section class="ui secondary top attached black segment post-head">
+				<h1 class="post-title">
+					统计学2:现代概率
+				</h1>
+
+				<div class="sub header">
+					<div><span><i class="calendar outline icon"></i>Jan 7, 2019</span></div>
+					
+					<div><span><i class="clock outline icon"></i>4 min read</span></div>
+					<div><span><i class="angle double up icon"></i>Last updated on Jan 7, 2019</span></div>
+				</div>
+				<hr>
+
+				
+
+				<article class="post-content twemoji">
+					<h4 id="统计学2-现代概率">统计学2: 现代概率&nbsp;<a class="anchor" href="#统计学2-现代概率"><i class="small linkify icon"></i></a> </h4>
+
+<p>现代概率的一大特征是概率不确定性.古代概率研究的骰子可以认为每面的概率是1/6, 但是统计天气的时候, 就没有理由认为晴天和雨天的概率都是1/2.</p>
+
+<p>概率函数在骰子只是简单的$\rho(任意一个数)= \frac{1}{6}$  . 在复杂的现实情况使用简单的函数是无法描述的.</p>
+
+<h4 id="偏差和方差">偏差和方差&nbsp;<a class="anchor" href="#偏差和方差"><i class="small linkify icon"></i></a> </h4>
+
+<p>如果怀疑赌场的骰子大小游戏有问题, 要怎么去验证它这个问题. 一种思路是认为如果1,2,3,4,5,6出现的概率不一样 就是有问题. 换种等价方法描述就是 骰子期望$E(X)=3.5$ . 这个骰子均值也应该是3.5.</p>
+
+<p>那么衡量离理想骰子距离也有几种方法 除了最简单的均值.</p>
+
+<p>偏差 所有发生事件 $X = [x_1, x_2 &hellip; x_n]$  偏差 $ =  \sum_n E(X) - x_n$</p>
+
+<p>例如连续出现5个6    $6*5  - 3.5*5 = 2.5*5$     但是连续5个6并不是现实的小概率事件.  如果发生连续5个6就认为骰子有问题显然是不行的.  而且偏差求的是平均, 两边偏差会抵消  $[3,4,3,4]$ 这种的偏差也是0,</p>
+
+<p>方差则是偏差的平方 $ \sum_n (E(X) - x_n)^2$ 方差是一个衡量离散度的标准</p>
+
+<h4 id="大数定律">大数定律&nbsp;<a class="anchor" href="#大数定律"><i class="small linkify icon"></i></a> </h4>
+
+<p>我们已经知道统计会出现偏差, 那么如何确定偏差是否是骰子本身的问题呢. 初中就有教, 统计次数越大, 越可能接近均值.</p>
+
+<p>用数学表达就是伯努利大数律 任意给定两个数 $\epsilon$, $\eta$ .含义分别是离均值的距离和离均值的概率. 事件总值是$X$, 存在一个抽取次数$N$ 使得 $\rho(| \frac{X}{N}|&gt;\epsilon ) &lt; \eta$</p>
+
+<p>伯努利证明时并没有方差, 但是他还是用概率的方法证明了.</p>
+
+<blockquote>
+<p>证明参考 数理统计学简史 第一章注3</p>
+</blockquote>
+
+<p>现在我们知道只是切比雪夫不等式的一个推论.</p>
+
+<p>$\rho(|X-E(X)| &gt; b\sigma) \geq \frac{1}{b^2}$   $\sigma$ 是方差的平方根 也叫标准差 X是随机变量</p>
+
+<p>这个不等式之前还有一个马可夫不等式</p>
+
+<p>$P(X\geq a) \leq  \frac{E(x)}{a}$</p>
+
+<p>这个就比较容易理解了. 如果a取值范围是在x之间.</p>
+
+<p>将$Y=(X-\epsilon)^2$  $a=(kσ)^2$代入马可夫不等式</p>
+
+<p>$\rho((X-\epsilon)^2)\geq kσ^2)\leq \frac{E(X-\epsilon)^2}{kσ^2)} = \frac{σ^2}{kσ^2} =\frac{1}{k^2} $</p>
+
+<h4 id="概率函数和累计分布函数">概率函数和累计分布函数&nbsp;<a class="anchor" href="#概率函数和累计分布函数"><i class="small linkify icon"></i></a> </h4>
+
+<p>如果随机变量是X,</p>
+
+<p>概率函数$\rho$</p>
+
+<p>$\rho(x) = x的概率$</p>
+
+<p>硬币抛出多少次正面的概率分布. 因为只有两个可能性的情况太常见,也被称为二次分布.</p>
+
+<p>n是总数量 k是正的数量 p是正的概率 二项式分布 $b(n, k, p ) = \frac{n!}{k!(n-k)!}p^k(1-p)^{n-k} $</p>
+
+<p>前面组合公式很显然, 后面$p^k$是抛出这么多次正面的概率  $(1-p)^{n-k}$则相反</p>
+
+<p>用二项分布可以计算出硬币概率分布  $ \rho(k)=\frac{n!}{k!(n-k)!}\frac{1}{2}^k\frac{1}{2}^{n-k}$</p>
+
+<p>它的期望是$E(X) = np$  因为二项分布是n次相同实验组合的. 不管抛多少次 期望都是正面的几率$p$ 再乘以总数量</p>
+
+<p>方差是$\sigma^2 = np(1-p)$</p>
+
+<p>累计分布函数f是</p>
+
+<p>$\rho(X \leq x) =f(x)$</p>
+
+<p>分布函数是概率函数的积分, 所以最终将变成1,</p>
+
+<h4 id="贝叶斯公式">贝叶斯公式&nbsp;<a class="anchor" href="#贝叶斯公式"><i class="small linkify icon"></i></a> </h4>
+
+<p>我们在概率定义知道 独立变量a,b有  $P(b|a) = P(a,b)/P(a)$ 和$P(a,b) = P(a|b)*P(b)$</p>
+
+<p>将后项带入前项 得$P(b|a) =  P(a|b)*P(b)/P(a)$</p>
+
+<p>独立变量, 也就是两个变量不相互影响. 天气自然是和骰子没什么关系, 但是骰子掷出双数和骰子掷出6自然是有关系. 在概率学上的定义是协方差, X, Y的期望值是$\mu$和$v$</p>
+
+<p>$Cov(X, Y) = E((X-\mu)(Y-v))$</p>
+
+<p>为什么这么定义呢. 这两个期望分开定义 都是0.  现在放到一起如果不是0, 说明存在相互影响. 期望值的大小也代表影响的方向</p>
+
+<h4 id="二项分布逼近">二项分布逼近&nbsp;<a class="anchor" href="#二项分布逼近"><i class="small linkify icon"></i></a> </h4>
+
+<p>高斯分布可谓是第一重要的分布  它其实是二项分布的逼近, 然后得出的函数.</p>
+
+<p>在历史上首先研究这个问题的是棣莫弗, 他一开始研究的对象 是$b(2m, <sup>1</sup>&frasl;<sub>2</sub>, m)$</p>
+
+<p>m是2m的中项 然后  $b(m)/b(m+d)$ 中项和偏离中项的关系</p>
+
+<p>然后他的朋友斯特林出现, 并使用斯特林公式算了一下</p>
+
+<p>$b(2m, <sup>1</sup>&frasl;<sub>2</sub>. m) \approx \frac{2}{mn}$</p>
+
+<p>$\frac{b(m+d)}{bm}\approx e^-\frac{2d^2}{n}$</p>
+
+<p>$b(m+d) \approx  \frac{2}{\sqrt{2πn}}  e^-\frac{2d^2}{n} $</p>
+
+<blockquote>
+<p>使用上式的结果，并在二项概率累加求和的过程中近似的使用定积分代替求和，得到</p>
+
+<p>$p<em>d  \approx  \sum</em>{-d\leq  m-i\leq d} \frac{2}{\sqrt{2πn}} e^{-2\frac{d}{\sqrt{n}}^2} \approx  \frac{2}{\sqrt{2π}}\int^\frac{d}{\sqrt{n}}<em>{-\frac{d}{\sqrt{n}}} e^{-2x^2}dx  = \frac{1}{\sqrt{2π}}\int^\frac{2d}{\sqrt{n}}</em>{-\frac{2d}{\sqrt{n}}} e^{\frac{x^2}{-2}}dx $</p>
+</blockquote>
+
+<p>将d换成$\frac{c}{\sqrt{n}}$ 可得$ \frac{1}{\sqrt{2π}}\int^{2c}_{-2c} e^{-{\frac{x^2}{2}}}dx $  熟悉的高斯分布</p>
+
+<p>这个公式有什么特殊之处呢 $\frac{1}{\sqrt{2π}}\int^{\infty}_{-\infty} e^{-{\frac{x^2}{2}}}dx =1 ​$</p>
+
+<p>$\int^{\infty}_{-\infty} e^{-{\frac{x^2}{2}}}dx$  也叫高斯积分</p>
+
+<h4 id="参考">参考&nbsp;<a class="anchor" href="#参考"><i class="small linkify icon"></i></a> </h4>
+
+<p>数理统计简史</p>
+
+<p>程序员的数学2</p>
+
+<p>概率论与梳理统计</p>
+
+<p><a href="https://www.qiujiawei.com/shadow-1/">https://www.qiujiawei.com/shadow-1/</a></p>
+				</article>				
+			</section>
+
+			
+			<section class="ui secondary attached segment dream-tags">
+				
+					
+
+
+
+
+	
+		<a class="ui label red " href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0" title="学习笔记">学习笔记</a>
+	
+
+
+				
+			</section>
+
+			
+			
+
+			
+			
+			
+
+			
+			
+		</div>
+	</div>
+
+				</div>
+				<div class="back">
+					
+<nav class="ui top secondary menu bar">
+	<div class="item">
+		<i class="inverted big link bullseye icon dream-flip-toggle" title="About Me"></i>
+	</div>
+	
+		
+	
+		
+	
+
+	
+	
+	
+	
+	
+	
+	
+		
+		
+			<div class="item">
+				<a href="https://github.com/blue-bird1" target="	_blank">
+					<i id="ico" class="inverted big link github icon" title="GitHub"></i>
+				</a>
+			</div>
+		
+	
+		
+		
+	
+		
+		
+			<div class="item">
+				<a href="https://twitter.com/blue_bird__hc" target="	_blank">
+					<i id="ico" class="inverted big link twitter icon" title="Twitter"></i>
+				</a>
+			</div>
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+		
+		
+	
+</nav>
+
+
+
+<div class="ui centered grid about">
+	<div class="sixteen wide mobile fifteen wide tablet fifteen wide computer column about">
+		<section class="ui stacked segments">
+			<div class="ui inverted segment">
+				<article class="twemoji">
+					<p>青鸟 一名无业游民</p>
+
+<p>主要技能是编程 擅长CV大法 主要使用的编程语言</p>
+
+<ul>
+<li>python</li>
+<li>golang</li>
+</ul>
+
+<p>主要使用的工具</p>
+
+<ul>
+<li>docker</li>
+<li>vim</li>
+<li>msf</li>
+</ul>
+
+				</article>
+			</div>
+		</section>
+	</div>
+</div>
+
+				</div>
+			</div>
+		</div>
+
+		
+
+<script src="/js/site.js"></script>
+
+
+
+
+
+
+
+
+
+
+	<script id="dsq-count-scr" src="//.disqus.com/count.js" async></script>
+
+
+
+
+	
+	<script>
+		window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+		ga('create', 'UA-110301700-1', 'auto');
+		ga('send', 'pageview');
+	</script>
+	<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+		
+
+
+		
+
+
+	</body>
+</html>
