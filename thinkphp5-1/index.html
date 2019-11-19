@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <link crossorigin="anonymous" media="all"
+        rel="stylesheet"
+        href="http://blue-bird1.github.io/css/frameworks.css" />
+    <link crossorigin="anonymous" media="all"
+        rel="stylesheet" href="http://blue-bird1.github.io/css/github.css" />
+    <meta name="viewport" content="width=device-width">
+
+    <title>think5审计与调试技巧1 - 青鸟的博客</title>
+
+    <link rel="icon" type="image/x-icon" class="js-site-favicon" href="http://blue-bird1.github.io/images/favicon.ico">
+    <meta name="theme-color" content="#1e2327">
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-110301700-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+
+<body class="env-production emoji-size-boost page-responsive page-profile">
+  <div class="position-relative js-header-wrapper ">
+    <span class="Progress progress-pjax-loader position-fixed width-full js-pjax-loader-bar">
+        <span class="progress-pjax-loader-bar top-0 left-0" style="width: 0%;"></span>
+    </span>
+    <header class="Header js-details-container Details flex-wrap flex-lg-nowrap p-responsive" role="banner">
+        <div class="Header-item d-none d-lg-flex">
+            <a class="Header-link" href="http://blue-bird1.github.io" aria-label="Homepage"
+                data-ga-click="Header, go to dashboard, icon:logo">
+                <svg class="octicon octicon-mark-github v-align-middle" height="32" viewBox="0 0 16 16" version="1.1"
+                    width="32" aria-hidden="true">
+                    <path fill-rule="evenodd"
+                        d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+                </svg>
+            </a>
+        </div>
+        <div
+            class="Header-item Header-item--full flex-column flex-lg-row width-full flex-order-2 flex-lg-order-none mr-0 mr-lg-3 mt-3 mt-lg-0 Details-content--hidden">
+            <div class="header-search flex-self-stretch flex-lg-self-auto mr-0 mr-lg-3 mb-3 mb-lg-0 scoped-search site-scoped-search js-site-search position-relative js-jump-to"
+                role="combobox" aria-owns="jump-to-results" aria-label="Search or jump to" aria-haspopup="listbox"
+                aria-expanded="false">
+                <div class="position-relative">
+                </div>
+            </div>
+        </div>
+        <div class="Header-item Header-item--full flex-justify-center d-lg-none position-relative" style="margin-right: auto;">
+            <a class="Header-link" href="http://blue-bird1.github.io" aria-label="Homepage"
+                data-ga-click="Header, go to dashboard, icon:logo">
+                <svg class="octicon octicon-mark-github v-align-middle" height="32" viewBox="0 0 16 16" version="1.1"
+                    width="32" aria-hidden="true">
+                    <path fill-rule="evenodd"
+                        d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+                </svg>
+            </a>
+        </div>
+        <div class="Header-item position-relative mr-0 d-none d-lg-flex">
+            <details class="details-overlay details-reset">
+                <summary class="Header-link" aria-label="View profile and more"
+                    data-ga-click="Header, show menu, icon:avatar">
+                    <img alt="" class="avatar" src="http://blue-bird1.github.io/images/avatar.png" height="20" width="20">
+                </summary>
+            </details>
+        </div>
+    </header>
+</div>
+
+<div id="start-of-content" class="show-on-focus"></div>
+<div id="js-flash-container">
+</div>
+  
+<div class="application-main " data-commit-hovercards-enabled="">
+    <div itemscope="" itemtype="http://schema.org/SoftwareSourceCode" class="">
+        <main id="js-repo-pjax-container" data-pjax-container="">
+            <div class="pagehead repohead instapaper_ignore readability-menu experiment-repo-nav pt-0 pt-lg-4 ">
+                <div class="repohead-details-container clearfix container-lg p-responsive d-none d-lg-block">
+                    <div class="mb-3 d-flex">
+                        <h1 class="public css-truncate float-none flex-auto width-fit pl-0">
+                            <a class="avatar mr-1" href="http://blue-bird1.github.ioabout/">
+                            
+
+                                <img
+                                    src="http://www.gravatar.com/avatar/36cc0b77102e4b4e776f444f95525703?s=512" width="26" height="26">
+                            
+                            </a>
+                            <span class="author"><a
+                                    href="http://blue-bird1.github.io">bluebird</a></span>
+                            <span class="path-divider">/</span>
+                            <strong itemprop="name" class="css-truncate-target" style="max-width: 410px"><a
+                                    href="http://blue-bird1.github.io/thinkphp5-1/">think5审计与调试技巧1</a></strong>
+
+                            <div class="d-block text-small text-gray">
+                                Created <time-ago datetime="2019-01-17" class="no-wrap"
+                                    title="Created at 2019/01/17">
+                                    2019-01-17</time-ago>
+                                <span class="file-info-divider"></span>
+                                Modifyd <time-ago datetime="2019-01-17" class="no-wrap"
+                                    title="Modifyd at 2019/01/17">
+                                    2019-01-17</time-ago>
+                            </div>
+                        </h1>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+            <div class="container-lg clearfix new-discussion-timeline experiment-repo-nav  p-responsive">
+                <div class="repository-content ">
+                    <div class="Box mt-3 position-relative">
+                        <div class="Box-header py-2 d-flex flex-column flex-shrink-0 flex-md-row flex-md-items-center">
+                            <div class="text-mono f6 flex-auto pr-3 flex-order-2 flex-md-order-1 mt-2 mt-md-0">
+                                1511 Words
+                                
+                            </div>
+                        </div>
+
+                        <div id="readme" class="Box-body readme blob instapaper_body js-code-block-container">
+                            <article class="markdown-body entry-content p-3 p-md-6" itemprop="text"><h3 id="think5审计与调试技巧1">think5审计与调试技巧1</h3>
+
+<p>think5是一个非常流行的框架, 现在的cms很多都采用了think5作为开发框架.这就带来一个问题, 没用过的安全人员审计的时候就非常懵逼了.</p>
+
+<p>例如 程序入口在哪?  orm操作都是这种函数  <code>Db::name($modeln['tablename'])-&gt;where('id',$id)-&gt;setInc('click');</code>  怎么操作才会出现sql注入?</p>
+
+<p>这就需要框架知识了,但是学习整个框架又太多, 不学又不知道怎么审计.所以这个系列旨在带来足以审计的think5框架知识,而不太复杂</p>
+
+<h4 id="整体目录结构">整体目录结构</h4>
+
+<p>think5 主要需要关注的目录如下</p>
+
+<pre><code>├── application 应用目录（可设置）
+├── config 配置目录 
+├── extend 扩展类库目录（可定义）
+├── public 网站目录
+├── route   路由
+├─- runtime  应用的运行时目录（可写，可设置）
+├── thinkphp 框架目录
+└── vendor 第三方库
+</code></pre>
+
+<p>我们审计主要看<code>application</code> 目录</p>
+
+<p>5.0 官方给的目录参考是</p>
+
+<pre><code>├─application           应用目录（可设置）
+│  ├─common             公共模块目录（可更改）
+│  ├─index              模块目录(可更改)
+│  │  ├─config.php      模块配置文件
+│  │  ├─common.php      模块函数文件
+│  │  ├─controller      控制器目录
+│  │  ├─model           模型目录
+│  │  ├─view            视图目录
+│  │  └─ ...            更多类库目录
+│  ├─command.php        命令行工具配置文件
+│  ├─common.php         应用公共（函数）文件
+│  ├─config.php         应用（公共）配置文件
+│  ├─database.php       数据库配置文件
+│  ├─tags.php           应用行为扩展定义文件
+│  └─route.php          路由配置文件
+</code></pre>
+
+<p>但是事实可能缺失很多部分 例如<code>nonecms</code> 的目录是</p>
+
+<pre><code>
+├── admin
+│   ├── behavior
+│   ├── config
+│   ├── controller
+│   ├── rbac.php
+│   ├── tags.php
+│   ├── validate
+│   └── view
+├── command.php
+├── common
+│   ├── lib
+│   ├── model
+│   └── taglib
+├── common.php
+├── index
+│   ├── config
+│   └── controller
+├── mobile
+│   ├── config
+│   └── controller
+└── push
+    ├── controller
+    └── service
+</code></pre>
+
+<h4 id="think5-url">think5 url</h4>
+
+<p>最常见的think5 url是</p>
+
+<p><code>http://serverName/index.php（或者其它应用入口文件）/模块/控制器/操作/[参数名/参数值...]</code></p>
+
+<p><code>http://serverName/index.php（或者其它应用入口文件）?s=/模块/控制器/操作/[参数名/参数值...]</code></p>
+
+<p>像</p>
+
+<p><code>index.php/index/blog/read</code> <code>index.php?s=/index/blog/read</code></p>
+
+<p>其他方式也有 但是基本大同小异 例如<code>index/listing/index/cid/47.html</code></p>
+
+<h4 id="配置文件">配置文件</h4>
+
+<p>think5.1 配置文件在config目录  5.0在<code>application/config.php</code></p>
+
+<p>常见的配置文件</p>
+
+<p><code>app.php  cache.php  cookie.php  database.php  log.php  session.php  template.php  trace.php</code></p>
+
+<p>最重要的配置文件是<code>app.php</code></p>
+
+<p>主要需要关注的配置如下</p>
+
+<pre><code>// 应用调试模式
+'app_debug'              =&gt; true,
+// 应用Trace
+'app_trace'              =&gt; true,
+// 默认全局过滤方法 用逗号分隔多个
+'default_filter'         =&gt; '',
+// 禁止访问模块
+'deny_module_list'       =&gt; ['common'],
+</code></pre>
+
+<p><code>app_debug</code> 和 <code>app_trace</code> 建议设置成true.</p>
+
+<p>调试模式下异常会显示详细信息,而不是通用报错界面</p>
+
+<p><code>app_trace</code> 则会在右下角显示一个按钮,根据设置可以显示执行路径,执行sql等等</p>
+
+<p>如果没有显示,需要添加</p>
+
+<pre><code>// Trace信息
+'trace'     =&gt;  [
+    //支持Html,Console
+    'type'  =&gt;  'html',
+] 
+</code></pre>
+
+<p>如果没有看到这个设置  可能在<code>trace.php</code>中设置</p>
+
+<pre><code>&lt;?php
+return [
+    // 内置Html Console 支持扩展
+    'type' =&gt; 'Html',
+];
+</code></pre>
+
+<p><code>xxx.php</code> 对应的是<code>app.php</code>里的<code>xxx</code>设置</p>
+
+<p><code>default_filter</code> 可能的值是函数, 例如 <code>strip_tags</code> 等于对所有用户传入的参数执行过滤.</p>
+
+<p><code>deny_module_list</code> 则是禁止访问的模块</p>
+
+<h4 id="日志">日志</h4>
+
+<p><code>config/log.php</code></p>
+
+<pre><code>return [
+    // 日志记录方式，内置 file socket 支持扩展
+    'type'  =&gt; 'File',
+    // 日志保存目录
+    'path'  =&gt; '',
+    // 日志记录级别
+    'level' =&gt; [],
+];
+</code></pre>
+
+<p>默认路径是在<code>runtime/log</code></p>
+
+<h4 id="数据库trace">数据库trace</h4>
+
+<p><code>app_trace</code>设置后会发现并没有sql记录,这个需要在database.php添加</p>
+
+<pre><code>'debug'       =&gt; true,
+</code></pre>
+
+<p>不过就算你看到你的sql注入进入了显示的语句, 但是由于thinkphp5的参数绑定, 很可能并没有生效.</p>
+
+<h4 id="路由">路由</h4>
+
+<p>路由对审计影响其实不大, 毕竟url怎么改, 真正的执行代码也不会变.建议扫描性的看一下,是否有开发不小心把调试用的路由留在上面了..</p></article>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+
+
+  <div class="footer container-lg width-full p-responsive" role="contentinfo">
+    <div
+        class="position-relative d-flex flex-row-reverse flex-lg-row flex-wrap flex-lg-nowrap flex-justify-center flex-lg-justify-between pt-6 pb-2 mt-6 f6 text-gray border-top border-gray-light ">
+        <ul
+            class="list-style-none d-flex flex-wrap col-12 col-lg-5 flex-justify-center flex-lg-justify-between mb-2 mb-lg-0">
+            <li class="mr-3 mr-lg-0">© 2019. Theme by <a href="https://github.com/MeiK2333/github-style"><span>github-style</span></a></li>
+        </ul>
+
+        <a aria-label="Homepage" title="青鸟的博客" class="footer-octicon d-none d-lg-block mx-lg-4"
+            href="http://blue-bird1.github.io">
+            <svg height="24" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" width="24"
+                aria-hidden="true">
+                <path fill-rule="evenodd"
+                    d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
+                </path>
+            </svg>
+        </a>
+        <ul
+            class="list-style-none d-flex flex-wrap col-12 col-lg-5 flex-justify-center flex-lg-justify-between mb-2 mb-lg-0">
+        </ul>
+    </div>
+    <div class="d-flex flex-justify-center pb-6">
+        <span class="f6 text-gray-light"></span>
+    </div>
+</div>
+
+<script crossorigin="anonymous"
+    type="application/javascript" src="http://blue-bird1.github.io/js/frameworks.js"></script>
+
+<script crossorigin="anonymous" async="async"
+    type="application/javascript" src="http://blue-bird1.github.io/js/github-bootstrap.js"></script>
+<script>
+    let classs = ['pinned-item-desc', 'text-gray', 'text-small', 'd-block', 'mt-2', 'mb-3'];
+    const pinned_posts = document.getElementsByName('pinned-post');
+    for (let i = 0; i < pinned_posts.length; i++) {
+        for (let j = 0; j < classs.length; j++) {
+            const ps = pinned_posts[i].getElementsByTagName('p');
+            for (let k = 0; k < ps.length; k++) {
+                ps[k].classList.add(classs[j]);
+            }
+        }
+    }
+    classs = [ 'd-inline-block', 'text-gray', 'mb-2', 'pr-4'];
+    const posts_posts = document.getElementsByName('posts-post');
+    for (let i = 0; i < posts_posts.length; i++) {
+        for (let j = 0; j < classs.length; j++) {
+            const ps = posts_posts[i].getElementsByTagName('p');
+            for (let k = 0; k < ps.length; k++) {
+                ps[k].classList.add(classs[j]);
+            }
+        }
+    }
+</script>
+</body>
+
+</html>
