@@ -2,7 +2,7 @@ baseURL = "http://blue-bird1.github.io"
 languageCode = "zh-CN"
 author = "blue bird"
 title = "青鸟的博客"
-theme = "dream-plus"
+theme = "github-style"
 hasCJKLanguage = true
 googleAnalytics = "UA-110301700-1"
 
@@ -17,15 +17,13 @@ enableEmoji=true
 [params]
         contentType = "posts"
 	    siteStartYear = 2017
-        [params.author]
-            author = "bluebird"
-            description = "bluebird的博客" 
-            avatar = "http://www.gravatar.com/avatar/36cc0b77102e4b4e776f444f95525703?s=512"
-            motto = "code and security"
+        author = "bluebird"
+        github =  "blue-bird1"
+        twitter = "blue_bird__hc"
+        description = "bluebird的博客" 
+        avatar = "http://www.gravatar.com/avatar/36cc0b77102e4b4e776f444f95525703?s=512"
+        motto = "code and security"
 
-        [params.background]
-            colorBG = true
-        #Tags settings
         [params.tags]
                 enabled = true
 
@@ -34,8 +32,5 @@ enableEmoji=true
                 enabled = true
 
 
-[social]
-  github = "blue-bird1"
-  twitter = "blue_bird__hc"
 
 
