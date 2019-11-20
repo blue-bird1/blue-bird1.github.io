@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>网络安全 on 青鸟的博客</title>
-    <link>http://blue-bird1.github.io/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/</link>
+    <link>https://blue-bird1.github.io/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/</link>
     <description>Recent content in 网络安全 on 青鸟的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <lastBuildDate>Fri, 22 Feb 2019 21:07:40 +0800</lastBuildDate>
     
-	<atom:link href="http://blue-bird1.github.io/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://blue-bird1.github.io/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>现代化网站的渗透测试</title>
-      <link>http://blue-bird1.github.io/posts/newsitethink/</link>
+      <link>https://blue-bird1.github.io/posts/newsitethink/</link>
       <pubDate>Fri, 22 Feb 2019 21:07:40 +0800</pubDate>
       
-      <guid>http://blue-bird1.github.io/posts/newsitethink/</guid>
+      <guid>https://blue-bird1.github.io/posts/newsitethink/</guid>
       <description>对现代化网站的渗透测试的思考 前言 首先定义本文所说的现代化网站. 现代化网站是指符合以下多个特征的对外服务. 储存,数据库,网站程序等服务器高度分</description>
     </item>
     

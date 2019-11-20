@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>漏洞分析 on 青鸟的博客</title>
-    <link>http://blue-bird1.github.io/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/</link>
+    <link>https://blue-bird1.github.io/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/</link>
     <description>Recent content in 漏洞分析 on 青鸟的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <lastBuildDate>Sat, 19 Jan 2019 18:12:19 +0800</lastBuildDate>
     
-	<atom:link href="http://blue-bird1.github.io/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://blue-bird1.github.io/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Iwebshop sql注入</title>
-      <link>http://blue-bird1.github.io/posts/iwebshopsql/</link>
+      <link>https://blue-bird1.github.io/posts/iwebshopsql/</link>
       <pubDate>Sat, 19 Jan 2019 18:12:19 +0800</pubDate>
       
-      <guid>http://blue-bird1.github.io/posts/iwebshopsql/</guid>
+      <guid>https://blue-bird1.github.io/posts/iwebshopsql/</guid>
       <description>&lt;h3 id=&#34;iwebshop-最新版本5-3-1-前台注入&#34;&gt;iwebshop 最新版本5.3.1 前台注入&lt;/h3&gt;
 
 &lt;p&gt;iwebshop最新版存在一个非常弱智的注入漏洞&lt;/p&gt;</description>
@@ -24,19 +24,19 @@
     
     <item>
       <title>Metinfo3.5.19 getshell</title>
-      <link>http://blue-bird1.github.io/posts/metinfogetshell/</link>
+      <link>https://blue-bird1.github.io/posts/metinfogetshell/</link>
       <pubDate>Tue, 28 Nov 2017 22:26:19 +0800</pubDate>
       
-      <guid>http://blue-bird1.github.io/posts/metinfogetshell/</guid>
+      <guid>https://blue-bird1.github.io/posts/metinfogetshell/</guid>
       <description>metinfo后台getshellexp分析 漏洞版本3.5.19 漏洞文件路径/admin/app/physical/physical.php</description>
     </item>
     
     <item>
       <title>metinfo3.5.18后台getshell分析</title>
-      <link>http://blue-bird1.github.io/posts/metinfoexp/</link>
+      <link>https://blue-bird1.github.io/posts/metinfoexp/</link>
       <pubDate>Sat, 25 Nov 2017 22:26:31 +0800</pubDate>
       
-      <guid>http://blue-bird1.github.io/posts/metinfoexp/</guid>
+      <guid>https://blue-bird1.github.io/posts/metinfoexp/</guid>
       <description>此漏洞已经在最新版修复 exp /admin/app/physical/physical.php?action=op&amp;amp;op=3&amp;amp;va</description>
     </item>
     
