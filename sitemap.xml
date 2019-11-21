@@ -3,17 +3,27 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://blue-bird1.github.io/posts/</loc>
+    <lastmod>2019-11-22T01:17:28+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blue-bird1.github.io/posts/time-attack/</loc>
+    <lastmod>2019-11-22T01:17:28+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blue-bird1.github.io/</loc>
+    <lastmod>2019-11-22T01:17:28+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://blue-bird1.github.io/categories/</loc>
     <lastmod>2019-05-07T02:42:17+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://blue-bird1.github.io/posts/mysql/</loc>
-    <lastmod>2019-05-07T02:42:17+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://blue-bird1.github.io/posts/</loc>
     <lastmod>2019-05-07T02:42:17+08:00</lastmod>
   </url>
   
@@ -29,11 +39,6 @@
   
   <url>
     <loc>https://blue-bird1.github.io/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/</loc>
-    <lastmod>2019-05-07T02:42:17+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://blue-bird1.github.io/</loc>
     <lastmod>2019-05-07T02:42:17+08:00</lastmod>
   </url>
   

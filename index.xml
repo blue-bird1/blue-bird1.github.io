@@ -6,10 +6,19 @@
     <description>Recent content on 青鸟的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Tue, 07 May 2019 02:42:17 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 22 Nov 2019 01:17:28 +0800</lastBuildDate>
     
 	<atom:link href="https://blue-bird1.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>时间攻击</title>
+      <link>https://blue-bird1.github.io/posts/time-attack/</link>
+      <pubDate>Fri, 22 Nov 2019 01:17:28 +0800</pubDate>
+      
+      <guid>https://blue-bird1.github.io/posts/time-attack/</guid>
+      <description>前言 对于本篇博客的标题 读者应该都不陌生了 毕竟大名鼎鼎的cpu漏洞就有利用这种侧信道攻击的. 这种攻击的难度也很大,但是作为一种攻击却是挺有意思</description>
+    </item>
     
     <item>
       <title>Mysql 储存过程注入</title>
