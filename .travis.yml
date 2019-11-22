@@ -1,7 +1,8 @@
 language: go
 
 install:
-    - git clone https://github.com/gohugoio/hugo.git && cd hugo &&go install
+    - git clone https://github.com/gohugoio/hugo.git 
+    - cd hugo && env GO111MODULE=on go install
 
 script:
     - hugo
