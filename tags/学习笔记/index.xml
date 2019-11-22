@@ -1,22 +1,22 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>学习笔记 on 青鸟的博客</title>
-    <link>http://blue-bird1.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
+    <link>https://blue-bird1.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
     <description>Recent content in 学习笔记 on 青鸟的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <lastBuildDate>Mon, 07 Jan 2019 21:20:23 +0800</lastBuildDate>
     
-	<atom:link href="http://blue-bird1.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://blue-bird1.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Statistics2</title>
-      <link>http://blue-bird1.github.io/statistics2/</link>
+      <link>https://blue-bird1.github.io/statistics2/</link>
       <pubDate>Mon, 07 Jan 2019 21:20:23 +0800</pubDate>
       
-      <guid>http://blue-bird1.github.io/statistics2/</guid>
+      <guid>https://blue-bird1.github.io/statistics2/</guid>
       <description>&lt;h4 id=&#34;统计学2-现代概率&#34;&gt;统计学2: 现代概率&lt;/h4&gt;
 
 &lt;p&gt;现代概率的一大特征是概率不确定性.古代概率研究的骰子可以认为每面的概率是1/6, 但是统计天气的时候, 就没有理由认为晴天和雨天的概率都是1/2.&lt;/p&gt;</description>
@@ -24,10 +24,10 @@
     
     <item>
       <title>统计学2:现代概率</title>
-      <link>http://blue-bird1.github.io/posts/statistics2/</link>
+      <link>https://blue-bird1.github.io/posts/statistics2/</link>
       <pubDate>Mon, 07 Jan 2019 21:20:23 +0800</pubDate>
       
-      <guid>http://blue-bird1.github.io/posts/statistics2/</guid>
+      <guid>https://blue-bird1.github.io/posts/statistics2/</guid>
       <description>&lt;h4 id=&#34;统计学2-现代概率&#34;&gt;统计学2: 现代概率&lt;/h4&gt;
 
 &lt;p&gt;现代概率的一大特征是概率不确定性.古代概率研究的骰子可以认为每面的概率是1/6, 但是统计天气的时候, 就没有理由认为晴天和雨天的概率都是1/2.&lt;/p&gt;</description>
@@ -35,10 +35,10 @@
     
     <item>
       <title>统计与概率1 古典概率</title>
-      <link>http://blue-bird1.github.io/posts/statistics1/</link>
+      <link>https://blue-bird1.github.io/posts/statistics1/</link>
       <pubDate>Sat, 05 Jan 2019 22:13:04 +0800</pubDate>
       
-      <guid>http://blue-bird1.github.io/posts/statistics1/</guid>
+      <guid>https://blue-bird1.github.io/posts/statistics1/</guid>
       <description>统计与概率1 古典概率 概率的一个定义是一件事发生的一个情况的几率. 也可以表示成$f(\Omega, \omega, \varrho)$ 古典概率研究的是比较简单的情况, 例如硬币</description>
     </item>
     
