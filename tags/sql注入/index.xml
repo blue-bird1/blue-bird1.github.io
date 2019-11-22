@@ -1,22 +1,22 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>sql注入 on 青鸟的博客</title>
-    <link>https://blue-bird1.github.io/tags/sql%E6%B3%A8%E5%85%A5/</link>
+    <link>http://blue-bird1.github.io/tags/sql%E6%B3%A8%E5%85%A5/</link>
     <description>Recent content in sql注入 on 青鸟的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <lastBuildDate>Tue, 07 May 2019 02:42:17 +0800</lastBuildDate>
     
-	<atom:link href="https://blue-bird1.github.io/tags/sql%E6%B3%A8%E5%85%A5/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://blue-bird1.github.io/tags/sql%E6%B3%A8%E5%85%A5/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Mysql 储存过程注入</title>
-      <link>https://blue-bird1.github.io/posts/mysql/</link>
+      <link>http://blue-bird1.github.io/posts/mysql/</link>
       <pubDate>Tue, 07 May 2019 02:42:17 +0800</pubDate>
       
-      <guid>https://blue-bird1.github.io/posts/mysql/</guid>
+      <guid>http://blue-bird1.github.io/posts/mysql/</guid>
       <description>Mysql 储存过程注入 mysql有着储存过程这个功能, 这次作者刚好遇到注入点在调用储存过程的sql注入. 基本知识 mysql可以通过以下语句创建一个储</description>
     </item>
     
