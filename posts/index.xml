@@ -6,19 +6,10 @@
     <description>Recent content in Posts on 青鸟的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Tue, 26 Nov 2019 12:56:55 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 22 Nov 2019 01:17:28 +0800</lastBuildDate>
     
 	<atom:link href="https://blue-bird1.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Code Audit</title>
-      <link>https://blue-bird1.github.io/posts/code-audit/</link>
-      <pubDate>Tue, 26 Nov 2019 12:56:55 +0800</pubDate>
-      
-      <guid>https://blue-bird1.github.io/posts/code-audit/</guid>
-      <description>前言 代码审计是白盒测试的重要部分,对它的自动化探索也从未停止,但是在现实环境复杂度下现有的工具 实用性并不用.只能实现发现简单漏洞.本文讨论现</description>
-    </item>
     
     <item>
       <title>时间攻击</title>
