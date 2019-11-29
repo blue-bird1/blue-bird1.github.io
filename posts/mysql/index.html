@@ -128,95 +128,77 @@ if (!doNotTrack) {
                         </div>
 
                         <div id="readme" class="Box-body readme blob instapaper_body js-code-block-container">
-                            <article class="markdown-body entry-content p-3 p-md-6" itemprop="text">
-
-<h3 id="mysql-储存过程注入">Mysql 储存过程注入</h3>
-
+                            <article class="markdown-body entry-content p-3 p-md-6" itemprop="text"><h3 id="mysql-">Mysql 储存过程注入</h3>
 <p>mysql有着储存过程这个功能, 这次作者刚好遇到注入点在调用储存过程的sql注入.</p>
-
-<h3 id="基本知识">基本知识</h3>
-
+<h3 id="heading">基本知识</h3>
 <p>mysql可以通过以下语句创建一个储存过程</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-mysql" data-lang="mysql"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-mysql" data-lang="mysql"><span class="k">CREATE</span> <span class="k">PROCEDURE</span> <span class="nf">sp_name</span><span class="p">(</span><span class="k">IN</span> <span class="n">param1</span> <span class="kt">INT</span><span class="p">,</span><span class="k">OUT</span> <span class="n">param2</span> <span class="kt">INT</span><span class="p">)</span>
+<pre class="chroma"><code class="language-mysql" data-lang="mysql"><span class="k">CREATE</span> <span class="k">PROCEDURE</span> <span class="nf">sp_name</span><span class="p">(</span><span class="k">IN</span> <span class="n">param1</span> <span class="kt">INT</span><span class="p"></span><span class="p">,</span><span class="k">OUT</span> <span class="n">param2</span> <span class="kt">INT</span><span class="p"></span><span class="p">)</span>
 <span class="n">BEGIN</span>
    <span class="c1"># code
-</span><span class="c1"></span><span class="n">END</span></code></pre></td></tr></table>
+</span><span class="c1"></span><span class="n">END</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>sp_name是名字, 为IN的参数是入参,为OUT的参数为返回值</p>
-
+</div><p>sp_name是名字, 为IN的参数是入参,为OUT的参数为返回值</p>
 <p>调用储存过程的语句</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-mysql" data-lang="mysql"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-mysql" data-lang="mysql"> <span class="k">CALL</span> <span class="nf">sp_name</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-mysql" data-lang="mysql"> <span class="k">CALL</span> <span class="nf">sp_name</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="p">;</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<h3 id="注入分析">注入分析</h3>
-
+</div><h3 id="heading1">注入分析</h3>
 <p>从语法我们可以分析出我们的输入可能出现在两处,和作为参数进入储存过程</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-mysql" data-lang="mysql"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-mysql" data-lang="mysql"><span class="k">CALL</span> <span class="o">&lt;</span><span class="err">储存过程名注入点</span><span class="o">&gt;</span><span class="p">(</span><span class="o">&lt;</span><span class="err">储存过程参数注入点</span><span class="o">&gt;</span><span class="p">);</span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-mysql" data-lang="mysql"><span class="k">CALL</span> <span class="o">&lt;</span><span class="err">储</span><span class="err">存</span><span class="err">过</span><span class="err">程</span><span class="err">名</span><span class="err">注</span><span class="err">入</span><span class="err">点</span><span class="o">&gt;</span><span class="p">(</span><span class="o">&lt;</span><span class="err">储</span><span class="err">存</span><span class="err">过</span><span class="err">程</span><span class="err">参</span><span class="err">数</span><span class="err">注</span><span class="err">入</span><span class="err">点</span><span class="o">&gt;</span><span class="p">)</span><span class="p">;</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>首先如果对参数过滤不严,无需进入储存过程就可以直接注入.用以下语句为例</p>
+</div><p>首先如果对参数过滤不严,无需进入储存过程就可以直接注入.用以下语句为例</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-mysql" data-lang="mysql"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-mysql" data-lang="mysql"><span class="k">CALL</span> <span class="nf">test</span><span class="p">([</span><span class="err">可控点</span><span class="p">])</span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-mysql" data-lang="mysql"><span class="k">CALL</span> <span class="nf">test</span><span class="p">(</span><span class="p">[</span><span class="err">可</span><span class="err">控</span><span class="err">点</span><span class="p">]</span><span class="p">)</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>由于是直接执行,所以我们可直接注入语句例如<code>(select 1)</code>.由于语法问题,这个括号是必须的,这语句就变成了</p>
+</div><p>由于是直接执行,所以我们可直接注入语句例如<code>(select 1)</code>.由于语法问题,这个括号是必须的,这语句就变成了</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-mysql" data-lang="mysql"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-mysql" data-lang="mysql"><span class="k">CALL</span> <span class="nf">test</span><span class="p">((</span><span class="k">select</span> <span class="mi">1</span><span class="p">))</span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-mysql" data-lang="mysql"><span class="k">CALL</span> <span class="nf">test</span><span class="p">(</span><span class="p">(</span><span class="k">select</span> <span class="mi">1</span><span class="p">)</span><span class="p">)</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>这种注入和普通注入差别不大,已有技巧基本可以套用.</p>
-
+</div><p>这种注入和普通注入差别不大,已有技巧基本可以套用.</p>
 <p>如果参数不可控,但是方法名可控也可以进行注入.但是首先要得知一个存在的储存过程名,然后通过注释后续语句来进行自己语句</p>
-
 <pre><code>CALL [可控]()
-</code></pre>
-
-<p>示例poc</p>
-
+</code></pre><p>示例poc</p>
 <pre><code>test((select updatexml(1,concat(0x7e,(select @@version),0x7e),1))) -- 
-</code></pre>
-
-<p>可以看到和参数注入差距不大,只是用于参数不可控,或被安全处理的情况.</p>
-
+</code></pre><p>可以看到和参数注入差距不大,只是用于参数不可控,或被安全处理的情况.</p>
 <p>最后一种可能,在储存过程中出现.虽然储存过程被认为非常安全,但是实际上如果编写不慎 例如进行动态sql拼接 还是会出现注入的.. 例如</p>
-
 <pre><code># 来自网上的一个例子 _field和_table是参数
 SET @strSql = CONCAT('SELECT ',_field,' FROM ',_table);
 PREPARE stmt FROM @strSql;
 EXECUTE stmt;
-</code></pre>
-
-<p>最后附上我遇上的一个漏洞代码</p>
+</code></pre><p>最后附上我遇上的一个漏洞代码</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-php" data-lang="php"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4

@@ -98,8 +98,7 @@
       <pubDate>Sat, 19 Jan 2019 18:12:19 +0800</pubDate>
       
       <guid>https://blue-bird1.github.io/posts/iwebshopsql/</guid>
-      <description>&lt;h3 id=&#34;iwebshop-最新版本5-3-1-前台注入&#34;&gt;iwebshop 最新版本5.3.1 前台注入&lt;/h3&gt;
-
+      <description>&lt;h3 id=&#34;iwebshop-531-&#34;&gt;iwebshop 最新版本5.3.1 前台注入&lt;/h3&gt;
 &lt;p&gt;iwebshop最新版存在一个非常弱智的注入漏洞&lt;/p&gt;</description>
     </item>
     
@@ -109,7 +108,7 @@
       <pubDate>Thu, 17 Jan 2019 23:19:42 +0800</pubDate>
       
       <guid>https://blue-bird1.github.io/posts/thinkphp5-1/</guid>
-      <description>&lt;h3 id=&#34;think5审计与调试技巧1&#34;&gt;think5审计与调试技巧1&lt;/h3&gt;</description>
+      <description>&lt;h3 id=&#34;think51&#34;&gt;think5审计与调试技巧1&lt;/h3&gt;</description>
     </item>
     
     <item>
@@ -118,8 +117,7 @@
       <pubDate>Mon, 07 Jan 2019 21:20:23 +0800</pubDate>
       
       <guid>https://blue-bird1.github.io/posts/statistics2/</guid>
-      <description>&lt;h4 id=&#34;统计学2-现代概率&#34;&gt;统计学2: 现代概率&lt;/h4&gt;
-
+      <description>&lt;h4 id=&#34;2-&#34;&gt;统计学2: 现代概率&lt;/h4&gt;
 &lt;p&gt;现代概率的一大特征是概率不确定性.古代概率研究的骰子可以认为每面的概率是1/6, 但是统计天气的时候, 就没有理由认为晴天和雨天的概率都是1/2.&lt;/p&gt;</description>
     </item>
     
@@ -138,7 +136,7 @@
       <pubDate>Sun, 02 Sep 2018 22:40:07 +0800</pubDate>
       
       <guid>https://blue-bird1.github.io/posts/fuzz/</guid>
-      <description>fuzz工具非常多 如libfuzz honggfuzz KernelFuzzer 也有专注进行web fuzz的wfuzz 但是fuzz功能可以分成两种 只是生成测试用例和检测程序使用测试用</description>
+      <description>fuzz工具非常多 如libfuzz` honggfuzz KernelFuzzer 也有专注进行web fuzz的wfuzz` 但是fuzz功能可以分成两种 只是生成测试用例和检测程序使用测</description>
     </item>
     
     <item>

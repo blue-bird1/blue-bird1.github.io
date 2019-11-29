@@ -122,45 +122,25 @@ if (!doNotTrack) {
                     <div class="Box mt-3 position-relative">
                         <div class="Box-header py-2 d-flex flex-column flex-shrink-0 flex-md-row flex-md-items-center">
                             <div class="text-mono f6 flex-auto pr-3 flex-order-2 flex-md-order-1 mt-2 mt-md-0">
-                                755 Words
+                                753 Words
                                 
                             </div>
                         </div>
 
                         <div id="readme" class="Box-body readme blob instapaper_body js-code-block-container">
-                            <article class="markdown-body entry-content p-3 p-md-6" itemprop="text">
-
-<h2 id="xss实战-跳转xss">XSS实战: 跳转XSS</h2>
-
-<h3 id="前言">前言</h3>
-
+                            <article class="markdown-body entry-content p-3 p-md-6" itemprop="text"><h2 id="xss-xss">XSS实战: 跳转XSS</h2>
+<h3 id="heading">前言</h3>
 <p>跳转XSS实际上并不是一种新类型的攻击方式,</p>
-
 <p>主要形成原因是 以前网站外部跳转时是直接接受参数然后跳转,导致了URL重定向漏洞.而现在网站喜欢加个跳转页,不会直接跳转,而是接受参数然后用js跳转. 这就有一个问题 如果未验证参数, js跳转时是可以接受JavaScript伪协议执行js代码的.</p>
-
-<h3 id="漏洞代码示例">漏洞代码示例</h3>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-php+HTML" data-lang="php+HTML"><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-php+HTML" data-lang="php+HTML">&lt;?php
-	echo &#34;&lt;script&gt;window.location.href = $_GET[&#39;url&#39;]&lt;/script&gt;&#34;;
-?&gt;</code></pre></td></tr></table>
-</div>
-</div>
-<h3 id="实战例子">实战例子</h3>
-
+<h3 id="heading1">漏洞代码示例</h3>
+<pre><code class="language-php+HTML" data-lang="php+HTML">&lt;?php
+	echo &quot;&lt;script&gt;window.location.href = $_GET['url']&lt;/script&gt;&quot;;
+?&gt;
+</code></pre><h3 id="heading2">实战例子</h3>
 <p>以拉勾网为例,作者打开页面都会先看看js里有什么信息.很快发现js里有这段代码</p>
-
-<p><img src="https://i.loli.net/2019/04/20/5cbb2a45d44a9.png" alt="Screenshot_15.png" /></p>
-
+<p><img src="https://i.loli.net/2019/04/20/5cbb2a45d44a9.png" alt="Screenshot_15.png"></p>
 <p>显然只有有参数的才能引起兴趣.作者快速尝试了<code>https://sec.lagou.com/verify.html?e=test1&amp;f=test2</code></p>
-
 <p>发现url参数直接进入了页面,当然与本次主题有关的是参数<code>f</code>.虽然另一个更直接. 它在页面的位置是</p>
-
 <pre><code>    function submit1(data){
         var host = &quot;test2&quot;;
         $.ajax({
@@ -178,20 +158,14 @@ if (!doNotTrack) {
 
         //$.getJSON('/user/sendCode.json', {t: new Date().getTime(), type: $('#contactSelect').val()}, function (data)
     }
-</code></pre>
-
-<p>尝试引入双引号.被转义了.所以这个参数就没问题了么?并不是.下面的代码使用了这个参数进行跳转.</p>
-
+</code></pre><p>尝试引入双引号.被转义了.所以这个参数就没问题了么?并不是.下面的代码使用了这个参数进行跳转.</p>
 <p>可以使用<code>https://sec.lagou.com/verify.html?e=1&amp;f=JavaScript:alert(1)</code>弹框.</p>
-
-<h3 id="最后">最后</h3>
-
-<p>首先拉勾网是没有src的,别想了. 另外现在这个问题似乎已经修复了?访问 <a href="https://sec.lagou.com/parseSession会302.">https://sec.lagou.com/parseSession会302.</a>.</p>
-
+<h3 id="heading3">最后</h3>
+<p>首先拉勾网是没有src的,别想了. 另外现在这个问题似乎已经修复了?访问 <a href="https://sec.lagou.com/parseSession">https://sec.lagou.com/parseSession</a>会302..</p>
 <p>e参数没修.e出现的代码为</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -220,41 +194,42 @@ if (!doNotTrack) {
 </span><span class="lnt">27
 </span><span class="lnt">28
 </span><span class="lnt">29
+</span><span class="lnt">30
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-javascript" data-lang="javascript">    <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#submit&#39;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-        <span class="kd">var</span> <span class="nx">code</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;code&#39;</span><span class="p">).</span><span class="nx">value</span><span class="p">;</span>
+<pre class="chroma"><code class="language-javascript" data-lang="javascript">    <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#submit&#39;</span><span class="p">)</span><span class="p">.</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">code</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;code&#39;</span><span class="p">)</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
         <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">code</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nx">showError</span><span class="p">(</span><span class="s1">&#39;请填写验证码&#39;</span><span class="p">);</span>
+            <span class="nx">showError</span><span class="p">(</span><span class="s1">&#39;请填写验证码&#39;</span><span class="p">)</span><span class="p">;</span>
             <span class="k">return</span><span class="p">;</span>
         <span class="p">}</span>
         <span class="k">else</span><span class="p">{</span>
             <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;111111&#34;</span><span class="p">)</span>
             <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">test1</span><span class="p">)</span>
-            <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+            <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">(</span><span class="p">{</span>
                 <span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;checkcode&#39;</span><span class="p">,</span>
                 <span class="nx">type</span><span class="o">:</span> <span class="s2">&#34;post&#34;</span><span class="p">,</span>
                 <span class="nx">dataType</span><span class="o">:</span> <span class="s2">&#34;json&#34;</span><span class="p">,</span>
                 <span class="nx">data</span><span class="o">:</span> <span class="p">{</span>
-                    <span class="nx">t</span><span class="o">:</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">().</span><span class="nx">getTime</span><span class="p">(),</span>
+                    <span class="nx">t</span><span class="o">:</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="p">)</span><span class="p">.</span><span class="nx">getTime</span><span class="p">(</span><span class="p">)</span><span class="p">,</span>
                     <span class="nx">code</span><span class="o">:</span> <span class="nx">code</span><span class="p">,</span>
                     <span class="nx">errcode</span> <span class="o">:</span><span class="nx">test1</span><span class="p">;</span>
-                <span class="p">},</span>
+                <span class="p">}</span><span class="p">,</span>
                 <span class="nx">success</span><span class="o">:</span><span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
                     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span>
                     <span class="k">if</span> <span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">state</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-                        <span class="nx">goToUrl</span><span class="p">(</span><span class="nx">getUrlParam</span><span class="p">(</span><span class="s2">&#34;f&#34;</span><span class="p">))</span>
+                        <span class="nx">goToUrl</span><span class="p">(</span><span class="nx">getUrlParam</span><span class="p">(</span><span class="s2">&#34;f&#34;</span><span class="p">)</span><span class="p">)</span>
                     <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
                         <span class="nx">showError</span><span class="p">(</span><span class="s2">&#34;验证码错误，请重新输入！&#34;</span><span class="p">)</span>
                     <span class="p">}</span>
                 <span class="p">}</span>
-            <span class="p">})</span>
+            <span class="p">}</span><span class="p">)</span>
         <span class="p">}</span>
-    <span class="p">});</span>
+    <span class="p">}</span><span class="p">)</span><span class="p">;</span>
+
 </code></pre></td></tr></table>
 </div>
-</div>
-<p>双引号和单引号均被转义,有兴趣的读者可以作为对自己的挑战.还有过滤的waf</p>
+</div><p>双引号和单引号均被转义,有兴趣的读者可以作为对自己的挑战.还有过滤的waf</p>
 </article>
                         </div>
                     </div>
