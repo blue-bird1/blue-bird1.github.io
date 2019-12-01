@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <link crossorigin="anonymous" media="all"
+        rel="stylesheet"
+        href="https://blue-bird1.github.io/css/frameworks.css" />
+    <link crossorigin="anonymous" media="all"
+        rel="stylesheet" href="https://blue-bird1.github.io/css/github.css" />
+    <meta name="viewport" content="width=device-width">
+
+    <title>Cms代码审计方法 - 青鸟的博客</title>
+
+    <link rel="icon" type="image/x-icon" class="js-site-favicon" href="https://blue-bird1.github.io/images/favicon.ico">
+    <meta name="theme-color" content="#1e2327">
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-110301700-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+
+<body class="env-production emoji-size-boost page-responsive page-profile">
+  <div class="position-relative js-header-wrapper ">
+    <span class="Progress progress-pjax-loader position-fixed width-full js-pjax-loader-bar">
+        <span class="progress-pjax-loader-bar top-0 left-0" style="width: 0%;"></span>
+    </span>
+    <header class="Header js-details-container Details flex-wrap flex-lg-nowrap p-responsive" role="banner">
+        <div class="Header-item d-none d-lg-flex">
+            <a class="Header-link" href="https://blue-bird1.github.io/" aria-label="Homepage"
+                data-ga-click="Header, go to dashboard, icon:logo">
+                <svg class="octicon octicon-mark-github v-align-middle" height="32" viewBox="0 0 16 16" version="1.1"
+                    width="32" aria-hidden="true">
+                    <path fill-rule="evenodd"
+                        d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+                </svg>
+            </a>
+        </div>
+        <div
+            class="Header-item Header-item--full flex-column flex-lg-row width-full flex-order-2 flex-lg-order-none mr-0 mr-lg-3 mt-3 mt-lg-0 Details-content--hidden">
+            <div class="header-search flex-self-stretch flex-lg-self-auto mr-0 mr-lg-3 mb-3 mb-lg-0 scoped-search site-scoped-search js-site-search position-relative js-jump-to"
+                role="combobox" aria-owns="jump-to-results" aria-label="Search or jump to" aria-haspopup="listbox"
+                aria-expanded="false">
+                <div class="position-relative">
+                </div>
+            </div>
+        </div>
+        <div class="Header-item Header-item--full flex-justify-center d-lg-none position-relative" style="margin-right: auto;">
+            <a class="Header-link" href="https://blue-bird1.github.io/" aria-label="Homepage"
+                data-ga-click="Header, go to dashboard, icon:logo">
+                <svg class="octicon octicon-mark-github v-align-middle" height="32" viewBox="0 0 16 16" version="1.1"
+                    width="32" aria-hidden="true">
+                    <path fill-rule="evenodd"
+                        d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+                </svg>
+            </a>
+        </div>
+        <div class="Header-item position-relative mr-0 d-none d-lg-flex">
+            <details class="details-overlay details-reset">
+                <summary class="Header-link" aria-label="View profile and more"
+                    data-ga-click="Header, show menu, icon:avatar">
+                    
+                    <img alt="" class="avatar" src="http://www.gravatar.com/avatar/36cc0b77102e4b4e776f444f95525703?s=512" height="20" width="20">
+                    
+                </summary>
+            </details>
+        </div>
+    </header>
+</div>
+
+<div id="start-of-content" class="show-on-focus"></div>
+<div id="js-flash-container">
+</div>
+
+  
+<div class="application-main " data-commit-hovercards-enabled="">
+    <div itemscope="" itemtype="http://schema.org/SoftwareSourceCode" class="">
+        <main id="js-repo-pjax-container" data-pjax-container="">
+            <div class="pagehead repohead instapaper_ignore readability-menu experiment-repo-nav pt-0 pt-lg-4 ">
+                <div class="repohead-details-container clearfix container-lg p-responsive d-none d-lg-block">
+                    <div class="mb-3 d-flex">
+                        <h1 class="public css-truncate float-none flex-auto width-fit pl-0">
+                            <a class="avatar mr-1" href="https://blue-bird1.github.io/about/">
+                            
+
+                                <img
+                                    src="http://www.gravatar.com/avatar/36cc0b77102e4b4e776f444f95525703?s=512" width="26" height="26">
+                            
+                            </a>
+                            <span class="author"><a
+                                    href="https://blue-bird1.github.io/">bluebird</a></span>
+                            <span class="path-divider">/</span>
+                            <strong itemprop="name" class="css-truncate-target" style="max-width: 410px"><a
+                                    href="https://blue-bird1.github.io/posts/cms-audit/">Cms代码审计方法</a></strong>
+
+                            <div class="d-block text-small text-gray">
+                                Created <time-ago datetime="2019-12-01" class="no-wrap"
+                                    title="Created at 2019/12/01">
+                                    2019-12-01</time-ago>
+                                <span class="file-info-divider"></span>
+                                Modifyd <time-ago datetime="2019-12-01" class="no-wrap"
+                                    title="Modifyd at 2019/12/01">
+                                    2019-12-01</time-ago>
+                            </div>
+                        </h1>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+            <div class="container-lg clearfix new-discussion-timeline experiment-repo-nav  p-responsive">
+                <div class="repository-content ">
+                    <div class="Box mt-3 position-relative">
+                        <div class="Box-header py-2 d-flex flex-column flex-shrink-0 flex-md-row flex-md-items-center">
+                            <div class="text-mono f6 flex-auto pr-3 flex-order-2 flex-md-order-1 mt-2 mt-md-0">
+                                1630 Words
+                                
+                            </div>
+                        </div>
+
+                        <div id="readme" class="Box-body readme blob instapaper_body js-code-block-container">
+                            <article class="markdown-body entry-content p-3 p-md-6" itemprop="text"><h3 id="heading">前言</h3>
+<p>记录cms挖掘漏洞的几种下手方法</p>
+<h3 id="heading1">基于危险函数</h3>
+<p>最常见的应该是这种了 通过搜索常见的危险函数如<code>assert|eval|system|file_put_contents|unserialize</code>
+来快速搜索可能存在的漏洞点 然后再追溯函数参数的引入位置.</p>
+<p>寻找速度很快.
+能直接找到的漏洞比较低级.
+在使用框架的cms上 搜索上述函数基本都应该搜到框架里面去了.
+对框架cms作用不大.</p>
+<p>但如果拥有前置框架知识 则可以用框架内的危险函数 代替上述函数.如thinkphp的 where order等sql函数 如果使用字符串做参数 将不会进行过滤. 同时由于使用了框架简化代码 这种方法速度将非常快.</p>
+<h3 id="heading2">基于输入点</h3>
+<p>基于危险函数搜索存在一个问题, 如果搜索结果过多,然后大部分输入实际上并不是由我们可控的,会导致效率很低.
+而基于输入点 则是按着只有我可控的输入才能导致漏洞的思路. 首先确定输入点 然后再按流程审计代码.</p>
+<p>这种方法速度不快, 但能找到的漏洞类型全面. 而在框架型cms下 由于封装很多 这种方法需要进入的函数很多 速度更加慢了.</p>
+<h3 id="heading3">基于安全假设</h3>
+<p>首先不管如何封装 底层函数都是无防护的 假设上层函数提供了足够的安全验证.所以只要某处这个安全验证的假设存在问题 就代表存在漏洞.
+这个方法从底层函数下手 寻找到输入某些参数值会导致安全漏洞的函数后 再搜索调用了这些函数的位置.</p>
+<p>或者 如框架中总会信任某些值的安全性(如已经通过某些过滤函数的值) 如果这种过滤存在绕过的话 也很容易形成安全漏洞
+再者我们能从对输入点的过滤来判断这个输入能否造成漏洞, 例如已经经过类型转换成int的输入点是不可能进行xss/sql注入的</p>
+<p>这种方法结合危险函数和输入点方法 从开发的验证下手 对于框架类cms有着不错的效果</p>
+<h3 id="heading4">实战</h3>
+<p>以yumyecms为例
+从搜索危险函数下手
+<img src="https://i.loli.net/2019/12/01/OmnRiW5qAkP67ef.png" alt="2019-12-01 21-50-55 的屏幕截图.png">
+令人失望的是 搜索到的结果不多 并且大部分都在类库文件里 检查剩下的反序列化函数 发现也是反序列从数据库中查询出来的数据.</p>
+<p>快速确认这个框架是否使用了获取输入的函数,幸运的发现这个cms仍然在使用<code>_ GET</code>等超全局变量 进行搜索
+<img src="https://i.loli.net/2019/12/01/rJ59XLDiVy2IcCO.png" alt="2019-12-01 21-59-29 的屏幕截图.png"></p>
+<p>首先我们可以忽略仅出现在判断语句里的结果,然后点开其他结果后发现 对变量进行了<code>usafestr</code>的过滤 并直接拼接到sql语句.在不查看这个过滤存在的情况下先认为这个变量已经是安全的.
+查看所有前台可访问函数内变量后 发现未经过编码的只有<code>core/app/shop/alipay.php</code>  但沮丧的发现里面对提交参数进行了其他验证.</p>
+<p>对此只能对代码进行更深一步的了解了 我们先从简单的sql注入入手 .</p>
+<p>在之前的了解中我们可以知道<code>this-&gt;db</code>操作了数据库(实际上在这个有model层的cms 直接看model类就行了)  我们追着父类查找(其中使用了<code>init.php</code>定义的函数加载文件 但函数都很简单)  最终在<code>core/lib/model.class.php</code> 它使用了<code>core/lib/yymysqli.class.php</code>操作数据库</p>
+<p>确认<code>yymysqli</code>的过滤 可以总结</p>
+<ol>
+<li>execute/insert方法的key参数/update的where参数是不安全的</li>
+</ol>
+<p>根据这些信息 很快就能确认出<code>model</code>类的不安全函数</p>
+<p>确认危险函数后 也需要确认外部参数的过滤 我们找到<code>usafestr</code>函数</p>
+<pre><code>function usafestr($string,$flitersql=1,$fliter_script=1) {
+	// 过滤url编码
+    $string=str_ireplace(&quot;%&quot;,&quot;&quot;,$string);
+    $string = str_ireplace('%20','',$string);
+    $string = str_ireplace('%27','',$string);
+    $string = str_ireplace('%2527','',$string);
+
+	$string=str_ireplace(&quot;\t&quot;,&quot;&quot;,$string);
+    $string = str_ireplace('*','',$string);
+    $string = str_ireplace(&quot;'&quot;,'',$string);
+    $string = str_ireplace(';','',$string);
+    //$string = str_replace(&quot;{&quot;,'',$string);
+    //$string = str_replace('}','',$string);
+	$string=str_ireplace(&quot;#&quot;,&quot;&quot;,$string);
+	$string=str_ireplace(&quot;--&quot;,&quot;&quot;,$string);
+	$string=str_ireplace(&quot;\&quot;&quot;,&quot;&quot;,$string);
+	$string=str_ireplace(&quot;/&quot;,&quot;&quot;,$string);
+    $string = str_ireplace('\\','',$string);
+	if($flitersql){
+		$string=safestring::fliter_sql($string);
+		}
+	if($fliter_script){
+		$string=safestring::fliter_script($string);
+		}
+	$string=safestring::fliter_escape($string);
+	$string=htmlspecialchars($string);
+	$string = str_ireplace(&quot;$&quot;, &quot;&amp;#36;&quot;, $string);
+	$string = str_ireplace(&quot;\n&quot;, &quot;&lt;br/&gt;&quot;, $string);	
+	$string = str_ireplace('%','%&amp;lrm;',$string);
+	$string=addslashes($string);
+    return $string;
+}
+
+</code></pre><p>其中的<code>fliter_sql</code> 和<code>fliter_script</code> 只是过滤常见关键字.
+从这段代码可以看出 过滤了大量字符 最关键的单引号和双引号也被过滤了. 从这点可以确认我们寻找sql注入时绝不能使用单引号和双引号.</p>
+<p>我们首先尝试搜索<code>select</code>这个危险函数
+<img src="https://i.loli.net/2019/12/01/bESAda8WwYgD4TJ.png" alt="2019-12-01 23-37-20 的屏幕截图.png"></p>
+<p>虽然都不需要引号 但只有最后一处是可控的.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php">		empty($_REQUEST[&#39;selcart&#39;])?messagebox(Lan(&#39;goods_least_one&#39;)):$selcart=yytrim($_REQUEST[&#39;selcart&#39;]);
+		empty($_REQUEST[&#39;num&#39;])?messagebox(Lan(&#39;error_parameter&#39;)):$numarray=yytrim($_REQUEST[&#39;num&#39;]);
+	    $cartstr=implode(&#34;,&#34;,$selcart);
+	    $cartlist=$this-&gt;db-&gt;select(&#34;select * from `#yunyecms_cart` where userid={$member[&#34;id&#34;]} and id in($cartstr) order by addtime desc&#34;);
+
+</code></pre></td></tr></table>
+</div>
+</div><p>很明显的漏洞 这cms还没报错处理 随便写点就报错了 .</p>
+<p><img src="https://i.loli.net/2019/12/02/9ecnhR7oTtwSuYH.png" alt="2019-12-02 00-47-18 的屏幕截图.png"></p>
+<h3 id="heading5">基于功能</h3>
+<p>这个需要结合动态测试和对框架的一定熟悉度,这个思路是黑盒测试常用的 看到某功能推测这个接口可能存在什么漏洞和对应的逻辑  再查看文件中代码.</p>
+</article>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+
+
+  <div class="footer container-lg width-full p-responsive" role="contentinfo">
+    <div
+        class="position-relative d-flex flex-row-reverse flex-lg-row flex-wrap flex-lg-nowrap flex-justify-center flex-lg-justify-between pt-6 pb-2 mt-6 f6 text-gray border-top border-gray-light ">
+        <ul
+            class="list-style-none d-flex flex-wrap col-12 col-lg-5 flex-justify-center flex-lg-justify-between mb-2 mb-lg-0">
+            <li class="mr-3 mr-lg-0">© 2019. Theme by <a href="https://github.com/MeiK2333/github-style"><span>github-style</span></a></li>
+        </ul>
+
+        <a aria-label="Homepage" title="青鸟的博客" class="footer-octicon d-none d-lg-block mx-lg-4"
+            href="https://blue-bird1.github.io/">
+            <svg height="24" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" width="24"
+                aria-hidden="true">
+                <path fill-rule="evenodd"
+                    d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z">
+                </path>
+            </svg>
+        </a>
+        <ul
+            class="list-style-none d-flex flex-wrap col-12 col-lg-5 flex-justify-center flex-lg-justify-between mb-2 mb-lg-0">
+        </ul>
+    </div>
+    <div class="d-flex flex-justify-center pb-6">
+        <span class="f6 text-gray-light"></span>
+    </div>
+</div>
+
+<script crossorigin="anonymous"
+    type="application/javascript" src="https://blue-bird1.github.io/js/frameworks.js"></script>
+
+<script crossorigin="anonymous" async="async"
+    type="application/javascript" src="https://blue-bird1.github.io/js/github-bootstrap.js"></script>
+<script>
+    let classs = ['pinned-item-desc', 'text-gray', 'text-small', 'd-block', 'mt-2', 'mb-3'];
+    const pinned_posts = document.getElementsByName('pinned-post');
+    for (let i = 0; i < pinned_posts.length; i++) {
+        for (let j = 0; j < classs.length; j++) {
+            const ps = pinned_posts[i].getElementsByTagName('p');
+            for (let k = 0; k < ps.length; k++) {
+                ps[k].classList.add(classs[j]);
+            }
+        }
+    }
+    classs = [ 'd-inline-block', 'text-gray', 'mb-2', 'pr-4'];
+    const posts_posts = document.getElementsByName('posts-post');
+    for (let i = 0; i < posts_posts.length; i++) {
+        for (let j = 0; j < classs.length; j++) {
+            const ps = posts_posts[i].getElementsByTagName('p');
+            for (let k = 0; k < ps.length; k++) {
+                ps[k].classList.add(classs[j]);
+            }
+        }
+    }
+</script>
+</body>
+
+</html>
