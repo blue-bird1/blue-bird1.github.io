@@ -1,6 +1,3 @@
 [submodule "themes/github-style"]
 	path = themes/github-style
 	url = https://github.com/Earth-Online/github-style
-[submodule "public"]
-	path = public
-	url = https://github.com/blue-bird1/blue-bird1.github.io.git
