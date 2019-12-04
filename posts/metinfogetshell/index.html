@@ -128,12 +128,17 @@ if (!doNotTrack) {
                         </div>
 
                         <div id="readme" class="Box-body readme blob instapaper_body js-code-block-container">
-                            <article class="markdown-body entry-content p-3 p-md-6" itemprop="text"><h3 id="metinfogetshellexp">metinfo后台getshellexp分析</h3>
+                            <article class="markdown-body entry-content p-3 p-md-6" itemprop="text">
+
+<h3 id="metinfo后台getshellexp分析">metinfo后台getshellexp分析</h3>
+
 <p>漏洞版本<code>3.5.19</code>  漏洞文件路径<code>/admin/app/physical/physical.php</code>
-有趣的是<code>3.5.18</code>修复的后台getshell也是这个文件<br>
+有趣的是<code>3.5.18</code>修复的后台getshell也是这个文件<br />
 <code>3.5.18</code>漏洞分析 <a href="https://bbs.ichunqiu.com/thread-29582-1-1.html">点我</a>
 上次分析完后顺手审计一下那个文件，发现居然还有一个getshell漏洞。提交后没人理就发出来分享</p>
-<h4 id="heading">漏洞代码</h4>
+
+<h4 id="漏洞代码">漏洞代码</h4>
+
 <pre><code>elseif($action==&quot;op&quot;){
 	// 不相关代码
 	$val=explode('|',$valphy);
@@ -148,8 +153,12 @@ if (!doNotTrack) {
 				if($val[2]){
 					Copyindx(&quot;../../../&quot;.$val[1],$val[2]);
 				}
-</code></pre><p>需要<code>op</code>参数为3才能进入漏洞代码流程，并且要正常执行，需要<code>fileaddr[1]='index.php' </code>和<code>$val[2]</code>也就是valphy参数要为<code>xxx|xxx/index.php|xxx</code>格式</p>
+</code></pre>
+
+<p>需要<code>op</code>参数为3才能进入漏洞代码流程，并且要正常执行，需要<code>fileaddr[1]='index.php'</code>和<code>$val[2]</code>也就是valphy参数要为<code>xxx|xxx/index.php|xxx</code>格式</p>
+
 <p>查看<code>Copyindex</code>函数</p>
+
 <pre><code>function Copyindx($newindx,$type){
     if(!file_exists($newindx)){
         if($type==3){
@@ -163,7 +172,9 @@ if (!doNotTrack) {
         fclose($fp);
     }
 }
-</code></pre><p>可以看到如果传入type参数不等于3,进入第二个流程.发现是单纯的字符串拼接,然后这个函数的参数我们都可控</p>
+</code></pre>
+
+<p>可以看到如果传入type参数不等于3,进入第二个流程.发现是单纯的字符串拼接,然后这个函数的参数我们都可控</p>
 </article>
                         </div>
                     </div>

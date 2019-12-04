@@ -128,19 +128,30 @@ if (!doNotTrack) {
                         </div>
 
                         <div id="readme" class="Box-body readme blob instapaper_body js-code-block-container">
-                            <article class="markdown-body entry-content p-3 p-md-6" itemprop="text"><h1 id="golangbazel">在golang项目开始使用Bazel</h1>
+                            <article class="markdown-body entry-content p-3 p-md-6" itemprop="text">
+
+<h1 id="在golang项目开始使用bazel">在golang项目开始使用Bazel</h1>
+
 <p><code>Bazel</code>是一个由java编写的编译工具,支持多语言编译,扩展,远程缓存等大量功能.</p>
-<h2 id="heading">下载</h2>
+
+<h2 id="下载">下载</h2>
+
 <p>推荐通过<code>https://github.com/bazelbuild/bazel/releases</code>下载,</p>
+
 <p><code>wget https://github.com/bazelbuild/bazel/releases/download/0.24.1/bazel-0.24.1-installer-linux-x86_64.sh</code></p>
+
 <p>由于大家都知道的原因,下载速度很慢.建议在国外服务器下载</p>
-<h2 id="heading1">快速开始</h2>
+
+<h2 id="快速开始">快速开始</h2>
+
 <p><code>Bazel</code>使用两个特殊文件名 <code>WORKSPACE</code> 和<code>BUILD</code>定义项目.</p>
+
 <p><code>WORKSPACE</code>定义一个项目工作区,例如外部依赖和工具链,<code>BUILD</code>定义如何编译这个项目.允许用多个<code>BUILD</code>定义不同部分的编译操作.</p>
+
 <p>在项目创建一个<code>WORKSPACE</code>文件.然后需要载入Bazel的golang扩展 .以下均为官方基础例子</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -161,29 +172,29 @@ if (!doNotTrack) {
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 载入http_archive函数</span>
-<span class="n">load</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">@bazel_tools//tools/build_defs/repo:http.bzl</span><span class="s2">&#34;</span><span class="p">,</span> <span class="sa"></span><span class="s2">&#34;</span><span class="s2">http_archive</span><span class="s2">&#34;</span><span class="p">)</span>
+<span class="n">load</span><span class="p">(</span><span class="s2">&#34;@bazel_tools//tools/build_defs/repo:http.bzl&#34;</span><span class="p">,</span> <span class="s2">&#34;http_archive&#34;</span><span class="p">)</span>
 
 <span class="c1"># 从github下载扩展</span>
 <span class="n">http_archive</span><span class="p">(</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="sa"></span><span class="s2">&#34;</span><span class="s2">io_bazel_rules_go</span><span class="s2">&#34;</span><span class="p">,</span>
-    <span class="n">urls</span> <span class="o">=</span> <span class="p">[</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">https://github.com/bazelbuild/rules_go/releases/download/0.18.3/rules_go-0.18.3.tar.gz</span><span class="s2">&#34;</span><span class="p">]</span><span class="p">,</span>
-    <span class="n">sha256</span> <span class="o">=</span> <span class="sa"></span><span class="s2">&#34;</span><span class="s2">86ae934bd4c43b99893fc64be9d9fc684b81461581df7ea8fc291c816f5ee8c5</span><span class="s2">&#34;</span><span class="p">,</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s2">&#34;io_bazel_rules_go&#34;</span><span class="p">,</span>
+    <span class="n">urls</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;https://github.com/bazelbuild/rules_go/releases/download/0.18.3/rules_go-0.18.3.tar.gz&#34;</span><span class="p">],</span>
+    <span class="n">sha256</span> <span class="o">=</span> <span class="s2">&#34;86ae934bd4c43b99893fc64be9d9fc684b81461581df7ea8fc291c816f5ee8c5&#34;</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="c1"># 从下载的扩展里载入 go_rules_dependencies go_register_toolchains 函数</span>
-<span class="n">load</span><span class="p">(</span><span class="sa"></span><span class="s2">&#34;</span><span class="s2">@io_bazel_rules_go//go:deps.bzl</span><span class="s2">&#34;</span><span class="p">,</span> <span class="sa"></span><span class="s2">&#34;</span><span class="s2">go_rules_dependencies</span><span class="s2">&#34;</span><span class="p">,</span> <span class="sa"></span><span class="s2">&#34;</span><span class="s2">go_register_toolchains</span><span class="s2">&#34;</span><span class="p">)</span>
+<span class="n">load</span><span class="p">(</span><span class="s2">&#34;@io_bazel_rules_go//go:deps.bzl&#34;</span><span class="p">,</span> <span class="s2">&#34;go_rules_dependencies&#34;</span><span class="p">,</span> <span class="s2">&#34;go_register_toolchains&#34;</span><span class="p">)</span>
 
 <span class="c1"># 注册一堆常用依赖 如github.com/google/protobuf golang.org/x/net</span>
-<span class="n">go_rules_dependencies</span><span class="p">(</span><span class="p">)</span>
+<span class="n">go_rules_dependencies</span><span class="p">()</span>
 
 <span class="c1"># 下载golang工具链</span>
-<span class="n">go_register_toolchains</span><span class="p">(</span><span class="p">)</span>
-</code></pre></td></tr></table>
+<span class="n">go_register_toolchains</span><span class="p">()</span></code></pre></td></tr></table>
 </div>
-</div><p>一般来说都会使用gazelle工具来自动生成<code>BUILD</code>文件,而不是手写.添加以下加入<code>WORKSPACE</code></p>
+</div>
+<p>一般来说都会使用gazelle工具来自动生成<code>BUILD</code>文件,而不是手写.添加以下加入<code>WORKSPACE</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -204,13 +215,13 @@ http_archive<span class="o">(</span>
 
 <span class="c1"># 载入依赖</span>
 load<span class="o">(</span><span class="s2">&#34;@bazel_gazelle//:deps.bzl&#34;</span>, <span class="s2">&#34;gazelle_dependencies&#34;</span><span class="o">)</span>
-gazelle_dependencies<span class="o">(</span><span class="o">)</span>
-</code></pre></td></tr></table>
+gazelle_dependencies<span class="o">()</span></code></pre></td></tr></table>
 </div>
-</div><p>在<code>BUILD</code>文件写入</p>
+</div>
+<p>在<code>BUILD</code>文件写入</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -221,27 +232,32 @@ gazelle_dependencies<span class="o">(</span><span class="o">)</span>
 
 <span class="c1"># 下面这行是必要的注释 注明了你的包前缀 例如github.com/example/project</span>
 <span class="c1"># gazelle:prefix go-common</span>
-gazelle<span class="o">(</span><span class="nv">name</span> <span class="o">=</span> <span class="s2">&#34;go-common&#34;</span><span class="o">)</span>
-</code></pre></td></tr></table>
+gazelle<span class="o">(</span><span class="nv">name</span> <span class="o">=</span> <span class="s2">&#34;go-common&#34;</span><span class="o">)</span></code></pre></td></tr></table>
 </div>
-</div><p>然后运行</p>
+</div>
+<p>然后运行</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 如果上面修改了名字 这里也需要修改</span>
-bazel run  //:gazelle
-</code></pre></td></tr></table>
+bazel run  //:gazelle</code></pre></td></tr></table>
 </div>
-</div><p>成功输出如下</p>
+</div>
+<p>成功输出如下</p>
+
 <pre><code>INFO: 0 processes.
 INFO: Build completed successfully, 1 total action
 INFO: Build completed successfully, 1 total action
-</code></pre><p>进行编译</p>
+</code></pre>
+
+<p>进行编译</p>
+
 <pre><code>bazel build //...
-</code></pre></article>
+</code></pre>
+</article>
                         </div>
                     </div>
                 </div>

@@ -128,16 +128,25 @@ if (!doNotTrack) {
                         </div>
 
                         <div id="readme" class="Box-body readme blob instapaper_body js-code-block-container">
-                            <article class="markdown-body entry-content p-3 p-md-6" itemprop="text"><p>metasploit在2017年尾将python作为官方支持语言,并且已经有python模块加入主分支.这使得我们开发metasploit模块可以不去学习ruby</p>
-<h3 id="python">为什么将python作为官方支持语言</h3>
+                            <article class="markdown-body entry-content p-3 p-md-6" itemprop="text">
+
+<p>metasploit在2017年尾将python作为官方支持语言,并且已经有python模块加入主分支.这使得我们开发metasploit模块可以不去学习ruby</p>
+
+<h3 id="为什么将python作为官方支持语言">为什么将python作为官方支持语言</h3>
+
 <ol>
 <li>很多不是metasploit官方人员编程的模块都是使用python编写</li>
 <li>现在python流行程度非常高 很多渗透人员python熟练程度比ruby高</li>
 </ol>
-<h3 id="metasploitpython">metasploit的python模块是什么</h3>
+
+<h3 id="metasploit的python模块是什么">metasploit的python模块是什么</h3>
+
 <p>主分支的一个python模块 <a href="https://github.com/rapid7/metasploit-framework/blob/778e69f92912c555e72bc3318278443126704b75/modules/auxiliary/dos/http/slowloris.py">https://github.com/rapid7/metasploit-framework/blob/778e69f92912c555e72bc3318278443126704b75/modules/auxiliary/dos/http/slowloris.py</a></p>
+
 <p>python模块实际是通过json-rpc调用与metasploit通信</p>
+
 <p>metasploit获取元数据如图(来自官方博客)</p>
+
 <pre><code>+------------+
 | Metasploit |
 |            |  Describe yourself  +-------------------+
@@ -151,7 +160,10 @@ if (!doNotTrack) {
 |            |
 |            |
 +------------+
-</code></pre><p>模块调用如图</p>
+</code></pre>
+
+<p>模块调用如图</p>
+
 <pre><code>+------------+
 | Metasploit |  Do a thing with
 |            |   these options     +-------------------+
@@ -170,17 +182,29 @@ if (!doNotTrack) {
 |            |                     +-------------------+
 |            |
 +------------+
-</code></pre><h3 id="heading">将会发生什么</h3>
+</code></pre>
+
+<h3 id="将会发生什么">将会发生什么</h3>
+
 <p>实际上对于原来的开发方式没有影响,完全可以使用原来的ruby编写方式.但是对于不熟悉ruby的开发者可以使用python来方便的编写模块</p>
-<h3 id="pythonmetasploit">python在metasploit能做什么</h3>
+
+<h3 id="python在metasploit能做什么">python在metasploit能做什么</h3>
+
 <p>可以使用的和ruby模块并没有区别</p>
-<h2 id="python1">如何编写一个python模块</h2>
+
+<h2 id="如何编写一个python模块">如何编写一个python模块</h2>
+
 <p>首先需要导入需要的模块</p>
+
 <pre><code>#!/usr/bin/env python
 # another:bluebird
 from metasploit import module
-</code></pre><p>这个metasploit实际上路径是 <code>lib/msf/core/modules/external/python/</code></p>
+</code></pre>
+
+<p>这个metasploit实际上路径是 <code>lib/msf/core/modules/external/python/</code></p>
+
 <p>然后定义元数据 格式和ruby模块的一样.详细可参考<a href="https://www.kancloud.cn/bluebird/metasploit/486941">这里的文档</a></p>
+
 <pre><code>metadata = {
 	# 模块名字
     'name': 'metasploit python module demo ',
@@ -205,14 +229,23 @@ from metasploit import module
         'rhost': {'type': 'address', 'description': 'The target address', 'required': True, 'default': None},
         'rport': {'type': 'port', 'description': 'The target port', 'required': True, 'default': 80},
      }}
-</code></pre><p>然后一般应该定义一个<code>run</code>方法.这个demo输出了helloworld</p>
+</code></pre>
+
+<p>然后一般应该定义一个<code>run</code>方法.这个demo输出了helloworld</p>
+
 <pre><code>def run(args):
     module.log('helloworld')
    
-</code></pre><p>最后定义主方法</p>
+</code></pre>
+
+<p>最后定义主方法</p>
+
 <pre><code>if __name__ == &quot;__main__&quot;:
     module.run(metadata, run)
-</code></pre><p>让我们实际跑一下(注意请给你的python文件添加执行权限)</p>
+</code></pre>
+
+<p>让我们实际跑一下(注意请给你的python文件添加执行权限)</p>
+
 <pre><code>msf5 auxiliary(test/demo) &gt; set rhost 127.0.0.1
 rhost =&gt; 127.0.0.1
 msf5 auxiliary(test/demo) &gt; run
@@ -221,7 +254,8 @@ msf5 auxiliary(test/demo) &gt; run
 [*] hello world
 [*] Auxiliary module execution completed
 msf5 auxiliary(test/demo) &gt; 
-</code></pre></article>
+</code></pre>
+</article>
                         </div>
                     </div>
                 </div>

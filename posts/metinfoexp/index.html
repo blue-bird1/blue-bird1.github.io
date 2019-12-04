@@ -128,14 +128,20 @@ if (!doNotTrack) {
                         </div>
 
                         <div id="readme" class="Box-body readme blob instapaper_body js-code-block-container">
-                            <article class="markdown-body entry-content p-3 p-md-6" itemprop="text"><p>此漏洞已经在最新版修复</p>
+                            <article class="markdown-body entry-content p-3 p-md-6" itemprop="text">
+
+<p>此漏洞已经在最新版修复</p>
+
 <h3 id="exp">exp</h3>
-<p><code> /admin/app/physical/physical.php?action=op&amp;op=3&amp;valphy=test|文件名&amp;address=包含文件</code></p>
-<h3 id="heading">代码分析</h3>
+
+<p><code>/admin/app/physical/physical.php?action=op&amp;op=3&amp;valphy=test|文件名&amp;address=包含文件</code></p>
+
+<h3 id="代码分析">代码分析</h3>
+
 <p>查看关键代码</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-php" data-lang="php"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -214,15 +220,16 @@ if (!doNotTrack) {
 				
 			}
 			echo $lang_physicalgenok;
-			break;
-</code></pre></td></tr></table>
+			break;</code></pre></td></tr></table>
 </div>
-</div><p>我们可以看到我们可控参数<code>$address</code>和<code>newfile</code>传入了<code>Copyfile</code>
+</div>
+<p>我们可以看到我们可控参数<code>$address</code>和<code>newfile</code>传入了<code>Copyfile</code>
 主要是程序员写代码的时候忽略了异常参数导致address参数没有被覆盖,应该添加不是正常参数时不执行<code>Copyfile</code></p>
+
 <p>查看<code>Copyfile</code>函数</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-php" data-lang="php"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -242,23 +249,25 @@ if (!doNotTrack) {
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>此函数可以创建并写入文件
+</div>
+<p>此函数可以创建并写入文件
 可以看到此函数我们可以控制文件名,不过单引号导致我们只能控制require_once参数.
 不过也造成了文件包含漏洞,上传一个php代码头像,即可getshell</p>
+
 <p>查看最新版本修复方法</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre class="chroma"><code class="language-php" data-lang="php"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-php" data-lang="php">	default:
 		 $address = &#34;&#34;;
-	break;
-</code></pre></td></tr></table>
+	break;</code></pre></td></tr></table>
 </div>
-</div><p>添加了不是正常参数时候默认为空</p>
+</div>
+<p>添加了不是正常参数时候默认为空</p>
 </article>
                         </div>
                     </div>

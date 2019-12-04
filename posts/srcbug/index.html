@@ -128,46 +128,89 @@ if (!doNotTrack) {
                         </div>
 
                         <div id="readme" class="Box-body readme blob instapaper_body js-code-block-container">
-                            <article class="markdown-body entry-content p-3 p-md-6" itemprop="text"><h2 id="heading">前言</h2>
+                            <article class="markdown-body entry-content p-3 p-md-6" itemprop="text">
+
+<h2 id="前言">前言</h2>
+
 <p>挖src也将近两个月了,写篇博客总结一下.</p>
+
 <p>首先挖洞成果 3中危 2低危, 收入~2k. 真实菜到扣脚,收入连泡面都吃不起.只挖了bilibili src.</p>
+
 <p>另外新业务挖洞难度确实比较低,我甚至挖到了一个毫无难度的越权删除投票. bilibili 开新功能很频繁,我才能挖到这么多.一年半之前挖了一次,啥都没找到.</p>
+
 <p>这次的漏洞挖掘主要是web方向,只用了浏览器,其他工具都没用.</p>
-<h2 id="heading1">成功挖掘到的漏洞分析</h2>
+
+<h2 id="成功挖掘到的漏洞分析">成功挖掘到的漏洞分析</h2>
+
 <p>分享审核通过并已修复或无危害的漏洞供参考(非细节)</p>
-<h3 id="dos">客户端dos</h3>
+
+<h3 id="客户端dos">客户端dos</h3>
+
 <p>b站客户端加入了聊天功能,而聊天信息格式比较复杂.凡是复杂的格式都容易出现问题, 通过简单测试,发现通过构造畸形的json分享信息可直接崩溃客户端. 例如</p>
+
 <p><code>msg[content]={&quot;content&quot;:&quot;test&quot;&quot;}</code></p>
+
 <p>奖金 30安全币   1安全币==10人民币</p>
+
 <p>由于复杂格式,这种类型的漏洞应该还存在.事实上我测试时确实用第二种信息打崩溃了,不过忘记当时写的什么了</p>
-<h3 id="heading2">客户端越权</h3>
+
+<h3 id="客户端越权">客户端越权</h3>
+
 <p>也是聊天系统的bug,未验证撤回信息者是否是信息发出人,导致可直接撤回他人信息.这个没什么技术含量,只是没人测试过这个功能,让我捡漏了而已.</p>
+
 <p>奖金 20安全币</p>
-<h3 id="xss">隐藏页面反射xss</h3>
+
+<h3 id="隐藏页面反射xss">隐藏页面反射xss</h3>
+
 <p>这个xss其实也没什么技术含量,直接arg=<code>payload</code> . 没有被人发现是因为这个页面存在于登陆记录页面,然后我是坚持阅读js源码的,然后发现在js代码中有一段if 记录状态异常,就有一个按钮打开反馈页面.然后这个反馈页面存在反射xss.</p>
+
 <p>重分说明阅读js源码重要性,没阅读或不碰巧账号异常是不会发现这个页面</p>
+
 <p>奖金 65安全币</p>
-<h3 id="heading3">越权删除投票</h3>
+
+<h3 id="越权删除投票">越权删除投票</h3>
+
 <p>没有任何技术含量,只是没人测试过</p>
+
 <p>奖金 100安全币</p>
-<h3 id="heading4">前端验证</h3>
+
+<h3 id="前端验证">前端验证</h3>
+
 <p>bilibili 专车号虽然打开要求账号认证,但是实际上是前端认证.通过打断点到验证处修改可直接通过,但是由于内部功能都需要审核被忽略了.</p>
+
 <p>想快速找到你想要的代码,就要熟练使用chrome开发工具了. 在开发功能网络块可发现请求用户信息,所以可以通过断点XHR来定位代码.</p>
+
 <p>方法如图</p>
-<p><img src="https://i.loli.net/2019/04/14/5cb230c130fa4.png" alt="Screenshot_12.png"></p>
+
+<p><img src="https://i.loli.net/2019/04/14/5cb230c130fa4.png" alt="Screenshot_12.png" /></p>
+
 <pre><code>或者在控制台勾选Log XMLHTTPRequests
-</code></pre><p><img src="https://i.loli.net/2019/04/14/5cb2311674088.png" alt="Screenshot_13.png"></p>
+</code></pre>
+
+<p><img src="https://i.loli.net/2019/04/14/5cb2311674088.png" alt="Screenshot_13.png" /></p>
+
 <p>打出的日志中会包含js代码位置</p>
-<h2 id="heading5">未成功找到的思路</h2>
+
+<h2 id="未成功找到的思路">未成功找到的思路</h2>
+
 <h3 id="window-postmessage">window postmessage</h3>
+
 <p><code>window.postmessage</code> 允许跨域发送,是一种新的攻击向量,如果js代码中接受message并用来构建html,会导致xss .b站全站约有7-8处接受postmessage的代码,均未验证发送者. 但是很遗憾的是只有一处真正用传送的数据直接做为html,这处还要求传送的字符串 &gt;0.导致无法利用做为xss</p>
+
 <p>想知道当前页面有没有这个功能?很简单,打开开发工具 sources面板 global listeners</p>
-<p><img src="https://i.loli.net/2019/04/14/5cb2362203afc.png" alt="Screenshot_14.png"></p>
-<h4 id="heading6">缓存攻击</h4>
+
+<p><img src="https://i.loli.net/2019/04/14/5cb2362203afc.png" alt="Screenshot_14.png" /></p>
+
+<h4 id="缓存攻击">缓存攻击</h4>
+
 <p>缓存攻击最典型的就是</p>
+
 <p>配置cdn会缓存.js/.css文件,然后404页面返回码也是200,并包含一些用户信息,攻击者可使受害者打开 /noexist.js的url,此时cdn会认为返回码200,后缀也是js.会将这个404页面缓存起来,然后攻击者可读取这个缓存来获取信息</p>
+
 <p>很遗憾的是b站未符合上述条件,404就是404.并且使用的是现代化前端技术,未返回任何信息在html页面中,难以通过缓存来攻击</p>
-<h4 id="http-csrf">切换http方法 CSRF</h4>
+
+<h4 id="切换http方法-csrf">切换http方法 CSRF</h4>
+
 <p>注意到csrf参数只在post方法生效,试图转换成get方法来绕过csrf限制, 不过还没有找到同时允许get和post方法的api.能直接找到get方法的已经是csrf了(找到了一个还未修复)</p>
 </article>
                         </div>

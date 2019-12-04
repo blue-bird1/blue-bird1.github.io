@@ -128,17 +128,27 @@ if (!doNotTrack) {
                         </div>
 
                         <div id="readme" class="Box-body readme blob instapaper_body js-code-block-container">
-                            <article class="markdown-body entry-content p-3 p-md-6" itemprop="text"><h3 id="heading">前言</h3>
+                            <article class="markdown-body entry-content p-3 p-md-6" itemprop="text">
+
+<h3 id="前言">前言</h3>
+
 <p>对于本篇博客的标题 读者应该都不陌生了 毕竟大名鼎鼎的cpu漏洞就有利用这种侧信道攻击的.
 这种攻击的难度也很大,但是作为一种攻击却是挺有意思的.攻击面也很广泛 因为只要是代码必然涉及到执行时间这个问题,只是差异有没有大到可以被攻击者检测出来的问题而已.</p>
-<h3 id="php">php的字符串时间攻击</h3>
+
+<h3 id="php的字符串时间攻击">php的字符串时间攻击</h3>
+
 <p>这应该离web最近的了 这种漏洞在cve也有 如CVE-2019-18887</p>
+
 <p>用一个最简单的代码举例</p>
+
 <pre><code>$secret = &quot;thisismykey&quot;;
 if ($_GET['secret'] !== $secret) {
     die(&quot;Not Allowed!&quot;);
 }
-</code></pre><p>本质的问题是 php的字符串比较是用以下伪代码实现的</p>
+</code></pre>
+
+<p>本质的问题是 php的字符串比较是用以下伪代码实现的</p>
+
 <pre><code>// str1 and str2 cmp
 if len(str1) != len(str2){
    return false
@@ -151,12 +161,18 @@ for x, y in zip(str1, str2){
 
 return true
 
-</code></pre><p>首先比较长度 不相同直接返回. 然后再比较各个字符.很显然如果长度不一样 将不会执行下面的代码 花的时间将会短一些. 可以通过比较时间来判断字符串的长度.</p>
+</code></pre>
+
+<p>首先比较长度 不相同直接返回. 然后再比较各个字符.很显然如果长度不一样 将不会执行下面的代码 花的时间将会短一些. 可以通过比较时间来判断字符串的长度.</p>
+
 <p>以现在的cpu速度 一个比较的时间几乎可以忽略不计. 也存在速度上的波动,但是只要尝试足够多的次数并平均(平均值总将趋向期望值) 总将可以猜测出它的长度和内容.</p>
-<h3 id="heading1">分支攻击</h3>
+
+<h3 id="分支攻击">分支攻击</h3>
+
 <p>如果不使用php默认的字符串比较呢.时间攻击几乎不可避免的.
 执行不同的代码可能导致执行时间不一致的分支几乎在所有代码中存在, 只要你使用了分支 执行的代码时间不一致 就可以进行猜测.
 例如预先判断用户存在再判断密码的两条分支就可能进行用户枚举</p>
+
 <pre><code>// 一些查询用户是否存在的操作
 if (user){
     // 登录操作
@@ -165,13 +181,19 @@ else {
 return
 }
 
-</code></pre><h3 id="heading2">缓存</h3>
+</code></pre>
+
+<h3 id="缓存">缓存</h3>
+
 <p>上面的差异时间都比较小 而缓存造成的时间差异是非常显著的. 在开发时必须考虑缓存是否会导致时间攻击.这在web上问题比较少见,但是在硬件层面比较多.
 例如cpu的Meltdown漏洞 就利用缓存的侧信道攻击</p>
-<h3 id="heading3">防御</h3>
+
+<h3 id="防御">防御</h3>
+
 <p>时间攻击的本质就是输入数据导致代码执行时间不一致.处于安全绝对 我们只需要将代码的时间差异减少到一个足够的量级就行.
 对于字符串比较 在php可以通过一个函数解决 hash_equals 它使用相同的时间比较.
 对于分支攻击 只能在开发上注意了.</p>
+
 <p>###　参考
 <a href="https://blog.ircmaxell.com/2014/11/its-all-about-time.html">https://blog.ircmaxell.com/2014/11/its-all-about-time.html</a>
 <a href="https://eprint.iacr.org/2011/232.pdf">https://eprint.iacr.org/2011/232.pdf</a></p>

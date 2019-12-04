@@ -17,7 +17,7 @@
       <pubDate>Sun, 02 Sep 2018 22:40:07 +0800</pubDate>
       
       <guid>https://blue-bird1.github.io/posts/fuzz/</guid>
-      <description>fuzz工具非常多 如libfuzz` honggfuzz KernelFuzzer 也有专注进行web fuzz的wfuzz` 但是fuzz功能可以分成两种 只是生成测试用例和检测程序使用测</description>
+      <description>fuzz工具非常多 如libfuzz honggfuzz KernelFuzzer 也有专注进行web fuzz的wfuzz 但是fuzz功能可以分成两种 只是生成测试用例和检测程序使用测试用</description>
     </item>
     
   </channel>

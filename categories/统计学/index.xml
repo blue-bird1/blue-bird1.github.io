@@ -12,12 +12,24 @@
     
     
     <item>
+      <title>Statistics2</title>
+      <link>https://blue-bird1.github.io/statistics2/</link>
+      <pubDate>Mon, 07 Jan 2019 21:20:23 +0800</pubDate>
+      
+      <guid>https://blue-bird1.github.io/statistics2/</guid>
+      <description>&lt;h4 id=&#34;统计学2-现代概率&#34;&gt;统计学2: 现代概率&lt;/h4&gt;
+
+&lt;p&gt;现代概率的一大特征是概率不确定性.古代概率研究的骰子可以认为每面的概率是1/6, 但是统计天气的时候, 就没有理由认为晴天和雨天的概率都是1/2.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>统计学2:现代概率</title>
       <link>https://blue-bird1.github.io/posts/statistics2/</link>
       <pubDate>Mon, 07 Jan 2019 21:20:23 +0800</pubDate>
       
       <guid>https://blue-bird1.github.io/posts/statistics2/</guid>
-      <description>&lt;h4 id=&#34;2-&#34;&gt;统计学2: 现代概率&lt;/h4&gt;
+      <description>&lt;h4 id=&#34;统计学2-现代概率&#34;&gt;统计学2: 现代概率&lt;/h4&gt;
+
 &lt;p&gt;现代概率的一大特征是概率不确定性.古代概率研究的骰子可以认为每面的概率是1/6, 但是统计天气的时候, 就没有理由认为晴天和雨天的概率都是1/2.&lt;/p&gt;</description>
     </item>
     

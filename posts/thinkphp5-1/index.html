@@ -128,12 +128,18 @@ if (!doNotTrack) {
                         </div>
 
                         <div id="readme" class="Box-body readme blob instapaper_body js-code-block-container">
-                            <article class="markdown-body entry-content p-3 p-md-6" itemprop="text"><h3 id="think51">think5审计与调试技巧1</h3>
+                            <article class="markdown-body entry-content p-3 p-md-6" itemprop="text"><h3 id="think5审计与调试技巧1">think5审计与调试技巧1</h3>
+
 <p>think5是一个非常流行的框架, 现在的cms很多都采用了think5作为开发框架.这就带来一个问题, 没用过的安全人员审计的时候就非常懵逼了.</p>
+
 <p>例如 程序入口在哪?  orm操作都是这种函数  <code>Db::name($modeln['tablename'])-&gt;where('id',$id)-&gt;setInc('click');</code>  怎么操作才会出现sql注入?</p>
+
 <p>这就需要框架知识了,但是学习整个框架又太多, 不学又不知道怎么审计.所以这个系列旨在带来足以审计的think5框架知识,而不太复杂</p>
-<h4 id="heading">整体目录结构</h4>
+
+<h4 id="整体目录结构">整体目录结构</h4>
+
 <p>think5 主要需要关注的目录如下</p>
+
 <pre><code>├── application 应用目录（可设置）
 ├── config 配置目录 
 ├── extend 扩展类库目录（可定义）
@@ -142,8 +148,12 @@ if (!doNotTrack) {
 ├─- runtime  应用的运行时目录（可写，可设置）
 ├── thinkphp 框架目录
 └── vendor 第三方库
-</code></pre><p>我们审计主要看<code>application</code> 目录</p>
+</code></pre>
+
+<p>我们审计主要看<code>application</code> 目录</p>
+
 <p>5.0 官方给的目录参考是</p>
+
 <pre><code>├─application           应用目录（可设置）
 │  ├─common             公共模块目录（可更改）
 │  ├─index              模块目录(可更改)
@@ -159,7 +169,10 @@ if (!doNotTrack) {
 │  ├─database.php       数据库配置文件
 │  ├─tags.php           应用行为扩展定义文件
 │  └─route.php          路由配置文件
-</code></pre><p>但是事实可能缺失很多部分 例如<code>nonecms</code> 的目录是</p>
+</code></pre>
+
+<p>但是事实可能缺失很多部分 例如<code>nonecms</code> 的目录是</p>
+
 <pre><code>
 ├── admin
 │   ├── behavior
@@ -184,19 +197,34 @@ if (!doNotTrack) {
 └── push
     ├── controller
     └── service
-</code></pre><h4 id="think5-url">think5 url</h4>
+</code></pre>
+
+<h4 id="think5-url">think5 url</h4>
+
 <p>最常见的think5 url是</p>
+
 <p><code>http://serverName/index.php（或者其它应用入口文件）/模块/控制器/操作/[参数名/参数值...]</code></p>
+
 <p><code>http://serverName/index.php（或者其它应用入口文件）?s=/模块/控制器/操作/[参数名/参数值...]</code></p>
+
 <p>像</p>
-<p><code>index.php/index/blog/read` </code>index.php?s=/index/blog/read`</p>
+
+<p><code>index.php/index/blog/read</code> <code>index.php?s=/index/blog/read</code></p>
+
 <p>其他方式也有 但是基本大同小异 例如<code>index/listing/index/cid/47.html</code></p>
-<h4 id="heading1">配置文件</h4>
+
+<h4 id="配置文件">配置文件</h4>
+
 <p>think5.1 配置文件在config目录  5.0在<code>application/config.php</code></p>
+
 <p>常见的配置文件</p>
+
 <p><code>app.php  cache.php  cookie.php  database.php  log.php  session.php  template.php  trace.php</code></p>
+
 <p>最重要的配置文件是<code>app.php</code></p>
+
 <p>主要需要关注的配置如下</p>
+
 <pre><code>// 应用调试模式
 'app_debug'              =&gt; true,
 // 应用Trace
@@ -205,26 +233,42 @@ if (!doNotTrack) {
 'default_filter'         =&gt; '',
 // 禁止访问模块
 'deny_module_list'       =&gt; ['common'],
-</code></pre><p><code>app_debug</code> 和 <code>app_trace</code> 建议设置成true.</p>
+</code></pre>
+
+<p><code>app_debug</code> 和 <code>app_trace</code> 建议设置成true.</p>
+
 <p>调试模式下异常会显示详细信息,而不是通用报错界面</p>
+
 <p><code>app_trace</code> 则会在右下角显示一个按钮,根据设置可以显示执行路径,执行sql等等</p>
+
 <p>如果没有显示,需要添加</p>
+
 <pre><code>// Trace信息
 'trace'     =&gt;  [
     //支持Html,Console
     'type'  =&gt;  'html',
 ] 
-</code></pre><p>如果没有看到这个设置  可能在<code>trace.php</code>中设置</p>
+</code></pre>
+
+<p>如果没有看到这个设置  可能在<code>trace.php</code>中设置</p>
+
 <pre><code>&lt;?php
 return [
     // 内置Html Console 支持扩展
     'type' =&gt; 'Html',
 ];
-</code></pre><p><code>xxx.php</code> 对应的是<code>app.php</code>里的<code>xxx</code>设置</p>
+</code></pre>
+
+<p><code>xxx.php</code> 对应的是<code>app.php</code>里的<code>xxx</code>设置</p>
+
 <p><code>default_filter</code> 可能的值是函数, 例如 <code>strip_tags</code> 等于对所有用户传入的参数执行过滤.</p>
+
 <p><code>deny_module_list</code> 则是禁止访问的模块</p>
-<h4 id="heading2">日志</h4>
+
+<h4 id="日志">日志</h4>
+
 <p><code>config/log.php</code></p>
+
 <pre><code>return [
     // 日志记录方式，内置 file socket 支持扩展
     'type'  =&gt; 'File',
@@ -233,12 +277,21 @@ return [
     // 日志记录级别
     'level' =&gt; [],
 ];
-</code></pre><p>默认路径是在<code>runtime/log</code></p>
-<h4 id="trace">数据库trace</h4>
+</code></pre>
+
+<p>默认路径是在<code>runtime/log</code></p>
+
+<h4 id="数据库trace">数据库trace</h4>
+
 <p><code>app_trace</code>设置后会发现并没有sql记录,这个需要在database.php添加</p>
+
 <pre><code>'debug'       =&gt; true,
-</code></pre><p>不过就算你看到你的sql注入进入了显示的语句, 但是由于thinkphp5的参数绑定, 很可能并没有生效.</p>
-<h4 id="heading3">路由</h4>
+</code></pre>
+
+<p>不过就算你看到你的sql注入进入了显示的语句, 但是由于thinkphp5的参数绑定, 很可能并没有生效.</p>
+
+<h4 id="路由">路由</h4>
+
 <p>路由对审计影响其实不大, 毕竟url怎么改, 真正的执行代码也不会变.建议扫描性的看一下,是否有开发不小心把调试用的路由留在上面了..</p></article>
                         </div>
                     </div>
