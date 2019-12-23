@@ -1,8 +1,7 @@
 baseURL = "https://blue-bird1.github.io/"
 languageCode = "zh-CN"
-author = "blue bird"
 title = "青鸟的博客"
-theme = "github-style"
+theme = "hermit"
 hasCJKLanguage = true
 googleAnalytics = "UA-110301700-1"
 
@@ -14,23 +13,38 @@ pygmentsOptions = "linenos=table"
 #Enable Hugo Emoji Conversion
 enableEmoji=true
 
+[author]
+author = "blue bird"
+
+[taxonomies]
+tag = "tags"
+
+
 [params]
-        contentType = "posts"
-	    siteStartYear = 2017
-        author = "bluebird"
-        github =  "blue-bird1"
-        twitter = "blue_bird__hc"
-        description = "bluebird的博客" 
-        avatar = "http://www.gravatar.com/avatar/36cc0b77102e4b4e776f444f95525703?s=512"
-        motto = "code and security"
-
-        [params.tags]
-                enabled = true
-
-        #Categories settings
-        [params.categories]
-                enabled = true
+  dateform        = "Jan 2, 2006"
+  dateformShort   = "Jan 2"
+  dateformNum     = "2006-01-02"
+  dateformNumTime = "2006-01-02 15:04 -0700"
+  code_copy_button = true 
 
 
+[menu]
 
+[[menu.main]]
+    name = "Posts"
+    url = "posts/"
+    weight = 10
+
+[[menu.main]]
+    name = "About"
+    url = "about/"
+    weight = 20
+[[menu.main]]
+    name = "Friend"
+    url = "friends/"
+    weight = 20
+
+[[params.social]]
+  name = "github"
+  url = "https://github.com/blue-bird1"
 
