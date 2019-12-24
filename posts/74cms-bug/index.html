@@ -1,6 +1,6 @@
-<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="ie=edge"><meta itemprop=name content="对骑士cms的一次弱加密漏洞挖掘"><meta itemprop=description content="对某cms的一次弱加密漏洞挖掘 前言 之前在挖某cms漏洞, 由于是tp框架的老牌cms, 便不想机械性去看sql注入和xss之类的.开始探索这个c"><meta itemprop=datePublished content="2019-12-24T12:10:30&#43;08:00"><meta itemprop=dateModified content="2019-12-24T12:10:30&#43;08:00"><meta itemprop=wordCount content="1909"><meta itemprop=keywords content="网络安全,漏洞挖掘,"><meta property="og:title" content="对骑士cms的一次弱加密漏洞挖掘"><meta property="og:description" content="对某cms的一次弱加密漏洞挖掘 前言 之前在挖某cms漏洞, 由于是tp框架的老牌cms, 便不想机械性去看sql注入和xss之类的.开始探索这个c"><meta property="og:type" content="article"><meta property="og:url" content="https://blue-bird1.github.io/posts/74cms-bug/"><meta property="article:published_time" content="2019-12-24T12:10:30+08:00"><meta property="article:modified_time" content="2019-12-24T12:10:30+08:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="对骑士cms的一次弱加密漏洞挖掘"><meta name=twitter:description content="对某cms的一次弱加密漏洞挖掘 前言 之前在挖某cms漏洞, 由于是tp框架的老牌cms, 便不想机械性去看sql注入和xss之类的.开始探索这个c"><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/site.webmanifest><link rel=mask-icon href=/safari-pinned-tab.svg color><link rel="shortcut icon" href=/favicon.ico><title>对骑士cms的一次弱加密漏洞挖掘</title><link rel=stylesheet href=https://blue-bird1.github.io/css/style.min.657bcb7af31123e4156b1a3d2ff60a636717e54ead74f882136b5114cf72b55e.css integrity="sha256-ZXvLevMRI+QVaxo9L/YKY2cX5U6tdPiCE2tRFM9ytV4=" crossorigin=anonymous></head><body id=page><header id=site-header class="animated slideInUp faster"><div class="hdr-wrapper section-inner"><div class=hdr-left><div class=site-branding><a href=https://blue-bird1.github.io/>青鸟的博客</a></div><nav class="site-nav hide-in-mobile"><a href=https://blue-bird1.github.io/posts/>Posts</a>
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="ie=edge"><meta itemprop=name content="对骑士cms的一次弱加密漏洞挖掘"><meta itemprop=description content="对某cms的一次弱加密漏洞挖掘 前言 之前在挖某cms漏洞, 由于是tp框架的老牌cms, 便不想机械性去看sql注入和xss之类的.开始探索这个c"><meta itemprop=datePublished content="2019-12-24T12:10:30&#43;08:00"><meta itemprop=dateModified content="2019-12-24T12:10:30&#43;08:00"><meta itemprop=wordCount content="1821"><meta itemprop=keywords content="网络安全,漏洞挖掘,"><meta property="og:title" content="对骑士cms的一次弱加密漏洞挖掘"><meta property="og:description" content="对某cms的一次弱加密漏洞挖掘 前言 之前在挖某cms漏洞, 由于是tp框架的老牌cms, 便不想机械性去看sql注入和xss之类的.开始探索这个c"><meta property="og:type" content="article"><meta property="og:url" content="https://blue-bird1.github.io/posts/74cms-bug/"><meta property="article:published_time" content="2019-12-24T12:10:30+08:00"><meta property="article:modified_time" content="2019-12-24T12:10:30+08:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="对骑士cms的一次弱加密漏洞挖掘"><meta name=twitter:description content="对某cms的一次弱加密漏洞挖掘 前言 之前在挖某cms漏洞, 由于是tp框架的老牌cms, 便不想机械性去看sql注入和xss之类的.开始探索这个c"><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/site.webmanifest><link rel=mask-icon href=/safari-pinned-tab.svg color><link rel="shortcut icon" href=/favicon.ico><title>对骑士cms的一次弱加密漏洞挖掘</title><link rel=stylesheet href=https://blue-bird1.github.io/css/style.min.657bcb7af31123e4156b1a3d2ff60a636717e54ead74f882136b5114cf72b55e.css integrity="sha256-ZXvLevMRI+QVaxo9L/YKY2cX5U6tdPiCE2tRFM9ytV4=" crossorigin=anonymous></head><body id=page><header id=site-header class="animated slideInUp faster"><div class="hdr-wrapper section-inner"><div class=hdr-left><div class=site-branding><a href=https://blue-bird1.github.io/>青鸟的博客</a></div><nav class="site-nav hide-in-mobile"><a href=https://blue-bird1.github.io/posts/>Posts</a>
 <a href=https://blue-bird1.github.io/about/>About</a>
-<a href=https://blue-bird1.github.io/friends/>Friend</a></nav></div><div class="hdr-right hdr-icons"><span class="hdr-social hide-in-mobile"><a href=https://github.com/blue-bird1 target=_blank rel="noopener me" title=Github><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37.0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44.0 0 0 20 4.77 5.07 5.07.0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38.0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07.0 0 0 5 4.77a5.44 5.44.0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37.0 0 0 9 18.13V22"/></svg></a></span><button id=menu-btn class=hdr-btn title=Menu><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button></div></div></header><div id=mobile-menu class="animated fast"><ul><li><a href=https://blue-bird1.github.io/posts/>Posts</a></li><li><a href=https://blue-bird1.github.io/about/>About</a></li><li><a href=https://blue-bird1.github.io/friends/>Friend</a></li></ul></div><main class="site-main section-inner animated fadeIn faster"><article class=thin><header class=post-header><div class=post-meta><span>Dec 24, 2019</span></div><h1>对骑士cms的一次弱加密漏洞挖掘</h1></header><div class=content><h3 id=对某cms的一次弱加密漏洞挖掘>对某cms的一次弱加密漏洞挖掘<a href=#对某cms的一次弱加密漏洞挖掘 class=anchor aria-hidden=true><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"/><line x1="8" y1="12" x2="16" y2="12"/></svg></a></h3><h4 id=前言>前言<a href=#前言 class=anchor aria-hidden=true><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"/><line x1="8" y1="12" x2="16" y2="12"/></svg></a></h4><p>之前在挖某cms漏洞, 由于是tp框架的老牌cms, 便不想机械性去看sql注入和xss之类的.开始探索这个cms是否有一些有趣的代码</p><h4 id=对加密算法的探索>对加密算法的探索<a href=#对加密算法的探索 class=anchor aria-hidden=true><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"/><line x1="8" y1="12" x2="16" y2="12"/></svg></a></h4><p>很快我就发现这个cms使用了以下这段加密代码</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code class=language-php data-lang=php><span class=lnt> 1
+<a href=https://blue-bird1.github.io/friends/>Friend</a></nav></div><div class="hdr-right hdr-icons"><span class="hdr-social hide-in-mobile"><a href=https://github.com/blue-bird1 target=_blank rel="noopener me" title=Github><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37.0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44.0 0 0 20 4.77 5.07 5.07.0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38.0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07.0 0 0 5 4.77a5.44 5.44.0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37.0 0 0 9 18.13V22"/></svg></a></span><button id=menu-btn class=hdr-btn title=Menu><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button></div></div></header><div id=mobile-menu class="animated fast"><ul><li><a href=https://blue-bird1.github.io/posts/>Posts</a></li><li><a href=https://blue-bird1.github.io/about/>About</a></li><li><a href=https://blue-bird1.github.io/friends/>Friend</a></li></ul></div><main class="site-main section-inner animated fadeIn faster"><article class=thin><header class=post-header><div class=post-meta><span>Dec 24, 2019</span></div><h1>对骑士cms的一次弱加密漏洞挖掘</h1></header><div class=content><h3 id=对某cms的一次弱加密漏洞挖掘>对某cms的一次弱加密漏洞挖掘<a href=#对某cms的一次弱加密漏洞挖掘 class=anchor aria-hidden=true><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"/><line x1="8" y1="12" x2="16" y2="12"/></svg></a></h3><h4 id=前言>前言<a href=#前言 class=anchor aria-hidden=true><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"/><line x1="8" y1="12" x2="16" y2="12"/></svg></a></h4><p>之前在挖某cms漏洞, 由于是tp框架的老牌cms, 便不想机械性去看sql注入和xss之类的.开始探索这个cms是否有一些有趣的代码</p><h4 id=对加密算法的探索>对加密算法的探索<a href=#对加密算法的探索 class=anchor aria-hidden=true><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"/><line x1="8" y1="12" x2="16" y2="12"/></svg></a></h4><p>很快我就发现这个cms使用了以下这段加密代码</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code class=language-php+html data-lang=php+html><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -75,7 +75,7 @@
 </span><span class=lnt>73
 </span><span class=lnt>74
 </span><span class=lnt>75
-</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-php data-lang=php>function decrypt($txt, $key = &#39;_qscms&#39;) {
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-php+html data-lang=php+html>function decrypt($txt, $key = &#39;_qscms&#39;) {
 
     // $txt 的结果为加密后的字串经过 base64 解码，然后与私有密匙一起，
 
@@ -93,137 +93,95 @@
 
     // for 循环，$i 为从 0 开始，到小于 $txt 字串长度的整数
 
-    for ($i = 0; $i <span class=p>&lt;</span> <span class=nt>strlen</span><span class=err>($</span><span class=na>txt</span><span class=err>);</span> <span class=err>$</span><span class=na>i</span><span class=err>++)</span> <span class=err>{</span>
+    for ($i = 0; $i &lt;strlen($txt); $i++) {
 
-        <span class=err>//</span> <span class=err>$</span><span class=na>tmp</span> <span class=na>字串在末尾增加一位</span><span class=err>，</span><span class=na>其内容为</span> <span class=err>$</span><span class=na>txt</span> <span class=na>的第</span> <span class=err>$</span><span class=na>i</span> <span class=na>位</span><span class=err>，</span>
+        // $tmp 字串在末尾增加一位，其内容为 $txt 的第 $i 位，
 
-        <span class=err>//</span> <span class=na>与</span> <span class=err>$</span><span class=na>txt</span> <span class=na>的第</span> <span class=err>$</span><span class=na>i</span> <span class=err>+</span> <span class=na>1</span> <span class=na>位取异或</span><span class=err>。</span><span class=na>然后</span> <span class=err>$</span><span class=na>i </span><span class=o>=</span> <span class=s>$i</span> <span class=err>+</span> <span class=na>1</span>
+        // 与 $txt 的第 $i + 1 位取异或。然后 $i = $i + 1
 
-        <span class=err>$</span><span class=na>tmp</span> <span class=err>.=</span> <span class=err>$</span><span class=na>txt</span><span class=err>[$</span><span class=na>i</span><span class=err>]</span> <span class=err>^</span> <span class=err>$</span><span class=na>txt</span><span class=err>[++$</span><span class=na>i</span><span class=err>];</span>
+        $tmp .= $txt[$i] ^ $txt[++$i];
 
-    <span class=err>}</span>
+    }
 
-    <span class=err>//</span> <span class=na>返回</span> <span class=err>$</span><span class=na>tmp</span> <span class=na>的值作为结果</span>
+    // 返回 $tmp 的值作为结果
 
-    <span class=na>return</span> <span class=err>$</span><span class=na>tmp</span><span class=err>;</span>
+    return $tmp;
 
-<span class=err>}</span>
-
-
-
-<span class=na>function</span> <span class=na>passport_key</span><span class=err>($</span><span class=na>txt</span><span class=err>,</span> <span class=err>$</span><span class=na>encrypt_key</span><span class=err>)</span> <span class=err>{</span>
-
-    <span class=err>//</span> <span class=na>将</span> <span class=err>$</span><span class=na>encrypt_key</span> <span class=na>赋为</span> <span class=err>$</span><span class=na>encrypt_key</span> <span class=na>经</span> <span class=na>md5</span><span class=err>()</span> <span class=na>后的值</span>
-
-    <span class=err>$</span><span class=na>encrypt_key </span><span class=o>=</span> <span class=s>md5($encrypt_key);</span>
-
-    <span class=err>//</span> <span class=na>变量初始化</span>
-
-    <span class=err>$</span><span class=na>ctr </span><span class=o>=</span> <span class=s>0;</span>
-
-    <span class=err>$</span><span class=na>tmp </span><span class=o>=</span> <span class=s>&#39;&#39;</span><span class=err>;</span>
+}
 
 
 
-    <span class=err>//</span> <span class=na>for</span> <span class=na>循环</span><span class=err>，$</span><span class=na>i</span> <span class=na>为从</span> <span class=na>0</span> <span class=na>开始</span><span class=err>，</span><span class=na>到小于</span> <span class=err>$</span><span class=na>txt</span> <span class=na>字串长度的整数</span>
+function passport_key($txt, $encrypt_key) {
 
-    <span class=na>for</span> <span class=err>($</span><span class=na>i </span><span class=o>=</span> <span class=s>0;</span> <span class=err>$</span><span class=na>i</span> <span class=err>&lt;</span> <span class=na>strlen</span><span class=err>($</span><span class=na>txt</span><span class=err>);</span> <span class=err>$</span><span class=na>i</span><span class=err>++)</span> <span class=err>{</span>
+    // 将 $encrypt_key 赋为 $encrypt_key 经 md5() 后的值
 
-        <span class=err>//</span> <span class=na>如果</span> <span class=err>$</span><span class=na>ctr </span><span class=o>=</span> <span class=s>$encrypt_key</span> <span class=na>的长度</span><span class=err>，</span><span class=na>则</span> <span class=err>$</span><span class=na>ctr</span> <span class=na>清零</span>
+    $encrypt_key = md5($encrypt_key);
 
-        <span class=err>$</span><span class=na>ctr </span><span class=o>=</span> <span class=s>$ctr</span> <span class=err>==</span> <span class=na>strlen</span><span class=err>($</span><span class=na>encrypt_key</span><span class=err>)</span> <span class=err>?</span> <span class=na>0</span> <span class=na>:</span> <span class=err>$</span><span class=na>ctr</span><span class=err>;</span>
+    // 变量初始化
 
-        <span class=err>//</span> <span class=err>$</span><span class=na>tmp</span> <span class=na>字串在末尾增加一位</span><span class=err>，</span><span class=na>其内容为</span> <span class=err>$</span><span class=na>txt</span> <span class=na>的第</span> <span class=err>$</span><span class=na>i</span> <span class=na>位</span><span class=err>，</span>
+    $ctr = 0;
 
-        <span class=err>//</span> <span class=na>与</span> <span class=err>$</span><span class=na>encrypt_key</span> <span class=na>的第</span> <span class=err>$</span><span class=na>ctr</span> <span class=err>+</span> <span class=na>1</span> <span class=na>位取异或</span><span class=err>。</span><span class=na>然后</span> <span class=err>$</span><span class=na>ctr </span><span class=o>=</span> <span class=s>$ctr</span> <span class=err>+</span> <span class=na>1</span>
+    $tmp = &#39;&#39;;
 
-      <span class=err>//</span>   <span class=na>echo</span> <span class=na>ord</span><span class=err>($</span><span class=na>txt</span><span class=err>[$</span><span class=na>i</span><span class=err>]);</span>
 
-        <span class=err>$</span><span class=na>tmp</span> <span class=err>.=</span> <span class=err>$</span><span class=na>txt</span><span class=err>[$</span><span class=na>i</span><span class=err>]</span> <span class=err>^</span> <span class=err>$</span><span class=na>encrypt_key</span><span class=err>[$</span><span class=na>ctr</span><span class=err>++];</span>
 
-      <span class=err>//</span>  <span class=na>echo</span> <span class=err>$</span><span class=na>tmp</span><span class=err>;</span>
+    // for 循环，$i 为从 0 开始，到小于 $txt 字串长度的整数
 
-    <span class=err>}</span>
+    for ($i = 0; $i &lt; strlen($txt); $i++) {
 
-    <span class=err>//</span> <span class=na>返回</span> <span class=err>$</span><span class=na>tmp</span> <span class=na>的值作为结果</span>
+        // 如果 $ctr = $encrypt_key 的长度，则 $ctr 清零
 
-    <span class=na>return</span> <span class=err>$</span><span class=na>tmp</span><span class=err>;</span>
+        $ctr = $ctr == strlen($encrypt_key) ? 0 : $ctr;
 
-<span class=err>}</span></code></pre></td></tr></table></div></div><p>虽然我不会密码学,但我也知道异或加密是不安全的. 于是开始对这函数开始分析.</p><h4 id=异或加密简介>异或加密简介<a href=#异或加密简介 class=anchor aria-hidden=true><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"/><line x1="8" y1="12" x2="16" y2="12"/></svg></a></h4><p>异或的定义为 两个值相同时就返回0,否则返回1. 异或的特性为 对这个数进行两次异或会返回这个值本身.</p><p>它有以下性质 设密文为<code>A</code> 用来异或的密钥为<code>B</code>. 如果<code>B</code>二进制表示全为<code>0</code> 则写为0</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code class="language-=" data-lang="="><span class=lnt>1
-</span><span class=lnt>2
-</span><span class=lnt>3
-</span><span class=lnt>4
-</span><span class=lnt>5
-</span><span class=lnt>6
-</span><span class=lnt>7
-</span></code></pre></td><td class=lntd><pre class=chroma><code class="language-=" data-lang="=">A^0 = A
+        // $tmp 字串在末尾增加一位，其内容为 $txt 的第 $i 位，
+
+        // 与 $encrypt_key 的第 $ctr + 1 位取异或。然后 $ctr = $ctr + 1
+
+      //   echo ord($txt[$i]);
+
+        $tmp .= $txt[$i] ^ $encrypt_key[$ctr++];
+
+      //  echo $tmp;
+
+    }
+
+    // 返回 $tmp 的值作为结果
+
+    return $tmp;
+
+}</code></pre></td></tr></table></div></div><p>虽然我不会密码学,但我也知道异或加密是不安全的. 于是开始对这函数开始分析.</p><h4 id=异或加密简介>异或加密简介<a href=#异或加密简介 class=anchor aria-hidden=true><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"/><line x1="8" y1="12" x2="16" y2="12"/></svg></a></h4><p>异或的定义为 两个值相同时就返回0,否则返回1. 异或的特性为 对这个数进行两次异或会返回这个值本身.</p><p>它有以下性质 设密文为<code>A</code> 用来异或的密钥为<code>B</code>. 如果<code>B</code>二进制表示全为<code>0</code> 则写为0</p><pre><code>
+A^0 = A
 
 A^A = 0
 
 (A^B)^C = A^(B^c)
 
-(A^B)^A = B^(A^A) = B^0 = B </code></pre></td></tr></table></div></div><p>例如 <code>0000000</code>^<code>10101111</code>,由于左侧都是0,所以右侧为0的还是0,1的还是1.导致并没有任何改变.</p><h3 id=对加密函数的思考>对加密函数的思考<a href=#对加密函数的思考 class=anchor aria-hidden=true><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"/><line x1="8" y1="12" x2="16" y2="12"/></svg></a></h3><p>为了将问题分解, 首先对<code>passport_key</code>函数分析.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code class=language-php data-lang=php><span class=lnt>1
-</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-php data-lang=php> $encrypt_key = md5($encrypt_key);</code></pre></td></tr></table></div></div><p>查看了<code>cms</code>对这个函数的调用, 实际传递的key是一个固定的<code>16</code>位随机生成数 . 所以爆破这个md5是不可能的. 但是可以发现实际上加密没用到这个<code>$encrypt_key</code>本身的值.</p><p>所以问题可以简化为 获取这个<code>$encrypt_key</code>的值.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code class=language-php data-lang=php><span class=lnt> 1
-</span><span class=lnt> 2
-</span><span class=lnt> 3
-</span><span class=lnt> 4
-</span><span class=lnt> 5
-</span><span class=lnt> 6
-</span><span class=lnt> 7
-</span><span class=lnt> 8
-</span><span class=lnt> 9
-</span><span class=lnt>10
-</span><span class=lnt>11
-</span><span class=lnt>12
-</span><span class=lnt>13
-</span><span class=lnt>14
-</span><span class=lnt>15
-</span><span class=lnt>16
-</span><span class=lnt>17
-</span><span class=lnt>18
-</span><span class=lnt>19
-</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-php data-lang=php>    // for 循环，$i 为从 0 开始，到小于 $txt 字串长度的整数
+(A^B)^A = B^(A^A) = B^0 = B 
 
-    for ($i = 0; $i <span class=p>&lt;</span> <span class=nt>strlen</span><span class=err>($</span><span class=na>txt</span><span class=err>);</span> <span class=err>$</span><span class=na>i</span><span class=err>++)</span> <span class=err>{</span>
+</code></pre><p>例如 <code>0000000</code>^<code>10101111</code>,由于左侧都是0,所以右侧为0的还是0,1的还是1.导致并没有任何改变.</p><h3 id=对加密函数的思考>对加密函数的思考<a href=#对加密函数的思考 class=anchor aria-hidden=true><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"/><line x1="8" y1="12" x2="16" y2="12"/></svg></a></h3><p>为了将问题分解, 首先对<code>passport_key</code>函数分析.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code class=language-php data-lang=php><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-php data-lang=php> $encrypt_key = md5($encrypt_key);</code></pre></td></tr></table></div></div><p>查看了<code>cms</code>对这个函数的调用, 实际传递的key是一个固定的<code>16</code>位随机生成数 . 所以爆破这个md5是不可能的. 但是可以发现实际上加密没用到这个<code>$encrypt_key</code>本身的值.</p><p>所以问题可以简化为 获取这个<code>$encrypt_key</code>的值.</p><pre><code>
+    // for 循环，$i 为从 0 开始，到小于 $txt 字串长度的整数
 
-        <span class=err>//</span> <span class=na>如果</span> <span class=err>$</span><span class=na>ctr </span><span class=o>=</span> <span class=s>$encrypt_key</span> <span class=na>的长度</span><span class=err>，</span><span class=na>则</span> <span class=err>$</span><span class=na>ctr</span> <span class=na>清零</span>
+    for ($i = 0; $i &lt; strlen($txt); $i++) {
 
-        <span class=err>$</span><span class=na>ctr </span><span class=o>=</span> <span class=s>$ctr</span> <span class=err>==</span> <span class=na>strlen</span><span class=err>($</span><span class=na>encrypt_key</span><span class=err>)</span> <span class=err>?</span> <span class=na>0</span> <span class=na>:</span> <span class=err>$</span><span class=na>ctr</span><span class=err>;</span>
+        // 如果 $ctr = $encrypt_key 的长度，则 $ctr 清零
 
-        <span class=err>//</span> <span class=err>$</span><span class=na>tmp</span> <span class=na>字串在末尾增加一位</span><span class=err>，</span><span class=na>其内容为</span> <span class=err>$</span><span class=na>txt</span> <span class=na>的第</span> <span class=err>$</span><span class=na>i</span> <span class=na>位</span><span class=err>，</span>
+        $ctr = $ctr == strlen($encrypt_key) ? 0 : $ctr;
 
-        <span class=err>//</span> <span class=na>与</span> <span class=err>$</span><span class=na>encrypt_key</span> <span class=na>的第</span> <span class=err>$</span><span class=na>ctr</span> <span class=err>+</span> <span class=na>1</span> <span class=na>位取异或</span><span class=err>。</span><span class=na>然后</span> <span class=err>$</span><span class=na>ctr </span><span class=o>=</span> <span class=s>$ctr</span> <span class=err>+</span> <span class=na>1</span>
+        // $tmp 字串在末尾增加一位，其内容为 $txt 的第 $i 位，
 
-      <span class=err>//</span>   <span class=na>echo</span> <span class=na>ord</span><span class=err>($</span><span class=na>txt</span><span class=err>[$</span><span class=na>i</span><span class=err>]);</span>
+        // 与 $encrypt_key 的第 $ctr + 1 位取异或。然后 $ctr = $ctr + 1
 
-        <span class=err>$</span><span class=na>tmp</span> <span class=err>.=</span> <span class=err>$</span><span class=na>txt</span><span class=err>[$</span><span class=na>i</span><span class=err>]</span> <span class=err>^</span> <span class=err>$</span><span class=na>encrypt_key</span><span class=err>[$</span><span class=na>ctr</span><span class=err>++];</span>
+      //   echo ord($txt[$i]);
 
-      <span class=err>//</span>  <span class=na>echo</span> <span class=err>$</span><span class=na>tmp</span><span class=err>;</span>
+        $tmp .= $txt[$i] ^ $encrypt_key[$ctr++];
 
-    <span class=err>}</span></code></pre></td></tr></table></div></div><p>这段代码可以总结为 用<code>$encrypt_key</code>对<code>$txt</code>逐位异或.</p><p>从上面的知识知道 利用<code>A^0</code>的特性, 传递<code>0</code>, 返回值将也是<code>$encrypt_key</code></p><p>也就是只要我们可控<code>$txt</code>, 甚至不需要任何解密操作, 直接就能从返回值得到密钥.</p><p>但是<code>cms</code>并未直接调用这个函数, 需要进一步分析<code>decrypt</code>函数</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code class=language-php data-lang=php><span class=lnt> 1
-</span><span class=lnt> 2
-</span><span class=lnt> 3
-</span><span class=lnt> 4
-</span><span class=lnt> 5
-</span><span class=lnt> 6
-</span><span class=lnt> 7
-</span><span class=lnt> 8
-</span><span class=lnt> 9
-</span><span class=lnt>10
-</span><span class=lnt>11
-</span><span class=lnt>12
-</span><span class=lnt>13
-</span><span class=lnt>14
-</span><span class=lnt>15
-</span><span class=lnt>16
-</span><span class=lnt>17
-</span><span class=lnt>18
-</span><span class=lnt>19
-</span><span class=lnt>20
-</span><span class=lnt>21
-</span><span class=lnt>22
-</span><span class=lnt>23
-</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-php data-lang=php> // 经过 passport_key() 函数处理后的返回值
+      //  echo $tmp;
+
+    }
+
+</code></pre><p>这段代码可以总结为 用<code>$encrypt_key</code>对<code>$txt</code>逐位异或.</p><p>从上面的知识知道 利用<code>A^0</code>的特性, 传递<code>0</code>, 返回值将也是<code>$encrypt_key</code></p><p>也就是只要我们可控<code>$txt</code>, 甚至不需要任何解密操作, 直接就能从返回值得到密钥.</p><p>但是<code>cms</code>并未直接调用这个函数, 需要进一步分析<code>decrypt</code>函数</p><pre><code>
+ // 经过 passport_key() 函数处理后的返回值
 
     $txt = passport_key(base64_decode($txt), $key);
 
@@ -233,48 +191,22 @@ A^A = 0
 
     // 变量初始化
 
-    $tmp = &#39;&#39;;
+    $tmp = '';
 
     // for 循环，$i 为从 0 开始，到小于 $txt 字串长度的整数
 
-    for ($i = 0; $i <span class=p>&lt;</span> <span class=nt>strlen</span><span class=err>($</span><span class=na>txt</span><span class=err>);</span> <span class=err>$</span><span class=na>i</span><span class=err>++)</span> <span class=err>{</span>
+    for ($i = 0; $i &lt; strlen($txt); $i++) {
 
-        <span class=err>//</span> <span class=err>$</span><span class=na>tmp</span> <span class=na>字串在末尾增加一位</span><span class=err>，</span><span class=na>其内容为</span> <span class=err>$</span><span class=na>txt</span> <span class=na>的第</span> <span class=err>$</span><span class=na>i</span> <span class=na>位</span><span class=err>，</span>
+        // $tmp 字串在末尾增加一位，其内容为 $txt 的第 $i 位，
 
-        <span class=err>//</span> <span class=na>与</span> <span class=err>$</span><span class=na>txt</span> <span class=na>的第</span> <span class=err>$</span><span class=na>i</span> <span class=err>+</span> <span class=na>1</span> <span class=na>位取异或</span><span class=err>。</span><span class=na>然后</span> <span class=err>$</span><span class=na>i </span><span class=o>=</span> <span class=s>$i</span> <span class=err>+</span> <span class=na>1</span>
+        // 与 $txt 的第 $i + 1 位取异或。然后 $i = $i + 1
 
-        <span class=err>$</span><span class=na>tmp</span> <span class=err>.=</span> <span class=err>$</span><span class=na>txt</span><span class=err>[$</span><span class=na>i</span><span class=err>]</span> <span class=err>^</span> <span class=err>$</span><span class=na>txt</span><span class=err>[++$</span><span class=na>i</span><span class=err>];</span>
+        $tmp .= $txt[$i] ^ $txt[++$i];
 
-    <span class=err>}</span></code></pre></td></tr></table></div></div><p>这个函数将<code>passport_key</code>返回值两位两位异或后返回,导致返回值位数减半.</p><p>考虑我们之前的利用, 在这个函数运行后得到的其实是8位密钥两两异或后的值.</p><p>如果对异或值进行爆破, 密钥的值范围也就是<code>php</code>的<code>md5</code>函数的返回值范围 <code>a-z0-9</code>.</p><p>编写一个爆破函数</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code class=language-php data-lang=php><span class=lnt> 1
-</span><span class=lnt> 2
-</span><span class=lnt> 3
-</span><span class=lnt> 4
-</span><span class=lnt> 5
-</span><span class=lnt> 6
-</span><span class=lnt> 7
-</span><span class=lnt> 8
-</span><span class=lnt> 9
-</span><span class=lnt>10
-</span><span class=lnt>11
-</span><span class=lnt>12
-</span><span class=lnt>13
-</span><span class=lnt>14
-</span><span class=lnt>15
-</span><span class=lnt>16
-</span><span class=lnt>17
-</span><span class=lnt>18
-</span><span class=lnt>19
-</span><span class=lnt>20
-</span><span class=lnt>21
-</span><span class=lnt>22
-</span><span class=lnt>23
-</span><span class=lnt>24
-</span><span class=lnt>25
-</span><span class=lnt>26
-</span><span class=lnt>27
-</span><span class=lnt>28
-</span><span class=lnt>29
-</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-php data-lang=php>function crack($char)
+    }
+
+</code></pre><p>这个函数将<code>passport_key</code>返回值两位两位异或后返回,导致返回值位数减半.</p><p>考虑我们之前的利用, 在这个函数运行后得到的其实是8位密钥两两异或后的值.</p><p>如果对异或值进行爆破, 密钥的值范围也就是<code>php</code>的<code>md5</code>函数的返回值范围 <code>a-z0-9</code>.</p><p>编写一个爆破函数</p><pre><code>
+function crack($char)
 
 {
 
@@ -282,44 +214,42 @@ A^A = 0
 
     // 可能的值范围
 
-    $chars = &#39;0123456789abcdefghijklmnopqrstuvwxyz&#39;;
+    $chars = '0123456789abcdefghijklmnopqrstuvwxyz';
 
-    for ($i = 0; $i <span class=p>&lt;</span> <span class=nt>strlen</span><span class=err>($</span><span class=na>chars</span><span class=err>);</span> <span class=err>$</span><span class=na>i</span><span class=err>++)</span> <span class=err>{</span>
+    for ($i = 0; $i &lt; strlen($chars); $i++) {
 
-        <span class=na>for</span> <span class=err>($</span><span class=na>i2 </span><span class=o>=</span> <span class=s>0;</span> <span class=err>$</span><span class=na>i2</span> <span class=err>&lt;</span> <span class=na>strlen</span><span class=err>($</span><span class=na>chars</span><span class=err>);</span> <span class=err>$</span><span class=na>i2</span><span class=err>++)</span> <span class=err>{</span>
+        for ($i2 = 0; $i2 &lt; strlen($chars); $i2++) {
 
-            <span class=err>//</span> <span class=na>如果异或后的值为要破解的字符</span> <span class=na>就加入返回数组</span>
+            // 如果异或后的值为要破解的字符 就加入返回数组
 
-            <span class=na>if</span><span class=err>(</span> <span class=err>($</span><span class=na>chars</span><span class=err>[$</span><span class=na>i</span><span class=err>]</span> <span class=err>^</span> <span class=err>$</span><span class=na>chars</span><span class=err>[$</span><span class=na>i2</span><span class=err>])</span> <span class=err>===</span>  <span class=err>$</span><span class=na>char</span><span class=err>){</span>
+            if( ($chars[$i] ^ $chars[$i2]) ===  $char){
 
-                <span class=err>$</span><span class=na>ret</span><span class=err>[]</span> <span class=err>=</span> <span class=err>$</span><span class=na>chars</span><span class=err>[$</span><span class=na>i</span><span class=err>].$</span><span class=na>chars</span><span class=err>[$</span><span class=na>i2</span><span class=err>];</span>
+                $ret[] = $chars[$i].$chars[$i2];
 
-            <span class=err>}</span>
+            }
 
-        <span class=err>}</span>
+        }
 
-    <span class=err>}</span>
+    }
 
-    <span class=na>return</span> <span class=err>$</span><span class=na>ret</span><span class=err>;</span>
+    return $ret;
 
-<span class=err>}</span></code></pre></td></tr></table></div></div><p>尝试破解一个字符</p><p><code>var_dump(crack(&quot;v&quot;));</code></p><p>实际返回为</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code class=language-php data-lang=php><span class=lnt>1
-</span><span class=lnt>2
-</span><span class=lnt>3
-</span><span class=lnt>4
-</span><span class=lnt>5
-</span><span class=lnt>6
-</span><span class=lnt>7
-</span><span class=lnt>8
-</span><span class=lnt>9
-</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-php data-lang=php>array(18) {
+}
+
+
+
+</code></pre><p>尝试破解一个字符</p><p><code>var_dump(crack(&quot;v&quot;));</code></p><p>实际返回为</p><pre><code>
+array(18) {
 
   [0]=&gt;
 
-  string(2) &#34;A7&#34;
+  string(2) &quot;A7&quot;
 
   // 省略
 
- }</code></pre></td></tr></table></div></div><p>实际上单个字符的可能性空间是不定的,<code>18</code>是最少的了 而md5一共有32位字符 ,也就是最少也有<code>18^16=1.21439531e20</code>种组合,不可能两个字符两个字符的爆破成功.</p><p>不过这只是表象, 计算一下就会发现</p><p>设未知字符为<code>x1</code>,<code>x2</code>,爆破出来的是<code>y1</code>,<code>y2</code>,加密的两个字符是<code>z1,z2</code></p><p>证</p><p><code>(z1^x1)^(z2^x2)</code> 根据上面的交换律解括号得到 <code>(x1^x2)^z1^z2</code> 然<code>(y1^y2)=(x1^x2)</code></p><p>得<code>(z1^x1)^(z2^x2)=(z1^y1)^(z2^y2)</code></p><p>所以只需要随便在可能里选一种就行.</p><h4 id=利用>利用<a href=#利用 class=anchor aria-hidden=true><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"/><line x1="8" y1="12" x2="16" y2="12"/></svg></a></h4><p>已知加密是弱加密,只需要有一处可控输入和可知输出的接口就可以利用. 尝试搜索<code>decrypt</code>函数</p><p><img src=https://i.loli.net/2019/12/23/2MLDQWvEzOAsiN9.png alt="2019-12-23 23-37-31 的屏幕截图.png"></p><p>只发现这处函数</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code class=language-php data-lang=php><span class=lnt> 1
+ }
+
+</code></pre><p>实际上单个字符的可能性空间是不定的,<code>18</code>是最少的了 而md5一共有32位字符 ,也就是最少也有<code>18^16=1.21439531e20</code>种组合,不可能两个字符两个字符的爆破成功.</p><p>不过这只是表象, 计算一下就会发现</p><p>设未知字符为<code>x1</code>,<code>x2</code>,爆破出来的是<code>y1</code>,<code>y2</code>,加密的两个字符是<code>z1,z2</code></p><p>证</p><p><code>(z1^x1)^(z2^x2)</code> 根据上面的交换律解括号得到 <code>(x1^x2)^z1^z2</code> 然<code>(y1^y2)=(x1^x2)</code></p><p>得<code>(z1^x1)^(z2^x2)=(z1^y1)^(z2^y2)</code></p><p>所以只需要随便在可能里选一种就行.</p><h4 id=利用>利用<a href=#利用 class=anchor aria-hidden=true><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"/><line x1="8" y1="12" x2="16" y2="12"/></svg></a></h4><p>已知加密是弱加密,只需要有一处可控输入和可知输出的接口就可以利用. 尝试搜索<code>decrypt</code>函数</p><p><img src=https://i.loli.net/2019/12/23/2MLDQWvEzOAsiN9.png alt="2019-12-23 23-37-31 的屏幕截图.png"></p><p>只发现这处函数</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code class=language-php data-lang=php><span class=lnt> 1
 </span><span class=lnt> 2
 </span><span class=lnt> 3
 </span><span class=lnt> 4
@@ -340,4 +270,4 @@ A^A = 0
 
         \Common\ORG\Image::buildString($str,array(100,50),&#39;&#39;,&#39;png&#39;,0,false);
 
-    }</code></pre></td></tr></table></div></div><p>满足条件,但是输出的是图片比较尴尬,尝试了一下全<code>\x00</code></p><p><img src=https://i.loli.net/2019/12/23/MYl7UGFCTHSQExA.png alt=image.png> 虽说参数故意没添加干扰,这也没法肉眼辨认可能的不可视字符.</p><p>只能通过更改攻击载荷来使得下面的字符变得可视化，只需要最后再与攻击载荷再进行一次异或就行了．</p></div><hr class=post-end><footer class=post-info><p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83.0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7" y2="7"/></svg><span class=tag><a href=https://blue-bird1.github.io/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8>网络安全</a></span><span class=tag><a href=https://blue-bird1.github.io/tags/%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98>漏洞挖掘</a></span></p><p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>1909 Words</p><p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2019-12-24 04:10 &#43;0000</p></footer></article><div class="post-nav thin"><a class=prev-post href=https://blue-bird1.github.io/posts/xunruicms/><span class=post-nav-label>Older&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span><br><span>Xunruicms</span></a></div><div id=comments class=thin></div></main><footer id=site-footer class="section-inner thin animated fadeIn faster"><p>&copy; 2019 <a href=https://blue-bird1.github.io/></a></p><p>Made with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a> &#183; Theme <a href=https://github.com/Track3/hermit target=_blank rel=noopener>Hermit</a> &#183; <a href=https://blue-bird1.github.io/posts/index.xml target=_blank title=rss><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg></a></p></footer><script src=https://blue-bird1.github.io/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin=anonymous></script><script type=application/javascript>var doNotTrack=false;if(!doNotTrack){window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;ga('create','UA-110301700-1','auto');ga('send','pageview');}</script><script async src=https://www.google-analytics.com/analytics.js></script></body></html>
+    }</code></pre></td></tr></table></div></div><p>满足条件,但是输出的是图片比较尴尬,尝试了一下全<code>\x00</code></p><p><img src=https://i.loli.net/2019/12/23/MYl7UGFCTHSQExA.png alt=image.png> 虽说参数故意没添加干扰,这也没法肉眼辨认可能的不可视字符.</p><p>只能通过更改攻击载荷来使得下面的字符变得可视化，只需要最后再与攻击载荷再进行一次异或就行了．</p></div><hr class=post-end><footer class=post-info><p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83.0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7" y2="7"/></svg><span class=tag><a href=https://blue-bird1.github.io/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8>网络安全</a></span><span class=tag><a href=https://blue-bird1.github.io/tags/%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98>漏洞挖掘</a></span></p><p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>1821 Words</p><p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2019-12-24 04:10 &#43;0000</p></footer></article><div class="post-nav thin"><a class=prev-post href=https://blue-bird1.github.io/posts/xunruicms/><span class=post-nav-label>Older&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span><br><span>Xunruicms</span></a></div><div id=comments class=thin></div></main><footer id=site-footer class="section-inner thin animated fadeIn faster"><p>&copy; 2019 <a href=https://blue-bird1.github.io/></a></p><p>Made with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a> &#183; Theme <a href=https://github.com/Track3/hermit target=_blank rel=noopener>Hermit</a> &#183; <a href=https://blue-bird1.github.io/posts/index.xml target=_blank title=rss><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg></a></p></footer><script src=https://blue-bird1.github.io/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin=anonymous></script><script type=application/javascript>var doNotTrack=false;if(!doNotTrack){window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;ga('create','UA-110301700-1','auto');ga('send','pageview');}</script><script async src=https://www.google-analytics.com/analytics.js></script></body></html>
