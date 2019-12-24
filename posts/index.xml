@@ -1,4 +1,471 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 青鸟的博客</title><link>https://blue-bird1.github.io/posts/</link><description>Recent content in Posts on 青鸟的博客</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Mon, 09 Dec 2019 00:07:02 +0800</lastBuildDate><atom:link href="https://blue-bird1.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Xunruicms</title><link>https://blue-bird1.github.io/posts/xunruicms/</link><pubDate>Mon, 09 Dec 2019 00:07:02 +0800</pubDate><guid>https://blue-bird1.github.io/posts/xunruicms/</guid><description>前言 前几天寻思着想挖几个通用的洞 于是在fofa poc列表上找找目标. 锁定目标为php cms 已有0day. 很快就锁定到了这个迅睿cms. 发现可以在</description><content type="html"><![CDATA[
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 青鸟的博客</title><link>https://blue-bird1.github.io/posts/</link><description>Recent content in Posts on 青鸟的博客</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 24 Dec 2019 12:10:30 +0800</lastBuildDate><atom:link href="https://blue-bird1.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>对骑士cms的一次弱加密漏洞挖掘</title><link>https://blue-bird1.github.io/posts/74cms-bug/</link><pubDate>Tue, 24 Dec 2019 12:10:30 +0800</pubDate><guid>https://blue-bird1.github.io/posts/74cms-bug/</guid><description>对某cms的一次弱加密漏洞挖掘 前言 之前在挖某cms漏洞, 由于是tp框架的老牌cms, 便不想机械性去看sql注入和xss之类的.开始探索这个c</description><content type="html"><![CDATA[
+
+<h3 id="对某cms的一次弱加密漏洞挖掘">对某cms的一次弱加密漏洞挖掘</h3>
+
+<h4 id="前言">前言</h4>
+
+<p>之前在挖某cms漏洞, 由于是tp框架的老牌cms, 便不想机械性去看sql注入和xss之类的.开始探索这个cms是否有一些有趣的代码</p>
+
+<h4 id="对加密算法的探索">对加密算法的探索</h4>
+
+<p>很快我就发现这个cms使用了以下这段加密代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php">function decrypt($txt, $key = &#39;_qscms&#39;) {
+
+    // $txt 的结果为加密后的字串经过 base64 解码，然后与私有密匙一起，
+
+    // 经过 passport_key() 函数处理后的返回值
+
+    $txt = passport_key(base64_decode($txt), $key);
+
+
+
+
+
+    // 变量初始化
+
+    $tmp = &#39;&#39;;
+
+    // for 循环，$i 为从 0 开始，到小于 $txt 字串长度的整数
+
+    for ($i = 0; $i <span class="p">&lt;</span> <span class="nt">strlen</span><span class="err">($</span><span class="na">txt</span><span class="err">);</span> <span class="err">$</span><span class="na">i</span><span class="err">++)</span> <span class="err">{</span>
+
+        <span class="err">//</span> <span class="err">$</span><span class="na">tmp</span> <span class="na">字串在末尾增加一位</span><span class="err">，</span><span class="na">其内容为</span> <span class="err">$</span><span class="na">txt</span> <span class="na">的第</span> <span class="err">$</span><span class="na">i</span> <span class="na">位</span><span class="err">，</span>
+
+        <span class="err">//</span> <span class="na">与</span> <span class="err">$</span><span class="na">txt</span> <span class="na">的第</span> <span class="err">$</span><span class="na">i</span> <span class="err">+</span> <span class="na">1</span> <span class="na">位取异或</span><span class="err">。</span><span class="na">然后</span> <span class="err">$</span><span class="na">i </span><span class="o">=</span> <span class="s">$i</span> <span class="err">+</span> <span class="na">1</span>
+
+        <span class="err">$</span><span class="na">tmp</span> <span class="err">.=</span> <span class="err">$</span><span class="na">txt</span><span class="err">[$</span><span class="na">i</span><span class="err">]</span> <span class="err">^</span> <span class="err">$</span><span class="na">txt</span><span class="err">[++$</span><span class="na">i</span><span class="err">];</span>
+
+    <span class="err">}</span>
+
+    <span class="err">//</span> <span class="na">返回</span> <span class="err">$</span><span class="na">tmp</span> <span class="na">的值作为结果</span>
+
+    <span class="na">return</span> <span class="err">$</span><span class="na">tmp</span><span class="err">;</span>
+
+<span class="err">}</span>
+
+
+
+<span class="na">function</span> <span class="na">passport_key</span><span class="err">($</span><span class="na">txt</span><span class="err">,</span> <span class="err">$</span><span class="na">encrypt_key</span><span class="err">)</span> <span class="err">{</span>
+
+    <span class="err">//</span> <span class="na">将</span> <span class="err">$</span><span class="na">encrypt_key</span> <span class="na">赋为</span> <span class="err">$</span><span class="na">encrypt_key</span> <span class="na">经</span> <span class="na">md5</span><span class="err">()</span> <span class="na">后的值</span>
+
+    <span class="err">$</span><span class="na">encrypt_key </span><span class="o">=</span> <span class="s">md5($encrypt_key);</span>
+
+    <span class="err">//</span> <span class="na">变量初始化</span>
+
+    <span class="err">$</span><span class="na">ctr </span><span class="o">=</span> <span class="s">0;</span>
+
+    <span class="err">$</span><span class="na">tmp </span><span class="o">=</span> <span class="s">&#39;&#39;</span><span class="err">;</span>
+
+
+
+    <span class="err">//</span> <span class="na">for</span> <span class="na">循环</span><span class="err">，$</span><span class="na">i</span> <span class="na">为从</span> <span class="na">0</span> <span class="na">开始</span><span class="err">，</span><span class="na">到小于</span> <span class="err">$</span><span class="na">txt</span> <span class="na">字串长度的整数</span>
+
+    <span class="na">for</span> <span class="err">($</span><span class="na">i </span><span class="o">=</span> <span class="s">0;</span> <span class="err">$</span><span class="na">i</span> <span class="err">&lt;</span> <span class="na">strlen</span><span class="err">($</span><span class="na">txt</span><span class="err">);</span> <span class="err">$</span><span class="na">i</span><span class="err">++)</span> <span class="err">{</span>
+
+        <span class="err">//</span> <span class="na">如果</span> <span class="err">$</span><span class="na">ctr </span><span class="o">=</span> <span class="s">$encrypt_key</span> <span class="na">的长度</span><span class="err">，</span><span class="na">则</span> <span class="err">$</span><span class="na">ctr</span> <span class="na">清零</span>
+
+        <span class="err">$</span><span class="na">ctr </span><span class="o">=</span> <span class="s">$ctr</span> <span class="err">==</span> <span class="na">strlen</span><span class="err">($</span><span class="na">encrypt_key</span><span class="err">)</span> <span class="err">?</span> <span class="na">0</span> <span class="na">:</span> <span class="err">$</span><span class="na">ctr</span><span class="err">;</span>
+
+        <span class="err">//</span> <span class="err">$</span><span class="na">tmp</span> <span class="na">字串在末尾增加一位</span><span class="err">，</span><span class="na">其内容为</span> <span class="err">$</span><span class="na">txt</span> <span class="na">的第</span> <span class="err">$</span><span class="na">i</span> <span class="na">位</span><span class="err">，</span>
+
+        <span class="err">//</span> <span class="na">与</span> <span class="err">$</span><span class="na">encrypt_key</span> <span class="na">的第</span> <span class="err">$</span><span class="na">ctr</span> <span class="err">+</span> <span class="na">1</span> <span class="na">位取异或</span><span class="err">。</span><span class="na">然后</span> <span class="err">$</span><span class="na">ctr </span><span class="o">=</span> <span class="s">$ctr</span> <span class="err">+</span> <span class="na">1</span>
+
+      <span class="err">//</span>   <span class="na">echo</span> <span class="na">ord</span><span class="err">($</span><span class="na">txt</span><span class="err">[$</span><span class="na">i</span><span class="err">]);</span>
+
+        <span class="err">$</span><span class="na">tmp</span> <span class="err">.=</span> <span class="err">$</span><span class="na">txt</span><span class="err">[$</span><span class="na">i</span><span class="err">]</span> <span class="err">^</span> <span class="err">$</span><span class="na">encrypt_key</span><span class="err">[$</span><span class="na">ctr</span><span class="err">++];</span>
+
+      <span class="err">//</span>  <span class="na">echo</span> <span class="err">$</span><span class="na">tmp</span><span class="err">;</span>
+
+    <span class="err">}</span>
+
+    <span class="err">//</span> <span class="na">返回</span> <span class="err">$</span><span class="na">tmp</span> <span class="na">的值作为结果</span>
+
+    <span class="na">return</span> <span class="err">$</span><span class="na">tmp</span><span class="err">;</span>
+
+<span class="err">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>虽然我不会密码学,但我也知道异或加密是不安全的. 于是开始对这函数开始分析.</p>
+
+<h4 id="异或加密简介">异或加密简介</h4>
+
+<p>异或的定义为 两个值相同时就返回0,否则返回1.  异或的特性为 对这个数进行两次异或会返回这个值本身.</p>
+
+<p>它有以下性质 设密文为<code>A</code>  用来异或的密钥为<code>B</code>. 如果<code>B</code>二进制表示全为<code>0</code>  则写为0</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-=" data-lang="="><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-=" data-lang="=">A^0 = A
+
+A^A = 0
+
+(A^B)^C = A^(B^c)
+
+(A^B)^A = B^(A^A) = B^0 = B </code></pre></td></tr></table>
+</div>
+</div>
+<p>例如 <code>0000000</code>^<code>10101111</code>,由于左侧都是0,所以右侧为0的还是0,1的还是1.导致并没有任何改变.</p>
+
+<h3 id="对加密函数的思考">对加密函数的思考</h3>
+
+<p>为了将问题分解, 首先对<code>passport_key</code>函数分析.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php"> $encrypt_key = md5($encrypt_key);</code></pre></td></tr></table>
+</div>
+</div>
+<p>查看了<code>cms</code>对这个函数的调用, 实际传递的key是一个固定的<code>16</code>位随机生成数 . 所以爆破这个md5是不可能的. 但是可以发现实际上加密没用到这个<code>$encrypt_key</code>本身的值.</p>
+
+<p>所以问题可以简化为 获取这个<code>$encrypt_key</code>的值.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php">    // for 循环，$i 为从 0 开始，到小于 $txt 字串长度的整数
+
+    for ($i = 0; $i <span class="p">&lt;</span> <span class="nt">strlen</span><span class="err">($</span><span class="na">txt</span><span class="err">);</span> <span class="err">$</span><span class="na">i</span><span class="err">++)</span> <span class="err">{</span>
+
+        <span class="err">//</span> <span class="na">如果</span> <span class="err">$</span><span class="na">ctr </span><span class="o">=</span> <span class="s">$encrypt_key</span> <span class="na">的长度</span><span class="err">，</span><span class="na">则</span> <span class="err">$</span><span class="na">ctr</span> <span class="na">清零</span>
+
+        <span class="err">$</span><span class="na">ctr </span><span class="o">=</span> <span class="s">$ctr</span> <span class="err">==</span> <span class="na">strlen</span><span class="err">($</span><span class="na">encrypt_key</span><span class="err">)</span> <span class="err">?</span> <span class="na">0</span> <span class="na">:</span> <span class="err">$</span><span class="na">ctr</span><span class="err">;</span>
+
+        <span class="err">//</span> <span class="err">$</span><span class="na">tmp</span> <span class="na">字串在末尾增加一位</span><span class="err">，</span><span class="na">其内容为</span> <span class="err">$</span><span class="na">txt</span> <span class="na">的第</span> <span class="err">$</span><span class="na">i</span> <span class="na">位</span><span class="err">，</span>
+
+        <span class="err">//</span> <span class="na">与</span> <span class="err">$</span><span class="na">encrypt_key</span> <span class="na">的第</span> <span class="err">$</span><span class="na">ctr</span> <span class="err">+</span> <span class="na">1</span> <span class="na">位取异或</span><span class="err">。</span><span class="na">然后</span> <span class="err">$</span><span class="na">ctr </span><span class="o">=</span> <span class="s">$ctr</span> <span class="err">+</span> <span class="na">1</span>
+
+      <span class="err">//</span>   <span class="na">echo</span> <span class="na">ord</span><span class="err">($</span><span class="na">txt</span><span class="err">[$</span><span class="na">i</span><span class="err">]);</span>
+
+        <span class="err">$</span><span class="na">tmp</span> <span class="err">.=</span> <span class="err">$</span><span class="na">txt</span><span class="err">[$</span><span class="na">i</span><span class="err">]</span> <span class="err">^</span> <span class="err">$</span><span class="na">encrypt_key</span><span class="err">[$</span><span class="na">ctr</span><span class="err">++];</span>
+
+      <span class="err">//</span>  <span class="na">echo</span> <span class="err">$</span><span class="na">tmp</span><span class="err">;</span>
+
+    <span class="err">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>这段代码可以总结为 用<code>$encrypt_key</code>对<code>$txt</code>逐位异或.</p>
+
+<p>从上面的知识知道 利用<code>A^0</code>的特性, 传递<code>0</code>,  返回值将也是<code>$encrypt_key</code></p>
+
+<p>也就是只要我们可控<code>$txt</code>, 甚至不需要任何解密操作, 直接就能从返回值得到密钥.</p>
+
+<p>但是<code>cms</code>并未直接调用这个函数, 需要进一步分析<code>decrypt</code>函数</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php"> // 经过 passport_key() 函数处理后的返回值
+
+    $txt = passport_key(base64_decode($txt), $key);
+
+
+
+
+
+    // 变量初始化
+
+    $tmp = &#39;&#39;;
+
+    // for 循环，$i 为从 0 开始，到小于 $txt 字串长度的整数
+
+    for ($i = 0; $i <span class="p">&lt;</span> <span class="nt">strlen</span><span class="err">($</span><span class="na">txt</span><span class="err">);</span> <span class="err">$</span><span class="na">i</span><span class="err">++)</span> <span class="err">{</span>
+
+        <span class="err">//</span> <span class="err">$</span><span class="na">tmp</span> <span class="na">字串在末尾增加一位</span><span class="err">，</span><span class="na">其内容为</span> <span class="err">$</span><span class="na">txt</span> <span class="na">的第</span> <span class="err">$</span><span class="na">i</span> <span class="na">位</span><span class="err">，</span>
+
+        <span class="err">//</span> <span class="na">与</span> <span class="err">$</span><span class="na">txt</span> <span class="na">的第</span> <span class="err">$</span><span class="na">i</span> <span class="err">+</span> <span class="na">1</span> <span class="na">位取异或</span><span class="err">。</span><span class="na">然后</span> <span class="err">$</span><span class="na">i </span><span class="o">=</span> <span class="s">$i</span> <span class="err">+</span> <span class="na">1</span>
+
+        <span class="err">$</span><span class="na">tmp</span> <span class="err">.=</span> <span class="err">$</span><span class="na">txt</span><span class="err">[$</span><span class="na">i</span><span class="err">]</span> <span class="err">^</span> <span class="err">$</span><span class="na">txt</span><span class="err">[++$</span><span class="na">i</span><span class="err">];</span>
+
+    <span class="err">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>这个函数将<code>passport_key</code>返回值两位两位异或后返回,导致返回值位数减半.</p>
+
+<p>考虑我们之前的利用, 在这个函数运行后得到的其实是8位密钥两两异或后的值.</p>
+
+<p>如果对异或值进行爆破, 密钥的值范围也就是<code>php</code>的<code>md5</code>函数的返回值范围  <code>a-z0-9</code>.</p>
+
+<p>编写一个爆破函数</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php">function crack($char)
+
+{
+
+    $ret = array();
+
+    // 可能的值范围
+
+    $chars = &#39;0123456789abcdefghijklmnopqrstuvwxyz&#39;;
+
+    for ($i = 0; $i <span class="p">&lt;</span> <span class="nt">strlen</span><span class="err">($</span><span class="na">chars</span><span class="err">);</span> <span class="err">$</span><span class="na">i</span><span class="err">++)</span> <span class="err">{</span>
+
+        <span class="na">for</span> <span class="err">($</span><span class="na">i2 </span><span class="o">=</span> <span class="s">0;</span> <span class="err">$</span><span class="na">i2</span> <span class="err">&lt;</span> <span class="na">strlen</span><span class="err">($</span><span class="na">chars</span><span class="err">);</span> <span class="err">$</span><span class="na">i2</span><span class="err">++)</span> <span class="err">{</span>
+
+            <span class="err">//</span> <span class="na">如果异或后的值为要破解的字符</span> <span class="na">就加入返回数组</span>
+
+            <span class="na">if</span><span class="err">(</span> <span class="err">($</span><span class="na">chars</span><span class="err">[$</span><span class="na">i</span><span class="err">]</span> <span class="err">^</span> <span class="err">$</span><span class="na">chars</span><span class="err">[$</span><span class="na">i2</span><span class="err">])</span> <span class="err">===</span>  <span class="err">$</span><span class="na">char</span><span class="err">){</span>
+
+                <span class="err">$</span><span class="na">ret</span><span class="err">[]</span> <span class="err">=</span> <span class="err">$</span><span class="na">chars</span><span class="err">[$</span><span class="na">i</span><span class="err">].$</span><span class="na">chars</span><span class="err">[$</span><span class="na">i2</span><span class="err">];</span>
+
+            <span class="err">}</span>
+
+        <span class="err">}</span>
+
+    <span class="err">}</span>
+
+    <span class="na">return</span> <span class="err">$</span><span class="na">ret</span><span class="err">;</span>
+
+<span class="err">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>尝试破解一个字符</p>
+
+<p><code>var_dump(crack(&quot;v&quot;));</code></p>
+
+<p>实际返回为</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php">array(18) {
+
+  [0]=&gt;
+
+  string(2) &#34;A7&#34;
+
+  // 省略
+
+ }</code></pre></td></tr></table>
+</div>
+</div>
+<p>实际上单个字符的可能性空间是不定的,<code>18</code>是最少的了  而md5一共有32位字符 ,也就是最少也有<code>18^16=1.21439531e20</code>种组合,不可能两个字符两个字符的爆破成功.</p>
+
+<p>不过这只是表象, 计算一下就会发现</p>
+
+<p>设未知字符为<code>x1</code>,<code>x2</code>,爆破出来的是<code>y1</code>,<code>y2</code>,加密的两个字符是<code>z1,z2</code></p>
+
+<p>证</p>
+
+<p><code>(z1^x1)^(z2^x2)</code> 根据上面的交换律解括号得到 <code>(x1^x2)^z1^z2</code> 然<code>(y1^y2)=(x1^x2)</code></p>
+
+<p>得<code>(z1^x1)^(z2^x2)=(z1^y1)^(z2^y2)</code></p>
+
+<p>所以只需要随便在可能里选一种就行.</p>
+
+<h4 id="利用">利用</h4>
+
+<p>已知加密是弱加密,只需要有一处可控输入和可知输出的接口就可以利用. 尝试搜索<code>decrypt</code>函数</p>
+
+<p><img src="https://i.loli.net/2019/12/23/2MLDQWvEzOAsiN9.png" alt="2019-12-23 23-37-31 的屏幕截图.png" /></p>
+
+<p>只发现这处函数</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-php" data-lang="php">    public function get_font_img(){
+
+        $str = I(&#39;request.str&#39;,&#39;&#39;,&#39;trim&#39;);
+
+        // 异或加密
+
+        $str = decrypt($str,C(&#39;PWDHASH&#39;));
+
+        \Common\ORG\Image::buildString($str,array(100,50),&#39;&#39;,&#39;png&#39;,0,false);
+
+    }</code></pre></td></tr></table>
+</div>
+</div>
+<p>满足条件,但是输出的是图片比较尴尬,尝试了一下全<code>\x00</code></p>
+
+<p><img src="https://i.loli.net/2019/12/23/MYl7UGFCTHSQExA.png" alt="image.png" /> 虽说参数故意没添加干扰,这也没法肉眼辨认可能的不可视字符.</p>
+
+<p>只能通过更改攻击载荷来使得下面的字符变得可视化，只需要最后再与攻击载荷再进行一次异或就行了．</p>
+]]></content></item><item><title>Xunruicms</title><link>https://blue-bird1.github.io/posts/xunruicms/</link><pubDate>Mon, 09 Dec 2019 00:07:02 +0800</pubDate><guid>https://blue-bird1.github.io/posts/xunruicms/</guid><description>前言 前几天寻思着想挖几个通用的洞 于是在fofa poc列表上找找目标. 锁定目标为php cms 已有0day. 很快就锁定到了这个迅睿cms. 发现可以在</description><content type="html"><![CDATA[
 
 <h3 id="前言">前言</h3>
 
