@@ -29,7 +29,7 @@ description:
 
 
 
-```php
+```php+html
 
 function decrypt($txt, $key = '_qscms') {
 
@@ -49,7 +49,7 @@ function decrypt($txt, $key = '_qscms') {
 
     // for 循环，$i 为从 0 开始，到小于 $txt 字串长度的整数
 
-    for ($i = 0; $i < strlen($txt); $i++) {
+    for ($i = 0; $i <strlen($txt); $i++) {
 
         // $tmp 字串在末尾增加一位，其内容为 $txt 的第 $i 位，
 
@@ -135,7 +135,7 @@ function passport_key($txt, $encrypt_key) {
 
 
 
-``` =
+``` 
 
 A^0 = A
 
@@ -185,7 +185,7 @@ A^A = 0
 
 
 
-```php
+```
 
     // for 循环，$i 为从 0 开始，到小于 $txt 字串长度的整数
 
@@ -231,7 +231,7 @@ A^A = 0
 
 
 
-```php
+```
 
  // 经过 passport_key() 函数处理后的返回值
 
@@ -285,7 +285,7 @@ A^A = 0
 
 
 
-```php
+```
 
 function crack($char)
 
@@ -339,7 +339,7 @@ function crack($char)
 
 
 
-```php
+```
 
 array(18) {
 
