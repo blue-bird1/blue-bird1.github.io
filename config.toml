@@ -8,6 +8,7 @@ googleAnalytics = "UA-110301700-1"
 # Syntax highlighting 
 pygmentsCodeFences = true
 pygmentsUseClasses = true
+pygmentsStyle = "pygments"
 pygmentsOptions = "linenos=table"
 
 #Enable Hugo Emoji Conversion
@@ -18,6 +19,11 @@ author = "blue bird"
 
 [taxonomies]
 tag = "tags"
+
+[markup]
+  [markup.highlight]
+    guessSyntax = true
+    tabWidth = 4
 
 
 [params]

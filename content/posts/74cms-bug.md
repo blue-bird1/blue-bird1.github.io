@@ -29,8 +29,8 @@ description:
 
 
 
-```php+html
-
+```PHP
+<?php
 function decrypt($txt, $key = '_qscms') {
 
     // $txt 的结果为加密后的字串经过 base64 解码，然后与私有密匙一起，
@@ -107,6 +107,7 @@ function passport_key($txt, $encrypt_key) {
 
 }
 
+
 ```
 
 
@@ -170,9 +171,7 @@ A^A = 0
 
 
 ```php
-
  $encrypt_key = md5($encrypt_key);
-
 ```
 
 
@@ -185,7 +184,8 @@ A^A = 0
 
 
 
-```
+```php
+<?
 
     // for 循环，$i 为从 0 开始，到小于 $txt 字串长度的整数
 
@@ -231,8 +231,8 @@ A^A = 0
 
 
 
-```
-
+```php
+<? 
  // 经过 passport_key() 函数处理后的返回值
 
     $txt = passport_key(base64_decode($txt), $key);
@@ -285,7 +285,8 @@ A^A = 0
 
 
 
-```
+```php
+<?
 
 function crack($char)
 
@@ -404,6 +405,7 @@ array(18) {
 
 
 ```php
+<? 
 
     public function get_font_img(){
 
