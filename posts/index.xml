@@ -1,4 +1,56 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 青鸟的博客</title><link>https://blue-bird1.github.io/posts/</link><description>Recent content in Posts on 青鸟的博客</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 31 Dec 2019 01:07:17 +0800</lastBuildDate><atom:link href="https://blue-bird1.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>2019 总结</title><link>https://blue-bird1.github.io/posts/2019-summary/</link><pubDate>Tue, 31 Dec 2019 01:07:17 +0800</pubDate><guid>https://blue-bird1.github.io/posts/2019-summary/</guid><description>## 2019年度总结 2019年度进度 ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ 100% 2019年要过完了, 博主今年又干了啥呢. 远行 基本没离开过家门 最远</description><content type="html"><![CDATA[
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 青鸟的博客</title><link>https://blue-bird1.github.io/posts/</link><description>Recent content in Posts on 青鸟的博客</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 22 Jan 2020 02:29:26 +0800</lastBuildDate><atom:link href="https://blue-bird1.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Sentry 过时依赖导致的安全问题</title><link>https://blue-bird1.github.io/posts/sentry-bug/</link><pubDate>Wed, 22 Jan 2020 02:29:26 +0800</pubDate><guid>https://blue-bird1.github.io/posts/sentry-bug/</guid><description>Sentry因过时依赖导致的安全问题 前言 这次挖的其实没啥技术含量 但是从依赖挖掘到漏洞还是比较少见的. 挖掘过程 下载源码后,发现src目录有so</description><content type="html"><![CDATA[
+
+<h3 id="sentry因过时依赖导致的安全问题">Sentry因过时依赖导致的安全问题</h3>
+
+<h3 id="前言">前言</h3>
+
+<p>这次挖的其实没啥技术含量 但是从依赖挖掘到漏洞还是比较少见的.</p>
+
+<h3 id="挖掘过程">挖掘过程</h3>
+
+<p>下载源码后,发现src目录有<code>social_auth</code>目录,并查看<code>views.py</code>(django的主要业务逻辑文件).</p>
+
+<p>并注意到</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python">   <span class="c1"># Save any defined next value into session</span>
+    <span class="k">if</span> <span class="n">REDIRECT_FIELD_NAME</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+        <span class="c1"># Check and sanitize a user-defined GET/POST next field value</span>
+        <span class="n">redirect</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">REDIRECT_FIELD_NAME</span><span class="p">]</span>
+        <span class="c1"># NOTE: django-sudo&#39;s `is_safe_url` is much better at catching bad</span>
+        <span class="c1"># redirections to different domains than social_auth&#39;s</span>
+        <span class="c1"># `sanitize_redirect` call.</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_safe_url</span><span class="p">(</span><span class="n">redirect</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">get_host</span><span class="p">()):</span>
+            <span class="n">redirect</span> <span class="o">=</span> <span class="n">DEFAULT_REDIRECT</span>
+        <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="p">[</span><span class="n">REDIRECT_FIELD_NAME</span><span class="p">]</span> <span class="o">=</span> <span class="n">redirect</span> <span class="ow">or</span> <span class="n">DEFAULT_REDIRECT</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>sentry使用了<code>django-sudo</code>来做url验证,搜索这个库.发现这个库的实际新代码提交是<code>2016</code>年的.</p>
+
+<p>这意味着如果在近些年出现过bypass,这个库并未进行修复. 快速的进行了谷歌搜索.很快就发现<code>CVE-2017-7233</code> django的is_safe_url的绕过.</p>
+
+<p>参考文章 <code>https://paper.seebug.org/274/#cve-2017-7233-django-is95safe95url-urlbypass</code></p>
+
+<p>通过对调用的分析  选择了logout作为简单的poc<code>http://127.0.0.1:9000/auth/logout/?next=https:1029415385</code>.<code>点击</code>sign out`将跳转到一个谷歌的ip</p>
+
+<h3 id="漏洞时间线">漏洞时间线</h3>
+
+<p><code>2019-12-24</code>: 漏洞提交</p>
+
+<p><code>2019-1-14</code>: 问题已修复</p>
+]]></content></item><item><title>2019 总结</title><link>https://blue-bird1.github.io/posts/2019-summary/</link><pubDate>Tue, 31 Dec 2019 01:07:17 +0800</pubDate><guid>https://blue-bird1.github.io/posts/2019-summary/</guid><description>## 2019年度总结 2019年度进度 ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ 100% 2019年要过完了, 博主今年又干了啥呢. 远行 基本没离开过家门 最远</description><content type="html"><![CDATA[
 
 <p>##　2019年度总结</p>
 
