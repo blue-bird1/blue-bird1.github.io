@@ -1,3 +1,11 @@
+---
+title: Gogs post 反射型 Xss
+date: 2020-01-28T00:13:39+08:00
+lastmod: 2020-01-28T00:13:39+08:00
+categories: ["网络安全"]
+description:
+---
+
 ### 通过form利用gogs的post型反射型xss
 
 ### 审计
