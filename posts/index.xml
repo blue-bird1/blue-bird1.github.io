@@ -1,4 +1,63 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 青鸟的博客</title><link>https://blue-bird1.github.io/posts/</link><description>Recent content in Posts on 青鸟的博客</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 28 Jan 2020 00:13:39 +0800</lastBuildDate><atom:link href="https://blue-bird1.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Gogs post 反射型 Xss</title><link>https://blue-bird1.github.io/posts/gogs_post_xss/</link><pubDate>Tue, 28 Jan 2020 00:13:39 +0800</pubDate><guid>https://blue-bird1.github.io/posts/gogs_post_xss/</guid><description>通过form利用gogs的post型反射型xss 审计 在审计gogs代码时发现gogs的api允许渲染markdown.最初以为是无法利用的,</description><content type="html"><![CDATA[
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 青鸟的博客</title><link>https://blue-bird1.github.io/posts/</link><description>Recent content in Posts on 青鸟的博客</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Mon, 23 Mar 2020 21:06:04 +0800</lastBuildDate><atom:link href="https://blue-bird1.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>第一个cve</title><link>https://blue-bird1.github.io/posts/first-cve/</link><pubDate>Mon, 23 Mar 2020 21:06:04 +0800</pubDate><guid>https://blue-bird1.github.io/posts/first-cve/</guid><description>第一个CVE 在今天获得了第一个有CVE编号的漏洞 CVE-2020-10804 . CVE只是一个漏洞数据库,只需要自己申请即可. 但国内会自己给小漏洞申请CVE很少,往往视</description><content type="html"><![CDATA[
+
+<h2 id="第一个cve">第一个CVE</h2>
+
+<p>在今天获得了第一个有CVE编号的漏洞 <a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-10804">CVE-2020-10804</a> .</p>
+
+<p>CVE只是一个漏洞数据库,只需要自己申请即可. 但国内会自己给小漏洞申请CVE很少,往往视为一种水货CVE.这也是第一个不需要我自己申请CVE的漏洞.</p>
+
+<p>有趣的是PHPMyadmin这个月修复的漏洞,包括这个漏洞里,三个漏洞撞了两个(指被两个或以上的人提交)</p>
+
+<p>和我同时发现问题的是<a href="mailto:hoangnguyenatn@gmail.com">hoangn144_VCS</a> 大佬,他是在登录插件处发现的用户名注入.</p>
+
+<h3 id="漏洞详情">漏洞详情</h3>
+
+<p>这个漏洞很水,我从审计开始到发现这个问题用时没超过两个小时.只是在sql查询时直接拼接字符串.</p>
+
+<p>phpmyadmin在编辑密码和权限对用户名转义不当 ,补丁很简单 就是加上转义了而已</p>
+
+<p><img src="https://i.loli.net/2020/03/23/jXzR76hWMY1cFtQ.png" alt="image.png" /></p>
+
+<p>密码处补丁 复现也很简单 只需要在mysql5.6下编辑一个有单引号的用户名即可</p>
+
+<h3 id="漏洞发现">漏洞发现</h3>
+
+<p>首先我阅读了近几天被发现的漏洞 这个可以在<a href="https://www.phpmyadmin.net/security/">这里</a>找到.</p>
+
+<p>发现大部分问题都只是简单的sql拼接 而且漏洞模式非常相似. 我在IDE下精心构造了几个正则表达式</p>
+
+<p>由于时间比较久了 没记下 但是大概如下</p>
+
+<p>第一个</p>
+
+<p><code>$GLOBALS['dbi']-&gt;tryQuery(\$_[GET|POST][^)]*)</code> 寻找在查询函数中被直接引入的请求变量</p>
+
+<p>实际上上面效果不佳 因为大部分sql语句都不在查询函数构造 而且这个没有过滤已经被转义过的变量</p>
+
+<p>第二个</p>
+
+<p><code>'.*?'+.\$_POST</code>  这个能找到简单的字符串拼接 但在复杂的函数调用中还是无能为力</p>
+
+<p>最后我使用了两种方法结合 第一种跟踪<code>$_GET|$_POST</code>   第二种根据开发的变量命名习惯 将第二条修改为</p>
+
+<p><code>$.*?query = \'.*?\'+.\$</code></p>
+
+<p>成功在短时间内发现了问题</p>
+
+<h3 id="评价">评价</h3>
+
+<p>在知名项目中 phpmyadmin应该属于最好挖 但漏洞影响很小的.在发现第一个时,我同时还有几个怀疑的注入,但毫无疑问那些也是接近于无的危害.</p>
+
+<p>phpmyadmin只能使用你给的账号来查询,select注入是没什么意义的,无法提权.只有能导致高权限用户在进行某些操作时像<code>update</code> <code>alter</code>之类语句中注入或者xss才有意义,但利用难度也非常高</p>
+
+<h3 id="漏洞时间线">漏洞时间线</h3>
+
+<pre><code>2020.1.20 提交给phpmyadmin安全组
+2020.1.21 得到第一次回应
+2020.3.21 修复并发布新版本
+2020.3.22 CVE-2020-10804已分配
+</code></pre>
+]]></content></item><item><title>Gogs post 反射型 Xss</title><link>https://blue-bird1.github.io/posts/gogs_post_xss/</link><pubDate>Tue, 28 Jan 2020 00:13:39 +0800</pubDate><guid>https://blue-bird1.github.io/posts/gogs_post_xss/</guid><description>通过form利用gogs的post型反射型xss 审计 在审计gogs代码时发现gogs的api允许渲染markdown.最初以为是无法利用的,</description><content type="html"><![CDATA[
 
 <h3 id="通过form利用gogs的post型反射型xss">通过form利用gogs的post型反射型xss</h3>
 
