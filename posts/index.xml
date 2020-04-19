@@ -1,4 +1,247 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 青鸟的博客</title><link>https://blue-bird1.github.io/posts/</link><description>Recent content in Posts on 青鸟的博客</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Mon, 23 Mar 2020 21:06:04 +0800</lastBuildDate><atom:link href="https://blue-bird1.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>第一个cve</title><link>https://blue-bird1.github.io/posts/first-cve/</link><pubDate>Mon, 23 Mar 2020 21:06:04 +0800</pubDate><guid>https://blue-bird1.github.io/posts/first-cve/</guid><description>第一个CVE 在今天获得了第一个有CVE编号的漏洞 CVE-2020-10804 . CVE只是一个漏洞数据库,只需要自己申请即可. 但国内会自己给小漏洞申请CVE很少,往往视</description><content type="html"><![CDATA[
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 青鸟的博客</title><link>https://blue-bird1.github.io/posts/</link><description>Recent content in Posts on 青鸟的博客</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sun, 19 Apr 2020 20:35:37 +0800</lastBuildDate><atom:link href="https://blue-bird1.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>使用jsfuzz对nodejs模块进行模糊测试</title><link>https://blue-bird1.github.io/posts/jsfuzz-module/</link><pubDate>Sun, 19 Apr 2020 20:35:37 +0800</pubDate><guid>https://blue-bird1.github.io/posts/jsfuzz-module/</guid><description>使用jsfuzz对nodejs模块进行模糊测试 #### 前言 jsfuzz是一个基于覆盖率指导的模糊测试工具,能对JavaScript/nodejs模</description><content type="html"><![CDATA[
+
+<h3 id="使用jsfuzz对nodejs模块进行模糊测试">使用jsfuzz对nodejs模块进行模糊测试</h3>
+
+<p>####　前言</p>
+
+<p><a href="https://github.com/fuzzitdev/jsfuzz">jsfuzz</a>是一个基于覆盖率指导的模糊测试工具,能对JavaScript/nodejs模块进行模糊测试. 只需要编写一个接受输入的函数即可.</p>
+
+<p>虽然nodejs是现代语言,即使出现了越界读写 也不会像c/c++一样直接导致安全问题. 但在审查一个复杂逻辑的nodejs模块时,仍是一个值得考虑的选项.</p>
+
+<h4 id="下载安装">下载安装</h4>
+
+<p><code>npm i -g jsfuzz</code></p>
+
+<h4 id="实战">实战</h4>
+
+<h5 id="编写模糊文件">编写模糊文件</h5>
+
+<p>一个标准的格式是</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">fuzz</span><span class="p">(</span><span class="nx">buf</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// call your package with buf  
+</span><span class="c1"></span><span class="p">}</span>
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">fuzz</span>
+<span class="p">};</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>更常见的是</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">fuzz</span><span class="p">(</span><span class="nx">buf</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">try</span> <span class="p">{</span>
+        <span class="c1">// 调用模块函数
+</span><span class="c1"></span>    <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// 检查是否是模块自己的自定义错误
+</span><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">message</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s1">&#39;xxx1&#39;</span><span class="p">)</span> <span class="o">!==</span> <span class="o">-</span><span class="mi">1</span> <span class="o">||</span>
+            <span class="nx">e</span><span class="p">.</span><span class="nx">message</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s1">&#39;xxx2&#39;</span><span class="p">)</span> <span class="o">!==</span> <span class="o">-</span><span class="mi">1</span> <span class="p">)</span> <span class="p">{</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">throw</span> <span class="nx">e</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>作为一个例子 作者挑选了<a href="https://github.com/mqttjs/mqtt-packet">mqtt-packet</a> 作为例子,这个模块代码不多,还提供了生成样本的函数,相当方便.</p>
+
+<p>首先下载包</p>
+
+<pre><code>mkdir jsfuzz
+cd jsfuzz
+npm i mqtt-packet
+</code></pre>
+
+<p>通过阅读包文档,很容易就能写出(复制粘贴)使用这个包解析函数的代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">mqtt</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;mqtt-packet&#39;</span><span class="p">)</span>
+<span class="kd">var</span> <span class="nx">opts</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">protocolVersion</span><span class="o">:</span> <span class="mi">4</span> <span class="p">}</span> <span class="c1">// default is 4. Usually, opts is a connect packet
+</span><span class="c1"></span>
+<span class="kd">function</span> <span class="nx">fuzz</span><span class="p">(</span><span class="nx">buf</span><span class="p">)</span> <span class="p">{</span>
+       <span class="kd">var</span> <span class="nx">parser</span> <span class="o">=</span> <span class="nx">mqtt</span><span class="p">.</span><span class="nx">parser</span><span class="p">(</span><span class="nx">opts</span><span class="p">)</span>
+       <span class="c1">// 这个包自己产生的异常都会通过这个函数调用
+</span><span class="c1"></span>       <span class="nx">parser</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+           
+       <span class="p">})</span>
+       <span class="nx">parser</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">buf</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">fuzz</span>
+<span class="p">};</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>运行</p>
+
+<p><code>jsfuzz fuzz2.js</code></p>
+
+<p>输出大致如</p>
+
+<pre><code>#0 READ units: 0
+#1 NEW     cov: 605 corp: 2 exec/s: 0 rss: 35.83 MB
+#2 NEW     cov: 717 corp: 3 exec/s: 200 rss: 35.88 MB
+#10 NEW     cov: 726 corp: 4 exec/s: 615 rss: 35.88 MB
+#28 NEW     cov: 731 corp: 5 exec/s: 1058 rss: 36.07 MB
+#43 NEW     cov: 747 corp: 6 exec/s: 1500 rss: 36.07 MB
+#56 NEW     cov: 749 corp: 7 exec/s: 1444 rss: 36.07 MB
+#63 NEW     cov: 773 corp: 8 exec/s: 1750 rss: 36.07 MB
+#108 NEW     cov: 775 corp: 9 exec/s: 1607 rss: 36.3 MB
+
+</code></pre>
+
+<p><code>NEW</code>表示发现了新的路径</p>
+
+<p><code>cov</code>代表行数, <code>corp</code>代表的不同路径数 <code>exec/s</code>代表每秒执行的次数 <code>rss</code>代表内存占用</p>
+
+<p>由于这个库代码量不大,预期上能产生崩溃最多几分钟,不然就不可能了. 模糊测试的效果和运行时间并不是线性的.</p>
+
+<p>不过由于这次运行并未提供任何一个样本,指望模糊测试器能覆盖太多路径是不太现实的.</p>
+
+<h5 id="覆盖率">覆盖率</h5>
+
+<p>在终止运行后,jsfuzz将会产生一个覆盖率文件. 可以通过nyc生成覆盖率报告</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">npm i -D nyc 
+node_modules/.bin/nyc report --reporter<span class="o">=</span>html --exclude-node-modules<span class="o">=</span><span class="nb">false</span> </code></pre></td></tr></table>
+</div>
+</div>
+<p>输出路径在<code>couverage</code>目录,打开html文件后</p>
+
+<p>页面如下,我们fuzz的包在<code>node_modules/mqtt-packet</code>, 可以看出覆盖率很低.点开后可以发现<code>parser.js</code>的覆盖率只有57%. 这是一个相当低的数值</p>
+
+<p><img src="https://i.loli.net/2020/01/19/V4HfF8tNyPgw29E.png" alt="image_2020-01-19_15-37-35.png" /></p>
+
+<p>#####　生成一些样本</p>
+
+<p>可以通过<code>mqtt.generate(obj)</code> 生成正确的mqtt格式, 尝试用包自带的生成例子就能得到一个样本</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">mqtt</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;mqtt-packet&#39;</span><span class="p">)</span>
+<span class="kd">var</span> <span class="nx">object</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">cmd</span><span class="o">:</span> <span class="s1">&#39;publish&#39;</span><span class="p">,</span>
+  <span class="nx">retain</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+  <span class="nx">qos</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+  <span class="nx">dup</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+  <span class="nx">length</span><span class="o">:</span> <span class="mi">10</span><span class="p">,</span>
+  <span class="nx">topic</span><span class="o">:</span> <span class="s1">&#39;test&#39;</span><span class="p">,</span>
+  <span class="nx">payload</span><span class="o">:</span> <span class="s1">&#39;test&#39;</span> <span class="c1">// Can also be a Buffer
+</span><span class="c1"></span><span class="p">}</span>
+<span class="kd">var</span> <span class="nx">opts</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">protocolVersion</span><span class="o">:</span> <span class="mi">4</span> <span class="p">}</span> <span class="c1">// default is 4. Usually, opts is a connect packet
+</span><span class="c1"></span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">mqtt</span><span class="p">.</span><span class="nx">generate</span><span class="p">(</span><span class="nx">object</span><span class="p">))</span>
+<span class="c1">// 写入文件的方法 
+</span><span class="c1"></span><span class="kd">var</span> <span class="nx">fs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;fs&#39;</span><span class="p">)</span>
+<span class="nx">fs</span><span class="p">.</span><span class="nx">writeFile</span><span class="p">(</span><span class="s2">&#34;test.txt&#34;</span><span class="p">,</span> <span class="nx">mqtt</span><span class="p">.</span><span class="nx">generate</span><span class="p">(</span><span class="nx">object</span><span class="p">),</span>  <span class="s2">&#34;binary&#34;</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span> <span class="p">});</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>用mqtt-packet仓库说明里的mqtt object格式生成更多样本后得到了16个样本.</p>
+
+<p><img src="https://i.loli.net/2020/01/19/rOdIE48WsP5Yh7w.png" alt="image_2020-01-19_15-51-21.png" /></p>
+
+<p>运行后</p>
+
+<p><code>jsfuzz fuzz2.js test_corpus/</code></p>
+
+<p>可以看到路径数从50提高了67 并且在67个路径上爆出了一个错误</p>
+
+<p><img src="https://i.loli.net/2020/01/19/zGkrldgUZiCOyA4.png" alt="image_2020-01-19_15-54-33.png" /></p>
+
+<p>文本版</p>
+
+<pre><code>RangeError [ERR_BUFFER_OUT_OF_BOUNDS]: Attempt to write outside buffer bounds
+    at boundsError (internal/buffer.js:70:11)
+    at Buffer.readUInt8 (internal/buffer.js:238:5)
+    at BufferList.&lt;computed&gt; [as readUInt8] (/home/bluebird/fuzz/jsfuzz/node_modules/bl/bl.js:1:33980)
+    at Parser._parseByte (/home/bluebird/fuzz/jsfuzz/node_modules/mqtt-packet/parser.js:1:71555)
+    at Parser._parseProperties (/home/bluebird/fuzz/jsfuzz/node_modules/mqtt-packet/parser.js:1:72858)
+    at Parser._parseConnect (/home/bluebird/fuzz/jsfuzz/node_modules/mqtt-packet/parser.js:1:55778)
+    at Parser._parsePayload (/home/bluebird/fuzz/jsfuzz/node_modules/mqtt-packet/parser.js:1:51576)
+    at Parser.parse (/home/bluebird/fuzz/jsfuzz/node_modules/mqtt-packet/parser.js:1:49930)
+    at Worker.fuzz [as fn] (/home/bluebird/fuzz/jsfuzz/fuzz2.js:1:1523)
+    at process.&lt;anonymous&gt; (/usr/local/lib/node_modules/jsfuzz/build/src/worker.js:63:30)
+
+</code></pre>
+
+<p>一个尝试越界读导致的错误(nodjs会阻止越界读写buffer)</p>
+
+<p>查看覆盖率的话 发现已经达到了85% 简单浏览就能发现未能覆盖到的都是需要解析器使用协议的版本为5 而不是例子里的4.</p>
+
+<p><img src="https://i.loli.net/2020/01/19/QSChfLHVKOGBlYw.png" alt="image_2020-01-19_16-03-43.png" /></p>
+
+<h4 id="后言">后言</h4>
+
+<p>在像nodejs这类现代语言,使用fuzz来测试module能发现的大多数只是bug,在检查了缓冲区越界读写后你没法利用它.能发现的安全漏洞常见是dos,用错误的输出导致内存占用过大或者崩溃.</p>
+
+<p>但JavaScript的依赖管理导致依赖了太多的包,如果你能发现一个底层包的问题,你将能对大量使用它的包进行攻击.</p>
+]]></content></item><item><title>第一个cve</title><link>https://blue-bird1.github.io/posts/first-cve/</link><pubDate>Mon, 23 Mar 2020 21:06:04 +0800</pubDate><guid>https://blue-bird1.github.io/posts/first-cve/</guid><description>第一个CVE 在今天获得了第一个有CVE编号的漏洞 CVE-2020-10804 . CVE只是一个漏洞数据库,只需要自己申请即可. 但国内会自己给小漏洞申请CVE很少,往往视</description><content type="html"><![CDATA[
 
 <h2 id="第一个cve">第一个CVE</h2>
 
