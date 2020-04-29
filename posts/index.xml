@@ -1,4 +1,189 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 青鸟的博客</title><link>https://blue-bird1.github.io/posts/</link><description>Recent content in Posts on 青鸟的博客</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sun, 19 Apr 2020 20:35:37 +0800</lastBuildDate><atom:link href="https://blue-bird1.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>使用jsfuzz对nodejs模块进行模糊测试</title><link>https://blue-bird1.github.io/posts/jsfuzz-module/</link><pubDate>Sun, 19 Apr 2020 20:35:37 +0800</pubDate><guid>https://blue-bird1.github.io/posts/jsfuzz-module/</guid><description>使用jsfuzz对nodejs模块进行模糊测试 #### 前言 jsfuzz是一个基于覆盖率指导的模糊测试工具,能对JavaScript/nodejs模</description><content type="html"><![CDATA[
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 青鸟的博客</title><link>https://blue-bird1.github.io/posts/</link><description>Recent content in Posts on 青鸟的博客</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 30 Apr 2020 01:57:12 +0800</lastBuildDate><atom:link href="https://blue-bird1.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Coql入门教程</title><link>https://blue-bird1.github.io/posts/coql-new/</link><pubDate>Thu, 30 Apr 2020 01:57:12 +0800</pubDate><guid>https://blue-bird1.github.io/posts/coql-new/</guid><description>Codeql 入门教程 首发于先知社区 codeql是一个可以对代码进行分析的引擎, 安全人员可以用它作为挖洞的辅助或者直接进行挖掘漏洞,节省进行重复操作的精</description><content type="html"><![CDATA[
+
+<h2 id="codeql-入门教程">Codeql 入门教程</h2>
+
+<blockquote>
+<p>首发于先知社区</p>
+</blockquote>
+
+<p>codeql是一个可以对代码进行分析的引擎, 安全人员可以用它作为挖洞的辅助或者直接进行挖掘漏洞,节省进行重复操作的精力</p>
+
+<h3 id="安装">安装</h3>
+
+<p>虽然官方提供了可以进行查询的网站 但是由于速度不快和一些c/c++项目 需要自定义编译命令来编译 实际上在网站是不能查询的</p>
+
+<p>首先找一个放codeql的目录  作者用的是<code>/opt/codeql</code></p>
+
+<p>然后从<a href="https://github.com/github/codeql-cli-binaries/releases">这里</a>下载后解压到目录 然后下载semmle的库</p>
+
+<p>执行 <code>cd codeql &amp;&amp; git clone https://github.com/Semmle/ql</code></p>
+
+<p>完成后 目录下应该有两个目录 <code>codeql  ql</code></p>
+
+<p>接下来安装vscode插件 在插件市场直接搜索codeql即可  编写时安装量只有3k多 说明用codeql的群体暂时还不多.</p>
+
+<h3 id="创建数据库">创建数据库</h3>
+
+<p>使用<code>codeql database create</code> 来创建一个用于查询的数据库 <code>--language=python</code>指定语言是python</p>
+
+<p>例子</p>
+
+<p><code>codeql database create ./codeql -s .  --language=python</code></p>
+
+<p>在这种解释性语言上并不困难 问题在于对于c编译语言 需要用<code>--command=xxx</code>提供编译命令 虽然codeql会自动检测编译系统 但是在一些项目上不行  这也导致你编译不了的项目就用不了codeql</p>
+
+<p><img src="https://i.loli.net/2020/04/22/J5vogNVEkbyDc7f.png" alt="image.png" /></p>
+
+<p>在vscode把创建的codeql目录添加为数据库 就可以正式准备开始查询了</p>
+
+<h3 id="hello-world">hello world</h3>
+
+<p>codeql语言的查询格式如下</p>
+
+<pre><code>from int i where i = 3 select i
+</code></pre>
+
+<p>和sql比较像 <code>from</code>定义变量  <code>where</code> 声明限制条件 <code>select</code> 选择要输出的数据</p>
+
+<p>可以使用的定义只有类和函数 例子代码</p>
+
+<pre><code>// 函数
+predicate Name(int i) {
+  i &gt;5
+}
+
+// 类声明
+class Name extend int {
+   // 类变量声明
+   int i
+   // 覆盖父类函数
+   override string func(){
+   
+   }
+}
+</code></pre>
+
+<p>导入包语法和python一致 也是<code>import 名字</code></p>
+
+<p>作为每个语言都有的惯例 运行一下以下代码吧</p>
+
+<p><code>select &quot;hello world&quot;</code></p>
+
+<h3 id="审计使用">审计使用</h3>
+
+<p>在这里你应该有了自己的数据库了   作者选取的是python的一个django项目 (很遗憾的是由于动态语言的特性 python的污点跟踪效果不怎么好)</p>
+
+<p>codeql 支持的语言有<code>python</code> <code>java</code> <code>JavaScript</code> <code>c/c++</code>  <code>c#</code> <code>go</code></p>
+
+<p>并没有安全人员最喜欢目标用的语言 php, 也不用对以后抱太大期望 以php的动态特性和开发人员动不动就全局变量或者动态字符串导入文件的做法  污点跟踪和变量分析也没法用</p>
+
+<p>进行代码查询 首先要导入对应的编程语言包</p>
+
+<pre><code>import python
+</code></pre>
+
+<p>需要注意的是不同语言包的使用方法不一样 而且目前的文档不是很好 也没有全面的教程</p>
+
+<p>作者查<a href="https://help.semmle.com/qldoc/python">https://help.semmle.com/qldoc/python</a>  把python改成其他语言也能进去对应的文档</p>
+
+<p>codeql的python库把对象分为了几种类型分别是</p>
+
+<p><code>Scope</code> 作用域 像函数或者类</p>
+
+<p><code>Expr</code> 表达式 像 <code>1+1</code></p>
+
+<p><code>Stmt</code> 语句 例如 <code>if(xxx)</code></p>
+
+<p><code>Variable</code> 变量</p>
+
+<p>作为代码审计的开始   让我们先看看这个库调用的危险函数 在这里查了 django的重定向函数<code>redirect</code></p>
+
+<pre><code>import python
+
+from Call c ,Name n where c.getFunc() = n and n.getId() = &quot;redirect&quot; 
+select c,&quot;redirect&quot;
+</code></pre>
+
+<p>我们选择了<code>call</code>和<code>name</code>变量, call是一个函数调用</p>
+
+<p>然后调用 <code>c.getFunc()</code> 来获取调用的函数, 为什么函数是一个<code>Name</code>呢</p>
+
+<p>在python中 <code>test()</code> 实际上是对test这个变量进行调用 而在语法树上<code>test</code>是一个变量名</p>
+
+<p>最后我们要求<code>n.getId()</code> 获得的名字是<code>redirect</code></p>
+
+<p>可以发现这里能查到的都是<code>redirect()</code> 而不是<code>xx.redirect</code></p>
+
+<p>如果我们想要寻找<code>request.GET.get(xxx)</code>的调用 必须使用<code>Attribute</code></p>
+
+<p><code>Attribute.getName</code> 获取自身名字  <code>Attribute.getName</code> 获取.之前的<code>Expr</code> 在我们的需求中它还是一个<code>Attribute</code> 因为它前面还有<code>request.</code></p>
+
+<pre><code>import python
+
+from Attribute a,Attribute b  
+where a.getName() = &quot;get&quot; and a.getObject() =b 
+and (b.getName() = &quot;GET&quot; or b.getName() = &quot;post&quot;)
+select a,&quot;get request var&quot;
+</code></pre>
+
+<p>可以发现随着查询复杂度的增加 代码行数在不断增加 这个时候就应该使用函数来解耦</p>
+
+<p>假设我们查询一个<code>Expr</code> 像上面的例子 但是不想查到<code>test</code> 或者<code>debug</code> 开头的文件 在<code>Expr</code>或者<code>Stmt</code>都可以通过<code>getLocation()</code>来获取当前位置  可以写一个函数</p>
+
+<pre><code>predicate isNoTest(Expr e){
+  not e.getLocation().getFile().getBaseName().matches(&quot;debug%&quot;) and 
+  not e.getLocation().getFile().getBaseName().matches(&quot;test%&quot;)
+}
+</code></pre>
+
+<p>通过不断添加限制条件 在代码审计中可以锁定自己想要看到的函数调用. codeql不仅如此,还可以通过结合判断条件来寻找自己目标中的代码</p>
+
+<p>例如我们希望找到一个函数中有获取请求数据并赋值的语句 还进行了重定向</p>
+
+<p>首先作为一个赋值语句的终点 <code>.get(xx)</code> 是一个调用 添加</p>
+
+<pre><code>select Call c
+// 省略
+and c.getFunc() = a
+</code></pre>
+
+<p>然后添加一个赋值语句 要求右端是上面的调用</p>
+
+<pre><code>select Assign  assign
+// 省略
+and  assign.getValue() = c
+</code></pre>
+
+<p>再要求它们的作用范围是同一个函数</p>
+
+<pre><code>from Function f
+// 省略
+and (assign.getScope() = f and  redirectCall.getScope() =f)
+</code></pre>
+
+<p>最后代码</p>
+
+<pre><code>import python
+
+from Attribute a,Attribute b,Call c, 
+ Function f, Assign  assign, Name n,
+ Call redirectCall,Name n1
+where a.getName() = &quot;get&quot; and a.getObject() =b  
+and (b.getName() = &quot;GET&quot; or b.getName() = &quot;post&quot;)
+and f.getAStmt() =  assign
+and c.getFunc() = a
+and  assign.getValue() = c
+and  redirectCall.getFunc() = n1  and n1.getId() = &quot;redirect&quot;
+and (assign.getScope() = f and  redirectCall.getScope() =f)
+select f 
+</code></pre>
+
+<p>也可以查询变量是否直接进行危险函数,但是由于赋值和各种字符串操作之类的关系 应该属于污点分析的内容了</p>
+
+<h3 id="后言">后言</h3>
+
+<p>这篇教程讲了如何去用codeql去做代码审计辅助.在拥有思路后去编写这种查询的最大难点 就是文档差了 使用人数少 你无法谷歌到xxx如何去查询 只能自己去查文档去查那些函数到底怎么用.</p>
+]]></content></item><item><title>使用jsfuzz对nodejs模块进行模糊测试</title><link>https://blue-bird1.github.io/posts/jsfuzz-module/</link><pubDate>Sun, 19 Apr 2020 20:35:37 +0800</pubDate><guid>https://blue-bird1.github.io/posts/jsfuzz-module/</guid><description>使用jsfuzz对nodejs模块进行模糊测试 #### 前言 jsfuzz是一个基于覆盖率指导的模糊测试工具,能对JavaScript/nodejs模</description><content type="html"><![CDATA[
 
 <h3 id="使用jsfuzz对nodejs模块进行模糊测试">使用jsfuzz对nodejs模块进行模糊测试</h3>
 
