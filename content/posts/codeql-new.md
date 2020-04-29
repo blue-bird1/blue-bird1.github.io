@@ -1,5 +1,5 @@
 ---
-title: Coql入门教程
+title: Codeql入门教程
 date: 2020-04-30T01:57:12+08:00
 lastmod: 2020-04-30T01:57:12+08:00
 categories: ["网络安全"]
