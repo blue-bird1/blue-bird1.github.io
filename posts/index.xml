@@ -1,4 +1,196 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 青鸟的博客</title><link>https://blue-bird1.github.io/posts/</link><description>Recent content in Posts on 青鸟的博客</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 31 Dec 2020 15:38:03 +0800</lastBuildDate><atom:link href="https://blue-bird1.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>2020 年度总结</title><link>https://blue-bird1.github.io/posts/2020-end/</link><pubDate>Thu, 31 Dec 2020 15:38:03 +0800</pubDate><guid>https://blue-bird1.github.io/posts/2020-end/</guid><description>2020年度总结 灾难性的一年 2020年终于要过完了 又到了写年度总结的时候. 今年划水的时间太多了,尤其是下半年 并没有做什么事情 首先看看各个平台</description><content type="html"><![CDATA[
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 青鸟的博客</title><link>https://blue-bird1.github.io/posts/</link><description>Recent content in Posts on 青鸟的博客</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Fri, 05 Feb 2021 03:10:01 +0800</lastBuildDate><atom:link href="https://blue-bird1.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Steam市场与喜&#43;1经验</title><link>https://blue-bird1.github.io/posts/steam/</link><pubDate>Fri, 05 Feb 2021 03:10:01 +0800</pubDate><guid>https://blue-bird1.github.io/posts/steam/</guid><description>steam 最近在玩steam游戏,也关注了steam相关的论坛 学到了不少关于steam的东西,简单介绍一下 市场货币与价值 严格的来说 steam只支持两</description><content type="html"><![CDATA[
+
+<h2 id="steam">steam</h2>
+
+<p>最近在玩steam游戏,也关注了steam相关的论坛 学到了不少关于steam的东西,简单介绍一下</p>
+
+<h3 id="市场货币与价值">市场货币与价值</h3>
+
+<p>严格的来说 steam只支持两种货币 现实货币和steam余额. 但在一定时间段内 <code>一袋宝石</code>和<code>csgo钥匙</code>等也可以充当稳定的标准货币</p>
+
+<p>而<code>一袋宝石</code>和<code>csgo钥匙</code>等波动相当大 在前两个月价格为2.9r[人民币] 现在仅有2.5</p>
+
+<p>因为这些都是游戏虚拟物品 并不是金融等价物  实际价格直接取决于玩家</p>
+
+<p>宝石主要受到steam宝石发行策略的影响 如</p>
+
+<p>在冬季促销时每位用户每天都可以免费获得一张卡牌 分解可获得100宝石(1袋==1000)  大大增加了市场上的宝石供给</p>
+
+<h3 id="交易成本与货币汇率">交易成本与货币汇率</h3>
+
+<p>现实货币由于以下这点  在熟悉市场的人里是没人会直接使用的 所以忽略汇率 直接从余额开始</p>
+
+<h4 id="余额">余额</h4>
+
+<p>官方渠道的余额兑换是1:1.直接充值余额绝对是亏的,保留在银行卡还会获得利息.</p>
+
+<p>但实际上通过steam线下交易(指非steam市场交易)可以获得一定的折扣. 具体在<a href="#offline">线下交易</a>这一节讨论</p>
+
+<p>通过线下交易等渠道 实际上余额实际价值为现实货币的7-8折 甚至更低.这个比率是相当稳定的.</p>
+
+<p>而且steam所有物品都几乎可以通过余额购买,且有部分游戏充值也可以使用steam余额,这也意味着全部八折.</p>
+
+<p>如果要对现实货币反向兑换,steam是不支持的 只有通过线下交易 见<a href="#offline">线下交易</a>这一节的讨论</p>
+
+<p>而想用余额兑换宝石或者csgo钥匙 只能遵循当前市场价在steam购买.</p>
+
+<h4 id="宝石-csgo钥匙等库存物品">宝石/csgo钥匙等库存物品</h4>
+
+<p>库存物品有两种方法进行交易</p>
+
+<ul>
+<li>通过市场售卖</li>
+</ul>
+
+<p>每个市场物品 贩卖时只能获得售价的85%  剩下的15%将作为税收被steam和游戏物品对应开发商(每个物品都有对应的游戏id csgo/dota等属于v社直辖游戏)收走</p>
+
+<p>要回避这种交易成本 只能通过线下交易 (一般是市场价的八折)</p>
+
+<p>除此之外再次转手 还有时间成本 每个物品从市场购买后 7天内不能再销售 下面这种交易不受影响</p>
+
+<ul>
+<li>私下以物易物交易<br /></li>
+</ul>
+
+<p>每个steam用户可以和其他用户进行交易 只能交换物品(允许一方为空作为赠送) 不能如市场一样交易余额. 交易成本很显然 你需要花时间找到想要购买你的东西的人 并且steam不会为你被诈骗后退回物品</p>
+
+<h3 id="市场商品">市场商品</h3>
+
+<p>steam可获得的有以下几类</p>
+
+<ul>
+<li><p>游戏/dlc    在商品页面购买 直接入库 不允许交易</p></li>
+
+<li><p>游戏礼物   在购买多人包时可获得 可以把礼物发送给其他用户 让他们获得游戏. 或是以前礼品机制没改的时候 留存下来的礼品 这类一般是收藏品  一个礼品在收藏圈价值成百上千的很正常</p></li>
+
+<li><p>游戏激活key  游戏开发商可以在后台生成key 在steam输入这些游戏key可以获得那个游戏</p></li>
+
+<li><p>勋章 可在个人资料看到 主要作用是每获得/升级一次勋章会获得100经验</p></li>
+
+<li><p>游戏卡牌  游玩一个具有游戏卡牌的游戏 会掉落游戏卡牌)最大数量为一套卡/2 向上取整) 收集一整套卡牌后合成 可以随机获得勋章+一个聊天表情+一个个人资料背景+一个优惠卷</p></li>
+
+<li><p>游戏卡牌补充包  除了游玩掉落和在市场购买外 还可以通过打开补充包来获得卡牌. 获得途径有</p></li>
+</ul>
+
+<p>每有一个人合成一套卡牌 就在已经掉落所有卡牌里的用户 随机挑选一个人赠送补充包 (根据等级有不同的掉落权重 等级越高权重越高).或者通过宝石合成. 这也导致他们之间的价格相互锚定 见下一节内容</p>
+
+<ul>
+<li><p>聊天表情  聊天表情可以在好友聊天界面里使用 (真的有人把steam当成社交软件嘛? )</p></li>
+
+<li><p>个人资料背景 个人资料背景的价格上限取决于好不好看 例如某流星雨背景当前市场价60+</p></li>
+
+<li><p>宝石     通过分解 游戏卡牌/聊天表情/个人资料背景可以获得宝石 而对应分解宝石的值受到很多因素影响</p></li>
+
+<li><p>其他库存物品 每个游戏都可以生成自己的库存物品 例如csgo饰品 橙汁100%的宠物,如果游戏开发者决定让这些物品可交易的话 也可以交易</p></li>
+
+<li><p>steam点数 在steam消费获得. 可用于steam点数商品 可以购买 头像/头像框/聊天表情/个人资料背景 但均不可交易 可以通过社区奖励来交易 但是需要收到66%的高额税收</p></li>
+</ul>
+
+<h3 id="商品间的相互关系">商品间的相互关系</h3>
+
+<p>要谈相互关系 最大的破坏者就是steam点数商店 用户可以在点数商品购买自己已经拥有的游戏的聊天表情/个人资料背景  只要购买游戏 就能通过点数直接购买 而不需要通过合成卡牌来获得. 一个背景只需要500点数(按写本文的时间 也就0.7r)</p>
+
+<p>如果背景的价格比直接购买游戏会更贵,理性的人会选择购买游戏.</p>
+
+<p>卡牌和补充包(一包可以开出三张)的关系很显然  补充包的价格会在卡牌平均价格*3浮动</p>
+
+<p>而补充包可由宝石合出,如果卡牌的平均价格*3 高于合成所需的宝石价格 就可以通过用宝石合成补充包来获得利润.</p>
+
+<p>上面说明卡和补充包的价格上限是受到宝石价格锚定,同样的是其他物品的下限也收到锚定</p>
+
+<p>卡牌/聊天表情/背景都有自己的分解宝石值 通过分解获得对应的宝石. 如果购买价格低于对应宝石价格算上交易成本 同时可以获得利润 事实上在steam已经有这种机器人,长期在有价值的物品下面求购,(可笑的是由于机器人太多,在对应价格上出现了一个求购数量的尖峰)</p>
+
+<p>除了单张卡价格锚定外 由于一套卡也属于交易物品 也受到了整套卡价格的锚定.详细内容见 <a href="#bot">交易机器人</a>一节</p>
+
+<h3 id="市场参与者">市场参与者</h3>
+
+<h4 id="steam-1">steam</h4>
+
+<p>steam直接售卖的游戏 这也是绝大部分人的购买途径 但他只售卖游戏和游戏礼物</p>
+
+<h4 id="游戏key零售商">游戏key零售商</h4>
+
+<p>游戏开发商可以通过将key交给其他网站来售卖 这种也分两种 普通零售商和慈善包商</p>
+
+<p>其中区别在于 普通零售商将按一个一个游戏售卖 慈善包商将会把多个游戏打包一起卖 并且价格非常低廉 1,2块一个游戏很常见. 比较好的作品不屑于将自己的作品贱卖,在慈善包能买的绝大部分只有喜+1</p>
+
+<p>主要活跃的慈善包商</p>
+
+<ul>
+<li><a href="https://www.fanatical.com/">fanatical</a></li>
+<li><a href="https://www.humblebundle.com/">humblebundle</a></li>
+<li><a href="https://www.indiegala.com/">indiegala</a></li>
+<li><a href="http://dailyindiegame.com/">dig</a></li>
+</ul>
+
+<h4 id="bot">交易机器人</h4>
+
+<p>交易机器人使用整套卡牌/宝石/csgo钥匙/tf2钥匙作为交换物,可以在它们之前相互交换 例如你可以用一套卡换取一些宝石或者一些csgo钥匙</p>
+
+<p>你可以在这里 <a href="https://steam.supply/CardBots">https://steam.supply/CardBots</a> 找到一些机器人 或者谷歌搜索也能找到</p>
+
+<h4 id="普通用户">普通用户</h4>
+
+<p>市场的主要参与者.通过在上面的售卖者选择 来实现自己的目的. 或者销售自己的卡牌或者饰品来获得余额</p>
+
+<h3 id="offline">线下交易</h3>
+
+<p>注意 如果是中国交易者 可以在<a href="https://steamrepcn.com/">https://steamrepcn.com/</a> 查询他的信誉记录 国外的 <a href="https://steamrep.com/">https://steamrep.com/</a></p>
+
+<h4 id="淘宝代购-贩卖充值卡">淘宝代购/贩卖充值卡</h4>
+
+<p>代购:你支付淘宝商人一定比例的钱,淘宝商人添加好友 并赠送给你游戏.</p>
+
+<p>贩卖余额:通过交易给你饰品 然后让你高价卖出 淘宝商人通过购买来交换给你余额(这种具有封号风险)</p>
+
+<h4 id="玩家之间交易">玩家之间交易</h4>
+
+<p>在论坛的交易区或者qq群发生,交易内容一般是游戏key/游戏礼物,</p>
+
+<h4 id="饰品市场">饰品市场</h4>
+
+<p>可以在<a href="https://buff.163.com/">网易buff</a>等网站购买和销售饰品 由于部分饰品购买后到steam转卖 扣除手续费后仍然比直接充值高 也被当成便宜充值余额的方法 同时由于国外区域不能使用支付宝  这也是外区的国内用户的消费方法</p>
+
+<h3 id="作为一个用户">作为一个用户</h3>
+
+<p>作为一个steam用户 如何利用市场来购买想要的东西</p>
+
+<h3 id="增加游戏数量">增加游戏数量</h3>
+
+<p><a href="https://keylol.com/t644656-1-1">https://keylol.com/t644656-1-1</a> 这里我推荐阅读大佬的文章 很详细</p>
+
+<h3 id="游戏">游戏</h3>
+
+<p>首先最好当然是先转到低价区 再通过饰品市场获得折扣过的余额 (如果读者已经学会转区 应该就不需要阅读这篇基础文章了 所以假设读者都是国区)</p>
+
+<p>然后 <a href="https://steamdb.keylol.com/search/">https://steamdb.keylol.com/search/</a> 可以在这里查询到游戏的相关信息</p>
+
+<p><img src="https://i.loli.net/2021/02/05/5GOYtg6KpRvPI1x.png" alt="image.png" /></p>
+
+<p>可以看到历史最低的折扣(这个游戏免费送过)   以及进入慈善包的次数</p>
+
+<p>通过史低可以判断这个游戏当前的打折是否有优势来决定是否购买 如果进过包 通过点进进包次数可以看到进过哪些包 如果还没过期 甚至还可以买一包. 也意味着你可以通过线下交易来获得一个key,例如橙汁不考虑免费送的话 史低是7r 由于进过包 实际上在线下交易可以获得3r的key价格</p>
+
+<p>如果没进过包 也不想在饰品市场花心思 建议通过淘宝代购</p>
+
+<h3 id="获得勋章">获得勋章</h3>
+
+<p>可以在<a href="https://www.steamcardexchange.net/index.php?inventory">SCE</a> 和<a href="https://www.steamtradematcher.com/">STM</a>来交换卡牌 其中STM是只能用同一套卡来交换而SCE有卡牌价格的设定</p>
+
+<p>或如果卡牌价格比较高 也通过宝石合成补充包</p>
+
+<h3 id="提升等级">提升等级</h3>
+
+<p>如果需要大量提升等级 可以在淘宝购买 成本0.6r一套</p>
+
+<p>或者如果宝石价格足够低(需要经过简单的计算) 可以通过线下购买大量宝石 然后与交易机器人交换套卡</p>
+
+<h3 id="尾言">尾言</h3>
+
+<p>最后引用一句大佬的名言</p>
+
+<p><code>玩毛游戏、浪费时间、不如加一</code></p>
+]]></content></item><item><title>2020 年度总结</title><link>https://blue-bird1.github.io/posts/2020-end/</link><pubDate>Thu, 31 Dec 2020 15:38:03 +0800</pubDate><guid>https://blue-bird1.github.io/posts/2020-end/</guid><description>2020年度总结 灾难性的一年 2020年终于要过完了 又到了写年度总结的时候. 今年划水的时间太多了,尤其是下半年 并没有做什么事情 首先看看各个平台</description><content type="html"><![CDATA[
 
 <h3 id="2020年度总结">2020年度总结</h3>
 
