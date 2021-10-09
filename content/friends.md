@@ -7,5 +7,5 @@ comments: true
 
 以下是大佬们的博客
 
-[夜莺](https://www.shallowdream.cn)
+[夜莺](https://www.nightgalessss.com)
 [天析](https://tianxi.20191005.tech/)
