@@ -14,6 +14,9 @@ pygmentsOptions = "linenos=table"
 #Enable Hugo Emoji Conversion
 enableEmoji=true
 
+[blackfriday]
+extensions = ["hardLineBreak"]
+
 [author]
 author = "blue bird"
 
@@ -53,4 +56,5 @@ tag = "tags"
 [[params.social]]
   name = "github"
   url = "https://github.com/blue-bird1"
+
 
