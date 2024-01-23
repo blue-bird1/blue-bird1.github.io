@@ -45,8 +45,8 @@ repo实际上做的事情是
 而如果需要添加自己代码仓库 就可以往`.repo`里写自己的xml文件  [文件格式参考](https://gerrit.googlesource.com/git-repo/+/HEAD/docs/manifest-format.md)
 
 ```bash
-mkdir .repo/self_manifests
-touch .repo/self_manifests/bluebird.xml
+mkdir .repo/local_manifests
+touch .repo/local_manifests/bluebird.xml
 ```
 
 
