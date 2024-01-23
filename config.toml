@@ -1,7 +1,7 @@
 baseURL = "https://blue-bird1.github.io/"
 languageCode = "zh-CN"
 title = "青鸟的博客"
-theme = "hermit"
+theme = "hermit-v2"
 hasCJKLanguage = true
 googleAnalytics = "UA-110301700-1"
 
