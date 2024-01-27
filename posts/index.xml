@@ -1,4 +1,250 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 青鸟的博客</title><link>https://blue-bird1.github.io/posts/</link><description>Recent content in Posts on 青鸟的博客</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 23 Jan 2024 18:11:54 +0800</lastBuildDate><atom:link href="https://blue-bird1.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>从零开始自定义安卓系统(2) 编译redroid</title><link>https://blue-bird1.github.io/posts/aosp-2/</link><pubDate>Tue, 23 Jan 2024 18:11:54 +0800</pubDate><guid>https://blue-bird1.github.io/posts/aosp-2/</guid><description>从零开始自定义安卓系统(2) 编译redroid 添加redroid补丁 redroid添加了自己的补丁 1 2 3 # apply redroid patches git clone https://github.com/remote-android/redroid-patches.git ~/redroid-patches ~/redroid-patches/apply-patch.sh . 具体补丁内容可以</description><content type="html"><![CDATA[<h2 id="从零开始自定义安卓系统2-编译redroid">从零开始自定义安卓系统(2) 编译redroid</h2>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 青鸟的博客</title><link>https://blue-bird1.github.io/posts/</link><description>Recent content in Posts on 青鸟的博客</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sun, 28 Jan 2024 02:26:53 +0800</lastBuildDate><atom:link href="https://blue-bird1.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>从零开始自定义安卓系统(3) 配置开发环境与新建product</title><link>https://blue-bird1.github.io/posts/aosp-3/</link><pubDate>Sun, 28 Jan 2024 02:26:53 +0800</pubDate><guid>https://blue-bird1.github.io/posts/aosp-3/</guid><description>从零开始自定义安卓系统(3) 配置开发环境与新建product aidegen aidegen是一个自动生成项目配置文件的工具 在运行完lunch后 会自动配置这</description><content type="html"><![CDATA[<h2 id="从零开始自定义安卓系统3-配置开发环境与新建product">从零开始自定义安卓系统(3) 配置开发环境与新建product</h2>
+<h3 id="aidegen">aidegen</h3>
+<p><code>aidegen</code>是一个自动生成项目配置文件的工具 在运行完<code>lunch</code>后 会自动配置这个工具路径</p>
+<p>主要参数有    <a href="https://android.googlesource.com/platform/tools/asuite/+/refs/heads/main/aidegen/README.md">完整文档参考</a></p>
+<ul>
+<li>
+<p><code>-s</code>  跳过构建</p>
+</li>
+<li>
+<p><code>-n </code> 不自动运行<code>IDE</code></p>
+</li>
+<li>
+<p><code>-i</code>   选择<code>IDE</code>类型</p>
+</li>
+<li>
+<p><code>-p</code> 指定<code>IDE</code>路径</p>
+</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 用vscode编辑整个项目 v是vscdoe c=clion a=android stuido i=idea</span>
+</span></span><span class="line"><span class="cl">aidegen -i v -s .
+</span></span><span class="line"><span class="cl"><span class="c1"># 编辑单个项目  检测后是打开android studio</span>
+</span></span><span class="line"><span class="cl">aidegen packages/apps/Settings
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="目录结构">目录结构</h3>
+<p>AOSP目录结构非常复杂 由非常多项目构成,但是大部分并不需要修改</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">- art 
+</span></span><span class="line"><span class="cl">- Dalvik
+</span></span><span class="line"><span class="cl">app运行时, 执行dex文件, 系统修改通常可以无视, 客户端岗位八股文经典题目
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">- bootable
+</span></span><span class="line"><span class="cl">硬件boot层 如fastboot 如果不做硬件开发可以直接无视
+</span></span><span class="line"><span class="cl">- bionic 
+</span></span><span class="line"><span class="cl">实现libc这种底层库, 通常不需要改动
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">- cts
+</span></span><span class="line"><span class="cl">- platform_testing
+</span></span><span class="line"><span class="cl">兼容性和平台测试相关 自己玩玩可以无视
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">- developers 
+</span></span><span class="line"><span class="cl">提供一些例子代码
+</span></span><span class="line"><span class="cl">- development 
+</span></span><span class="line"><span class="cl">一些开发与例子代码
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">- external  
+</span></span><span class="line"><span class="cl">- prebuilt 
+</span></span><span class="line"><span class="cl">都是存放的外部代码 开发不需要看
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">-libcore
+</span></span><span class="line"><span class="cl">-libnativehelper
+</span></span><span class="line"><span class="cl">只需要用
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">- build
+</span></span><span class="line"><span class="cl">- toolchain
+</span></span><span class="line"><span class="cl">- tools
+</span></span><span class="line"><span class="cl">编译用
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>需要主要关注的</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># rom修改
+</span></span><span class="line"><span class="cl">/packages  自带的应用包
+</span></span><span class="line"><span class="cl">/framework 安卓系统框架
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">#  系统定制
+</span></span><span class="line"><span class="cl">/vendor 厂商定制
+</span></span><span class="line"><span class="cl">/device 厂商设备
+</span></span><span class="line"><span class="cl">/hardware  硬件层
+</span></span><span class="line"><span class="cl">/kernel 系统内核
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 如果对如何在AOSP 实现某个功能有疑问,如设置什么选项才能赋予root权限, 可能需要查阅代码编译流程
+</span></span><span class="line"><span class="cl">/build
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="新建device和product">新建device和product</h3>
+<p>在编译时已经知道 编译时需要选择编译目标.而编译目标在<code>AndroidProducts.mk</code> 这种文件下设置</p>
+<p>参考<code>redroid</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">PRODUCT_MAKEFILES := \
+</span></span><span class="line"><span class="cl">    $(LOCAL_DIR)/redroid_x86_64.mk \
+</span></span><span class="line"><span class="cl">    $(LOCAL_DIR)/redroid_x86_64_only.mk \
+</span></span><span class="line"><span class="cl">    $(LOCAL_DIR)/redroid_arm64.mk \
+</span></span><span class="line"><span class="cl">    $(LOCAL_DIR)/redroid_arm64_only.mk \
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">COMMON_LUNCH_CHOICES := \
+</span></span><span class="line"><span class="cl">    redroid_x86_64-userdebug \
+</span></span><span class="line"><span class="cl">    redroid_x86_64_only-userdebug \
+</span></span><span class="line"><span class="cl">    redroid_arm64-userdebug \
+</span></span><span class="line"><span class="cl">    redroid_arm64_only-userdebug \
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可知要新建一个<code>device</code> 首先在device目录下创建一个子目录 例如 <code>device/bluebird</code></p>
+<p>然后创建一个``AndroidProducts.mk<code> </code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 这两个是一一对应关系,如果文件同名  `bluebird_redroid_x86_64.mk` 可以省略前面
+</span></span><span class="line"><span class="cl">bluebird_redroid_x86_64:
+</span></span><span class="line"><span class="cl">PRODUCT_MAKEFILES := \
+</span></span><span class="line"><span class="cl">    bluebird_redroid_x86_64:$(LOCAL_DIR)/bluebird.mk 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">COMMON_LUNCH_CHOICES := \
+</span></span><span class="line"><span class="cl">    bluebird_redroid_x86_64-userdebug 
+</span></span><span class="line"><span class="cl">    
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后新建一个<code>bluebird.mk </code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 直接复制redroid的配置
+</span></span><span class="line"><span class="cl">$(call inherit-product, $(LOCAL_PATH)/../redroid/redroid_x86_64_only.mk)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 定义自己产品的名字
+</span></span><span class="line"><span class="cl">PRODUCT_NAME := bluebird_x86_64_only
+</span></span><span class="line"><span class="cl">PRODUCT_DEVICE := bluebird_x86_64_only
+</span></span><span class="line"><span class="cl">PRODUCT_BRAND := blulebird
+</span></span><span class="line"><span class="cl">PRODUCT_MODEL := bluebird_x86_64_only
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>再新建一个 <code>bluebird_x86_64_only/BoardConfig.mk</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 直接导入redroid的对应配置
+</span></span><span class="line"><span class="cl">include device/redroid/redroid_x86_64_only/BoardConfig.mk
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>最后结果</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">○ → tree device/bluebird/
+</span></span><span class="line"><span class="cl">device/bluebird/
+</span></span><span class="line"><span class="cl">|-- AndroidProducts.mk
+</span></span><span class="line"><span class="cl">|-- README.md
+</span></span><span class="line"><span class="cl">|-- bluebird.mk
+</span></span><span class="line"><span class="cl">`-- bluebird_x86_64_only
+</span></span><span class="line"><span class="cl">    `-- BoardConfig.mk
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后就能进行 <code>lunch bluebird_x86_64_only-userdebug</code></p>
+]]></content></item><item><title>从零开始自定义安卓系统(2) 编译redroid</title><link>https://blue-bird1.github.io/posts/aosp-2/</link><pubDate>Tue, 23 Jan 2024 18:11:54 +0800</pubDate><guid>https://blue-bird1.github.io/posts/aosp-2/</guid><description>从零开始自定义安卓系统(2) 编译redroid 添加redroid补丁 redroid添加了自己的补丁 1 2 3 # apply redroid patches git clone https://github.com/remote-android/redroid-patches.git ~/redroid-patches ~/redroid-patches/apply-patch.sh . 具体补丁内容可以</description><content type="html"><![CDATA[<h2 id="从零开始自定义安卓系统2-编译redroid">从零开始自定义安卓系统(2) 编译redroid</h2>
 <h3 id="添加redroid补丁">添加redroid补丁</h3>
 <p><code>redroid</code>添加了自己的补丁</p>
 <div class="highlight"><div class="chroma">
