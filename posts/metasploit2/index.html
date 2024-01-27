@@ -1,0 +1,474 @@
+<!doctype html><html lang=zh-CN><head><script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(e,t,n,s,o,i,a){e.GoogleAnalyticsObject=o,e[o]=e[o]||function(){(e[o].q=e[o].q||[]).push(arguments)},e[o].l=1*new Date,i=t.createElement(n),a=t.getElementsByTagName(n)[0],i.async=1,i.src=s,a.parentNode.insertBefore(i,a)}(window,document,"script","https://www.google-analytics.com/analytics.js","ga"),ga("create","UA-110301700-1","auto"),ga("send","pageview"))</script><meta charset=utf-8><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="ie=edge"><meta name=robots content="index, follow"><meta name=revisit-after content="15 days"><link rel=author href=/humans.txt><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/site.webmanifest><meta name=msapplication-TileImage content="/mstile-144x144.png"><link rel="shortcut icon" href=/favicon.ico><meta name=author content><meta itemprop=name content="metasploit python 模块是如何运行"><meta itemprop=description content="开始 metasploit的扩展实现的代码主要在metasploit-framework/lib/msf/core/modules/exter"><meta itemprop=datePublished content="2018-02-02T22:57:52+08:00"><meta itemprop=dateModified content="2018-02-02T22:57:52+08:00"><meta itemprop=wordCount content="1904"><meta itemprop=keywords content><meta property="og:title" content="metasploit python 模块是如何运行"><meta property="og:description" content="开始 metasploit的扩展实现的代码主要在metasploit-framework/lib/msf/core/modules/exter"><meta property="og:type" content="article"><meta property="og:url" content="https://blue-bird1.github.io/posts/metasploit2/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2018-02-02T22:57:52+08:00"><meta property="article:modified_time" content="2018-02-02T22:57:52+08:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="metasploit python 模块是如何运行"><meta name=twitter:description content="开始 metasploit的扩展实现的代码主要在metasploit-framework/lib/msf/core/modules/exter"><title>metasploit python 模块是如何运行</title><link rel="stylesheet dns-prefetch preconnect preload prefetch" as=style href=https://blue-bird1.github.io/css/style.min.d0b20be7baabc80eb407cbffc7e54d364796f75f0c7f757c906f90f3c84fc262.css integrity="sha256-0LIL57qryA60B8v/x+VNNkeW918Mf3V8kG+Q88hPwmI=" crossorigin=anonymous></head><body id=page><header id=site-header class="animated slideInUp"><div class="hdr-wrapper section-inner"><div class=hdr-left><div class=site-branding><a href=https://blue-bird1.github.io/>青鸟的博客</a></div><nav class="site-nav hide-in-mobile"><a href=https://blue-bird1.github.io/posts/>Posts</a><a href=https://blue-bird1.github.io/about/>About</a><a href=https://blue-bird1.github.io/friends/>Friend</a></nav></div><div class="hdr-right hdr-icons"><button id=menu-btn class=hdr-btn title=Menu><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button></div></div></header><div id=mobile-menu class="animated fast"><ul><li><a href=https://blue-bird1.github.io/posts/>Posts</a></li><li><a href=https://blue-bird1.github.io/about/>About</a></li><li><a href=https://blue-bird1.github.io/friends/>Friend</a></li></ul></div><main class="site-main section-inner animated fadeIn faster"><article class=thin><header class=post-header><div class=post-meta><span>Feb 2, 2018</span></div><h1>metasploit python 模块是如何运行</h1></header><div class=post-info><p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-feather"><path d="M20.24 12.24a6 6 0 00-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" y1="8" x2="2" y2="22"/><line x1="17.5" y1="15" x2="9" y2="15"/></svg><a href target=_blank></a></p><p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-folder"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg><span class=category><a href=https://blue-bird1.github.io/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8>网络安全</a></span></p><p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6A2 2 0 004 4v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>1904 Words</p><p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2018-02-02 14:57 +0000</p></div><hr class=post-end><div class=content><h2 id=开始>开始<a href=#开始 class=anchor aria-hidden=true><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 015 5 5 5 0 01-5 5h-3m-6 0H6a5 5 0 01-5-5 5 5 0 015-5h3"/><line x1="8" y1="12" x2="16" y2="12"/></svg></a></h2><p>metasploit的扩展实现的代码主要在<code>metasploit-framework/lib/msf/core/modules/external</code>
+目录结构如下</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>├── bridge.rb
+</span></span><span class=line><span class=cl>├── message.rb
+</span></span><span class=line><span class=cl>├── python
+</span></span><span class=line><span class=cl>│   ├── async_timeout
+</span></span><span class=line><span class=cl>│   │   ├── __init__.py
+</span></span><span class=line><span class=cl>│   └── metasploit
+</span></span><span class=line><span class=cl>│       ├── __init__.py
+</span></span><span class=line><span class=cl>│       ├── __init__.pyc
+</span></span><span class=line><span class=cl>│       ├── module.py
+</span></span><span class=line><span class=cl>│       ├── module.pyc
+</span></span><span class=line><span class=cl>│       ├── probe_scanner.py
+</span></span><span class=line><span class=cl>├── shim.rb
+</span></span><span class=line><span class=cl>└── templates
+</span></span><span class=line><span class=cl>    ├── capture_server.erb
+</span></span><span class=line><span class=cl>    ├── common_metadata.erb
+</span></span><span class=line><span class=cl>    ├── dos.erb
+</span></span><span class=line><span class=cl>    ├── multi_scanner.erb
+</span></span><span class=line><span class=cl>    └── remote_exploit_cmd_stager.erb
+</span></span></code></pre></td></tr></table></div></div><p>其中<code>python</code>目录的py代码将会在我们运行python模块时加入python路径.这也是为什么我们能导入<code>metasploit</code>
+<code>templates</code>目录则是用于实现将python代码变成模块的代码模板.事实上我们能使用msf对正常模块的功能 如<code>info</code>都是靠这些模板实现的.
+<code>message.rb</code>和<code>bridge</code>是与msf jsonrpc通信的一些api.
+<code>shim.rb</code>则是真正将python代码实现为模块的代码.</p><p>这里省略了不重要的细节的<code>message.rb</code>代码</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>class Msf::Modules::External::Message
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl>  def self.from_module(j)                                                                                        
+</span></span><span class=line><span class=cl>    if j[&#39;method&#39;]
+</span></span><span class=line><span class=cl>      m = self.new(j[&#39;method&#39;].to_sym)
+</span></span><span class=line><span class=cl>      m.params = j[&#39;params&#39;]
+</span></span><span class=line><span class=cl>      m
+</span></span><span class=line><span class=cl>    elsif j[&#39;response&#39;]
+</span></span><span class=line><span class=cl>      m = self.new(:reply)
+</span></span><span class=line><span class=cl>      m.params = j[&#39;response&#39;]
+</span></span><span class=line><span class=cl>      m.id = j[&#39;id&#39;]
+</span></span><span class=line><span class=cl>      m
+</span></span><span class=line><span class=cl>    end
+</span></span><span class=line><span class=cl>  end
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl>  def initialize(m)
+</span></span><span class=line><span class=cl>    self.method = m
+</span></span><span class=line><span class=cl>    self.params = {}
+</span></span><span class=line><span class=cl>    self.id = Base64.strict_encode64(SecureRandom.random_bytes(16))
+</span></span><span class=line><span class=cl>  end
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl>  def to_json
+</span></span><span class=line><span class=cl>    params =
+</span></span><span class=line><span class=cl>      if self.params.respond_to? :to_nested_values
+</span></span><span class=line><span class=cl>        self.params.to_nested_values
+</span></span><span class=line><span class=cl>      else
+</span></span><span class=line><span class=cl>        self.params.to_h
+</span></span><span class=line><span class=cl>      end
+</span></span><span class=line><span class=cl>    JSON.generate({jsonrpc: &#39;2.0&#39;, id: self.id, method: self.method, params: params})
+</span></span><span class=line><span class=cl>  end
+</span></span></code></pre></td></tr></table></div></div><p>这个类实际上是对传递给metasploit的信息的一个封装.
+<code>initialize</code>是ruby的初始化方法 从这里可以看到它有三个属性<code>method</code> <code>params</code> <code>id</code></p><p><code>from_module</code>方法则是用于将传递的参数转换成自身
+<code>to_json</code>方法很明显就是转换成一个可用的json(jsonrpc传递需要json格式)</p><p>这里是省略了不重要的细节的<code>bridge.rb</code>代码</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span><span class=lnt>60
+</span><span class=lnt>61
+</span><span class=lnt>62
+</span><span class=lnt>63
+</span><span class=lnt>64
+</span><span class=lnt>65
+</span><span class=lnt>66
+</span><span class=lnt>67
+</span><span class=lnt>68
+</span><span class=lnt>69
+</span><span class=lnt>70
+</span><span class=lnt>71
+</span><span class=lnt>72
+</span><span class=lnt>73
+</span><span class=lnt>74
+</span><span class=lnt>75
+</span><span class=lnt>76
+</span><span class=lnt>77
+</span><span class=lnt>78
+</span><span class=lnt>79
+</span><span class=lnt>80
+</span><span class=lnt>81
+</span><span class=lnt>82
+</span><span class=lnt>83
+</span><span class=lnt>84
+</span><span class=lnt>85
+</span><span class=lnt>86
+</span><span class=lnt>87
+</span><span class=lnt>88
+</span><span class=lnt>89
+</span><span class=lnt>90
+</span><span class=lnt>91
+</span><span class=lnt>92
+</span><span class=lnt>93
+</span><span class=lnt>94
+</span><span class=lnt>95
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>require &#39;msf/core/modules/external/message&#39;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>class Msf::Modules::External::Bridge
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>  # 通过jsonrpc运行
+</span></span><span class=line><span class=cl>  def run(datastore)
+</span></span><span class=line><span class=cl>    unless self.running
+</span></span><span class=line><span class=cl>      m = Msf::Modules::External::Message.new(:run)
+</span></span><span class=line><span class=cl>      m.params = datastore.dup
+</span></span><span class=line><span class=cl>      send(m)
+</span></span><span class=line><span class=cl>      self.running = true
+</span></span><span class=line><span class=cl>    end
+</span></span><span class=line><span class=cl>  end
+</span></span><span class=line><span class=cl>	
+</span></span><span class=line><span class=cl>  # 获取当前状态和恢复run状态  
+</span></span><span class=line><span class=cl>  def get_status
+</span></span><span class=line><span class=cl>    if self.running || !self.messages.empty?
+</span></span><span class=line><span class=cl>      m = receive_notification
+</span></span><span class=line><span class=cl>      if m.nil?
+</span></span><span class=line><span class=cl>        close_ios
+</span></span><span class=line><span class=cl>        self.messages.close
+</span></span><span class=line><span class=cl>        self.running = false
+</span></span><span class=line><span class=cl>      end
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>      return m
+</span></span><span class=line><span class=cl>    end
+</span></span><span class=line><span class=cl>  end
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>  # 接收
+</span></span><span class=line><span class=cl>  def recv(filter_id=nil, timeout=600)
+</span></span><span class=line><span class=cl>    _, out, err = self.ios
+</span></span><span class=line><span class=cl>    message = &#39;&#39;
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>  # jsonrpc发送和接受
+</span></span><span class=line><span class=cl>  def send_receive(message)
+</span></span><span class=line><span class=cl>    send(message)
+</span></span><span class=line><span class=cl>    recv(message.id)
+</span></span><span class=line><span class=cl>  end
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>  # 发送模块元数据
+</span></span><span class=line><span class=cl>  def describe
+</span></span><span class=line><span class=cl>    resp = send_receive(Msf::Modules::External::Message.new(:describe))
+</span></span><span class=line><span class=cl>    close_ios
+</span></span><span class=line><span class=cl>    resp.params
+</span></span><span class=line><span class=cl>  end
+</span></span><span class=line><span class=cl>  	
+</span></span><span class=line><span class=cl>  # 发送  
+</span></span><span class=line><span class=cl>  def send(message)
+</span></span><span class=line><span class=cl>    input, output, err, status = ::Open3.popen3(self.env, self.cmd)
+</span></span><span class=line><span class=cl>    self.ios = [input, output, err]
+</span></span><span class=line><span class=cl>    self.wait_thread = status
+</span></span><span class=line><span class=cl>    case select(nil, [input], nil, 0.1)
+</span></span><span class=line><span class=cl>    when nil
+</span></span><span class=line><span class=cl>      raise &#34;Cannot run module #{self.path}&#34;
+</span></span><span class=line><span class=cl>    when [[], [input], []]
+</span></span><span class=line><span class=cl>      m = message.to_json
+</span></span><span class=line><span class=cl>      write_message(input, m)
+</span></span><span class=line><span class=cl>    else
+</span></span><span class=line><span class=cl>      raise &#34;Error running module #{self.path}&#34;
+</span></span><span class=line><span class=cl>    end
+</span></span><span class=line><span class=cl>  end
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>  # TODO 这里原本有一大段关于网络接受的代码 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl># 每个编程语言扩展的具体实现
+</span></span><span class=line><span class=cl>class Msf::Modules::External::PyBridge &lt; Msf::Modules::External::Bridge
+</span></span><span class=line><span class=cl> # 判断是否是py文件
+</span></span><span class=line><span class=cl>  def self.applies?(module_name)
+</span></span><span class=line><span class=cl>    module_name.match? /\.py$/
+</span></span><span class=line><span class=cl>  end
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl>  # 初始化 python扩展添加了额外的路径
+</span></span><span class=line><span class=cl>  def initialize(module_path)
+</span></span><span class=line><span class=cl>    super
+</span></span><span class=line><span class=cl>    pythonpath = ENV[&#39;PYTHONPATH&#39;] || &#39;&#39;
+</span></span><span class=line><span class=cl>    self.env = self.env.merge({ &#39;PYTHONPATH&#39; =&gt; pythonpath + File::PATH_SEPARATOR + File.expand_path(&#39;../python&#39;, __FILE__) })
+</span></span><span class=line><span class=cl>  end
+</span></span><span class=line><span class=cl>end
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>class Msf::Modules::External::Bridge
+</span></span><span class=line><span class=cl>  # 载入列表 我们可以期待更多的语言可以编写msf模块 如Msf::Modules::External::JsBridge?
+</span></span><span class=line><span class=cl>  LOADERS = [
+</span></span><span class=line><span class=cl>    Msf::Modules::External::PyBridge,
+</span></span><span class=line><span class=cl>    Msf::Modules::External::Bridge
+</span></span><span class=line><span class=cl>  ]
+</span></span><span class=line><span class=cl>	
+</span></span><span class=line><span class=cl>  # 运行模块方法 让载入的bridge都判断是否是自己所属的 
+</span></span><span class=line><span class=cl>  def self.open(module_path)
+</span></span><span class=line><span class=cl>    LOADERS.each do |klass|
+</span></span><span class=line><span class=cl>      return klass.new module_path if klass.applies? module_path
+</span></span><span class=line><span class=cl>    end
+</span></span><span class=line><span class=cl>    nil
+</span></span><span class=line><span class=cl>  end
+</span></span><span class=line><span class=cl>end
+</span></span></code></pre></td></tr></table></div></div><p>这里是省略了不重要的细节的<code>shim.rb</code>代码</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>require &#39;msf/core/modules/external/bridge&#39;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>class Msf::Modules::External::Shim
+</span></span><span class=line><span class=cl>  # 将bridge返回的数据生成一个模块
+</span></span><span class=line><span class=cl>  def self.generate(module_path)
+</span></span><span class=line><span class=cl>    mod = Msf::Modules::External::Bridge.open(module_path)
+</span></span><span class=line><span class=cl>    return &#39;&#39; unless mod.meta
+</span></span><span class=line><span class=cl>    # 这里根据模块元数据来选择模板 目前只有3个 元数据获取查看bridge.rb的meta方法 
+</span></span><span class=line><span class=cl>    case mod.meta[&#39;type&#39;]
+</span></span><span class=line><span class=cl>    when &#39;remote_exploit_cmd_stager&#39;
+</span></span><span class=line><span class=cl>      remote_exploit_cmd_stager(mod)
+</span></span><span class=line><span class=cl>    when &#39;capture_server&#39;
+</span></span><span class=line><span class=cl>      capture_server(mod)
+</span></span><span class=line><span class=cl>    when &#39;dos&#39;
+</span></span><span class=line><span class=cl>      dos(mod)
+</span></span><span class=line><span class=cl>    when &#39;scanner.multi&#39;
+</span></span><span class=line><span class=cl>      multi_scanner(mod)
+</span></span><span class=line><span class=cl>    else
+</span></span><span class=line><span class=cl>      # TODO have a nice load error show up in the logs
+</span></span><span class=line><span class=cl>      &#39;&#39;
+</span></span><span class=line><span class=cl>    end
+</span></span><span class=line><span class=cl>  end
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>  # 返回一个模块 erb是ruby的一个代码模板库
+</span></span><span class=line><span class=cl>  def self.render_template(name, meta = {})
+</span></span><span class=line><span class=cl>    template = File.join(File.dirname(__FILE__), &#39;templates&#39;, name)
+</span></span><span class=line><span class=cl>    ERB.new(File.read(template)).result(binding)
+</span></span><span class=line><span class=cl>  end
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  def self.common_metadata(meta = {})
+</span></span><span class=line><span class=cl>    render_template(&#39;common_metadata.erb&#39;, meta)
+</span></span><span class=line><span class=cl>  end
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>  # 数据转换
+</span></span><span class=line><span class=cl>  def self.mod_meta_common(mod, meta = {})
+</span></span><span class=line><span class=cl>    meta[:path]        = mod.path.dump
+</span></span><span class=line><span class=cl>    meta[:name]        = mod.meta[&#39;name&#39;].dump
+</span></span><span class=line><span class=cl>    meta[:description] = mod.meta[&#39;description&#39;].dump
+</span></span><span class=line><span class=cl>    meta[:authors]     = mod.meta[&#39;authors&#39;].map(&amp;:dump).join(&#34;,\n          &#34;)
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    meta[:options]     = mod.meta[&#39;options&#39;].map do |n, o|
+</span></span><span class=line><span class=cl>      &#34;Opt#{o[&#39;type&#39;].camelize}.new(#{n.dump},
+</span></span><span class=line><span class=cl>        [#{o[&#39;required&#39;]}, #{o[&#39;description&#39;].dump}, #{o[&#39;default&#39;].inspect}])&#34;
+</span></span><span class=line><span class=cl>    end.join(&#34;,\n          &#34;)
+</span></span><span class=line><span class=cl>    meta
+</span></span><span class=line><span class=cl>  end
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl> # 渲染膜拜
+</span></span><span class=line><span class=cl>  def self.dos(mod)
+</span></span><span class=line><span class=cl>    meta = mod_meta_common(mod)
+</span></span><span class=line><span class=cl>    meta[:date] = mod.meta[&#39;date&#39;].dump
+</span></span><span class=line><span class=cl>    meta[:references] = mod.meta[&#39;references&#39;].map do |r|
+</span></span><span class=line><span class=cl>      &#34;[#{r[&#39;type&#39;].upcase.dump}, #{r[&#39;ref&#39;].dump}]&#34;
+</span></span><span class=line><span class=cl>    end.join(&#34;,\n          &#34;)
+</span></span><span class=line><span class=cl>    render_template(&#39;dos.erb&#39;, meta)
+</span></span><span class=line><span class=cl>  end
+</span></span><span class=line><span class=cl>end
+</span></span></code></pre></td></tr></table></div></div><p>所以python模块的运行过程其实是这样的</p><ol><li>class Msf::Modules::External::Shim获取到了模块路径</li><li>调用Msf::Modules::External::Bridge.open</li><li>在open方法 Msf::Modules::External::PyBridge::applies判断成功(也就是确认了是python模块)</li><li>初始化一个Msf::Modules::External::PyBridge并返回</li><li>判断元数据类型 假设是dos 则调用dos方法</li><li>调用mod_meta_common方法转换元数据 渲染代码模板</li></ol><p>我们可以查看<code>dos.erb</code>的内容</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>require &#39;msf/core/modules/external/bridge&#39;
+</span></span><span class=line><span class=cl>require &#39;msf/core/module/external&#39;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>class MetasploitModule &lt; Msf::Auxiliary
+</span></span><span class=line><span class=cl>  include Msf::Module::External
+</span></span><span class=line><span class=cl>  include Msf::Auxiliary::Dos
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  def initialize
+</span></span><span class=line><span class=cl>    super({
+</span></span><span class=line><span class=cl>	  &lt;%= common_metadata meta %&gt;
+</span></span><span class=line><span class=cl>      &#39;References&#39;  =&gt;
+</span></span><span class=line><span class=cl>        [
+</span></span><span class=line><span class=cl>          &lt;%= meta[:references] %&gt;
+</span></span><span class=line><span class=cl>        ],
+</span></span><span class=line><span class=cl>      &#39;DisclosureDate&#39; =&gt; &lt;%= meta[:date] %&gt;,
+</span></span><span class=line><span class=cl>      })
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>      register_options([
+</span></span><span class=line><span class=cl>        &lt;%= meta[:options] %&gt;
+</span></span><span class=line><span class=cl>      ])
+</span></span><span class=line><span class=cl>  end
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  def run
+</span></span><span class=line><span class=cl>    print_status(&#34;Starting server...&#34;)
+</span></span><span class=line><span class=cl>    mod = Msf::Modules::External::Bridge.open(&lt;%= meta[:path] %&gt;)
+</span></span><span class=line><span class=cl>    mod.run(datastore)
+</span></span><span class=line><span class=cl>    wait_status(mod)
+</span></span><span class=line><span class=cl>  end
+</span></span><span class=line><span class=cl>end
+</span></span></code></pre></td></tr></table></div></div><p>所以事实上python模块的实现就是将python代码中元数据传递到代码模板 然后实际上调用的还是ruby模板 我们的python文件路径将会出现在</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>mod = Msf::Modules::External::Bridge.open(&lt;%= meta[:path] %&gt;)
+</span></span><span class=line><span class=cl>mod.run(datastore)
+</span></span></code></pre></td></tr></table></div></div><p>最后通过<code>bridge.run</code>调用.这种扩展方法不但没有失去对ruby模块的强大支持也没丢失python的灵活性 非常好</p></div></article><div class="post-nav thin"><a class=next-post href=https://blue-bird1.github.io/posts/metasploit1/><span class=post-nav-label><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>&nbsp;Newer</span><br><span>metasploit python 模块</span></a>
+<a class=prev-post href=https://blue-bird1.github.io/posts/metinfogetshell/><span class=post-nav-label>Older&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span><br><span>Metinfo3.5.19 getshell</span></a></div><div id=comments class=thin></div></main><footer id=site-footer class="section-inner thin animated fadeIn faster"><p>&copy; 2024 <a href=https://blue-bird1.github.io/></a>
+&#183;
+&#183; Made with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a>
+&#183; Theme <a href=https://github.com/1bl4z3r/hermit-V2 target=_blank rel=noopener>Hermit-V2</a>
+&#183; <a href=https://blue-bird1.github.io/posts/index.xml target=_blank title=rss><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 019 9"/><path d="M4 4a16 16 0 0116 16"/><circle cx="5" cy="19" r="1"/></svg></a></p></footer><script async src=https://blue-bird1.github.io/js/bundle.min.038214de9d568246fadcfeb06c69349925de3209f332ec123861b6aa031d63c6.js integrity="sha256-A4IU3p1Wgkb63P6wbGk0mSXeMgnzMuwSOGG2qgMdY8Y=" crossorigin=anonymous></script><script type=text/javascript async src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">MathJax.Hub.Config({tex2jax:{inlineMath:[["$","$"],["\\(","\\)"]],displayMath:[["$$","$$"],["[[","]]"]],processEscapes:!0,processEnvironments:!0,skipTags:["script","noscript","style","textarea","pre"],TeX:{equationNumbers:{autoNumber:"AMS"},extensions:["AMSmath.js","AMSsymbols.js"]}}}),MathJax.Hub.Queue(function(){var e,t=MathJax.Hub.getAllJax();for(e=0;t.length>e;e+=1)t[e].SourceElement().parentNode.className+=" has-jax"})</script><style>code.has-jax{font:inherit;font-size:100%;background:inherit;border:inherit;color:#515151}</style></body></html>

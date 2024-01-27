@@ -1,0 +1,104 @@
+<!doctype html><html lang=zh-CN><head><script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(e,t,n,s,o,i,a){e.GoogleAnalyticsObject=o,e[o]=e[o]||function(){(e[o].q=e[o].q||[]).push(arguments)},e[o].l=1*new Date,i=t.createElement(n),a=t.getElementsByTagName(n)[0],i.async=1,i.src=s,a.parentNode.insertBefore(i,a)}(window,document,"script","https://www.google-analytics.com/analytics.js","ga"),ga("create","UA-110301700-1","auto"),ga("send","pageview"))</script><meta charset=utf-8><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="ie=edge"><meta name=robots content="index, follow"><meta name=revisit-after content="15 days"><link rel=author href=/humans.txt><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/site.webmanifest><meta name=msapplication-TileImage content="/mstile-144x144.png"><link rel="shortcut icon" href=/favicon.ico><meta name=author content><meta itemprop=name content="XSS实战 跳转XSS"><meta itemprop=description content="XSS实战: 跳转XSS 前言 跳转XSS实际上并不是一种新类型的攻击方式, 主要形成原因是 以前网站外部跳转时是直接接受参数然后跳转,导致了URL重"><meta itemprop=datePublished content="2019-04-20T12:43:40+08:00"><meta itemprop=dateModified content="2019-04-20T12:43:40+08:00"><meta itemprop=wordCount content="772"><meta itemprop=keywords content><meta property="og:title" content="XSS实战 跳转XSS"><meta property="og:description" content="XSS实战: 跳转XSS 前言 跳转XSS实际上并不是一种新类型的攻击方式, 主要形成原因是 以前网站外部跳转时是直接接受参数然后跳转,导致了URL重"><meta property="og:type" content="article"><meta property="og:url" content="https://blue-bird1.github.io/posts/location-xss/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2019-04-20T12:43:40+08:00"><meta property="article:modified_time" content="2019-04-20T12:43:40+08:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="XSS实战 跳转XSS"><meta name=twitter:description content="XSS实战: 跳转XSS 前言 跳转XSS实际上并不是一种新类型的攻击方式, 主要形成原因是 以前网站外部跳转时是直接接受参数然后跳转,导致了URL重"><title>XSS实战 跳转XSS</title><link rel="stylesheet dns-prefetch preconnect preload prefetch" as=style href=https://blue-bird1.github.io/css/style.min.d0b20be7baabc80eb407cbffc7e54d364796f75f0c7f757c906f90f3c84fc262.css integrity="sha256-0LIL57qryA60B8v/x+VNNkeW918Mf3V8kG+Q88hPwmI=" crossorigin=anonymous></head><body id=page><header id=site-header class="animated slideInUp"><div class="hdr-wrapper section-inner"><div class=hdr-left><div class=site-branding><a href=https://blue-bird1.github.io/>青鸟的博客</a></div><nav class="site-nav hide-in-mobile"><a href=https://blue-bird1.github.io/posts/>Posts</a><a href=https://blue-bird1.github.io/about/>About</a><a href=https://blue-bird1.github.io/friends/>Friend</a></nav></div><div class="hdr-right hdr-icons"><button id=menu-btn class=hdr-btn title=Menu><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button></div></div></header><div id=mobile-menu class="animated fast"><ul><li><a href=https://blue-bird1.github.io/posts/>Posts</a></li><li><a href=https://blue-bird1.github.io/about/>About</a></li><li><a href=https://blue-bird1.github.io/friends/>Friend</a></li></ul></div><main class="site-main section-inner animated fadeIn faster"><article class=thin><header class=post-header><div class=post-meta><span>Apr 20, 2019</span></div><h1>XSS实战 跳转XSS</h1></header><div class=post-info><p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-feather"><path d="M20.24 12.24a6 6 0 00-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" y1="8" x2="2" y2="22"/><line x1="17.5" y1="15" x2="9" y2="15"/></svg><a href target=_blank></a></p><p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-folder"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg><span class=category><a href=https://blue-bird1.github.io/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8>网络安全</a></span></p><p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6A2 2 0 004 4v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>772 Words</p><p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2019-04-20 04:43 +0000</p></div><hr class=post-end><div class=content><h2 id=xss实战-跳转xss>XSS实战: 跳转XSS<a href=#xss实战-跳转xss class=anchor aria-hidden=true><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 015 5 5 5 0 01-5 5h-3m-6 0H6a5 5 0 01-5-5 5 5 0 015-5h3"/><line x1="8" y1="12" x2="16" y2="12"/></svg></a></h2><h3 id=前言>前言<a href=#前言 class=anchor aria-hidden=true><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 015 5 5 5 0 01-5 5h-3m-6 0H6a5 5 0 01-5-5 5 5 0 015-5h3"/><line x1="8" y1="12" x2="16" y2="12"/></svg></a></h3><p>跳转XSS实际上并不是一种新类型的攻击方式,</p><p>主要形成原因是 以前网站外部跳转时是直接接受参数然后跳转,导致了URL重定向漏洞.而现在网站喜欢加个跳转页,不会直接跳转,而是接受参数然后用js跳转. 这就有一个问题 如果未验证参数, js跳转时是可以接受JavaScript伪协议执行js代码的.</p><h3 id=漏洞代码示例>漏洞代码示例<a href=#漏洞代码示例 class=anchor aria-hidden=true><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 015 5 5 5 0 01-5 5h-3m-6 0H6a5 5 0 01-5-5 5 5 0 015-5h3"/><line x1="8" y1="12" x2="16" y2="12"/></svg></a></h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>&lt;?php
+</span></span><span class=line><span class=cl>	echo &#34;&lt;script&gt;window.location.href = $_GET[&#39;url&#39;]&lt;/script&gt;&#34;;
+</span></span><span class=line><span class=cl>?&gt;
+</span></span></code></pre></td></tr></table></div></div><h3 id=实战例子>实战例子<a href=#实战例子 class=anchor aria-hidden=true><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 015 5 5 5 0 01-5 5h-3m-6 0H6a5 5 0 01-5-5 5 5 0 015-5h3"/><line x1="8" y1="12" x2="16" y2="12"/></svg></a></h3><p>以拉勾网为例,作者打开页面都会先看看js里有什么信息.很快发现js里有这段代码</p><p><img src=https://i.loli.net/2019/04/20/5cbb2a45d44a9.png alt=Screenshot_15.png></p><p>显然只有有参数的才能引起兴趣.作者快速尝试了<code>https://sec.lagou.com/verify.html?e=test1&amp;f=test2</code></p><p>发现url参数直接进入了页面,当然与本次主题有关的是参数<code>f</code>.虽然另一个更直接. 它在页面的位置是</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>    function submit1(data){
+</span></span><span class=line><span class=cl>        var host = &#34;test2&#34;;
+</span></span><span class=line><span class=cl>        $.ajax({
+</span></span><span class=line><span class=cl>            url: &#39;parseSession&#39;,
+</span></span><span class=line><span class=cl>            type: &#34;post&#34;,
+</span></span><span class=line><span class=cl>            dataType: &#34;json&#34;,
+</span></span><span class=line><span class=cl>            data: {
+</span></span><span class=line><span class=cl>                challenge: data.challenge,
+</span></span><span class=line><span class=cl>                errcode:1
+</span></span><span class=line><span class=cl>            },
+</span></span><span class=line><span class=cl>            success: function (result) {
+</span></span><span class=line><span class=cl>                window.location.href = host;
+</span></span><span class=line><span class=cl>            }
+</span></span><span class=line><span class=cl>        })
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        //$.getJSON(&#39;/user/sendCode.json&#39;, {t: new Date().getTime(), type: $(&#39;#contactSelect&#39;).val()}, function (data)
+</span></span><span class=line><span class=cl>    }
+</span></span></code></pre></td></tr></table></div></div><p>尝试引入双引号.被转义了.所以这个参数就没问题了么?并不是.下面的代码使用了这个参数进行跳转.</p><p>可以使用<code>https://sec.lagou.com/verify.html?e=1&amp;f=JavaScript:alert(1)</code>弹框.</p><h3 id=最后>最后<a href=#最后 class=anchor aria-hidden=true><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 015 5 5 5 0 01-5 5h-3m-6 0H6a5 5 0 01-5-5 5 5 0 015-5h3"/><line x1="8" y1="12" x2="16" y2="12"/></svg></a></h3><p>首先拉勾网是没有src的,别想了. 另外现在这个问题似乎已经修复了?访问 <a href=https://sec.lagou.com/parseSession>https://sec.lagou.com/parseSession</a>会302..</p><p>e参数没修.e出现的代码为</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=line><span class=cl>    <span class=nx>$</span><span class=p>(</span><span class=s1>&#39;#submit&#39;</span><span class=p>).</span><span class=nx>click</span><span class=p>(</span><span class=kd>function</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=kd>var</span> <span class=nx>code</span> <span class=o>=</span> <span class=nb>document</span><span class=p>.</span><span class=nx>getElementById</span><span class=p>(</span><span class=s1>&#39;code&#39;</span><span class=p>).</span><span class=nx>value</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>(</span><span class=o>!</span><span class=nx>code</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=nx>showError</span><span class=p>(</span><span class=s1>&#39;请填写验证码&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=k>else</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=s2>&#34;111111&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=nx>test1</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=nx>$</span><span class=p>.</span><span class=nx>ajax</span><span class=p>({</span>
+</span></span><span class=line><span class=cl>                <span class=nx>url</span><span class=o>:</span> <span class=s1>&#39;checkcode&#39;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                <span class=nx>type</span><span class=o>:</span> <span class=s2>&#34;post&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                <span class=nx>dataType</span><span class=o>:</span> <span class=s2>&#34;json&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                <span class=nx>data</span><span class=o>:</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>                    <span class=nx>t</span><span class=o>:</span> <span class=k>new</span> <span class=nb>Date</span><span class=p>().</span><span class=nx>getTime</span><span class=p>(),</span>
+</span></span><span class=line><span class=cl>                    <span class=nx>code</span><span class=o>:</span> <span class=nx>code</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                    <span class=nx>errcode</span> <span class=o>:</span><span class=nx>test1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>                <span class=p>},</span>
+</span></span><span class=line><span class=cl>                <span class=nx>success</span><span class=o>:</span><span class=kd>function</span> <span class=p>(</span><span class=nx>data</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>                    <span class=nx>console</span><span class=p>.</span><span class=nx>log</span><span class=p>(</span><span class=nx>data</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                    <span class=k>if</span> <span class=p>(</span><span class=nx>data</span><span class=p>.</span><span class=nx>state</span> <span class=o>==</span> <span class=mi>1</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>                        <span class=nx>goToUrl</span><span class=p>(</span><span class=nx>getUrlParam</span><span class=p>(</span><span class=s2>&#34;f&#34;</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>                    <span class=p>}</span> <span class=k>else</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>                        <span class=nx>showError</span><span class=p>(</span><span class=s2>&#34;验证码错误，请重新输入！&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                    <span class=p>}</span>
+</span></span><span class=line><span class=cl>                <span class=p>}</span>
+</span></span><span class=line><span class=cl>            <span class=p>})</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>});</span>
+</span></span></code></pre></td></tr></table></div></div><p>双引号和单引号均被转义,有兴趣的读者可以作为对自己的挑战.还有过滤的waf</p></div></article><div class="post-nav thin"><a class=next-post href=https://blue-bird1.github.io/posts/go-bazel/><span class=post-nav-label><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>&nbsp;Newer</span><br><span>在golang项目开始使用Bazel</span></a>
+<a class=prev-post href=https://blue-bird1.github.io/posts/srcbug/><span class=post-nav-label>Older&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span><br><span>挖掘src漏洞</span></a></div><div id=comments class=thin></div></main><footer id=site-footer class="section-inner thin animated fadeIn faster"><p>&copy; 2024 <a href=https://blue-bird1.github.io/></a>
+&#183;
+&#183; Made with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a>
+&#183; Theme <a href=https://github.com/1bl4z3r/hermit-V2 target=_blank rel=noopener>Hermit-V2</a>
+&#183; <a href=https://blue-bird1.github.io/posts/index.xml target=_blank title=rss><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 019 9"/><path d="M4 4a16 16 0 0116 16"/><circle cx="5" cy="19" r="1"/></svg></a></p></footer><script async src=https://blue-bird1.github.io/js/bundle.min.038214de9d568246fadcfeb06c69349925de3209f332ec123861b6aa031d63c6.js integrity="sha256-A4IU3p1Wgkb63P6wbGk0mSXeMgnzMuwSOGG2qgMdY8Y=" crossorigin=anonymous></script><script type=text/javascript async src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">MathJax.Hub.Config({tex2jax:{inlineMath:[["$","$"],["\\(","\\)"]],displayMath:[["$$","$$"],["[[","]]"]],processEscapes:!0,processEnvironments:!0,skipTags:["script","noscript","style","textarea","pre"],TeX:{equationNumbers:{autoNumber:"AMS"},extensions:["AMSmath.js","AMSsymbols.js"]}}}),MathJax.Hub.Queue(function(){var e,t=MathJax.Hub.getAllJax();for(e=0;t.length>e;e+=1)t[e].SourceElement().parentNode.className+=" has-jax"})</script><style>code.has-jax{font:inherit;font-size:100%;background:inherit;border:inherit;color:#515151}</style></body></html>

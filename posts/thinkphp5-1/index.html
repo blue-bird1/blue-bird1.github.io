@@ -1,0 +1,154 @@
+<!doctype html><html lang=zh-CN><head><script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(e,t,n,s,o,i,a){e.GoogleAnalyticsObject=o,e[o]=e[o]||function(){(e[o].q=e[o].q||[]).push(arguments)},e[o].l=1*new Date,i=t.createElement(n),a=t.getElementsByTagName(n)[0],i.async=1,i.src=s,a.parentNode.insertBefore(i,a)}(window,document,"script","https://www.google-analytics.com/analytics.js","ga"),ga("create","UA-110301700-1","auto"),ga("send","pageview"))</script><meta charset=utf-8><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="ie=edge"><meta name=robots content="index, follow"><meta name=revisit-after content="15 days"><link rel=author href=/humans.txt><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/site.webmanifest><meta name=msapplication-TileImage content="/mstile-144x144.png"><link rel="shortcut icon" href=/favicon.ico><meta name=author content="bluebird"><meta itemprop=name content="think5审计与调试技巧1"><meta itemprop=description content="think5审计与调试技巧1"><meta itemprop=datePublished content="2019-01-17T23:19:42+08:00"><meta itemprop=dateModified content="2019-01-17T23:19:42+08:00"><meta itemprop=wordCount content="1585"><meta itemprop=keywords content="审计,"><meta property="og:title" content="think5审计与调试技巧1"><meta property="og:description" content="think5审计与调试技巧1"><meta property="og:type" content="article"><meta property="og:url" content="https://blue-bird1.github.io/posts/thinkphp5-1/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2019-01-17T23:19:42+08:00"><meta property="article:modified_time" content="2019-01-17T23:19:42+08:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="think5审计与调试技巧1"><meta name=twitter:description content="think5审计与调试技巧1"><title>think5审计与调试技巧1</title><link rel="stylesheet dns-prefetch preconnect preload prefetch" as=style href=https://blue-bird1.github.io/css/style.min.d0b20be7baabc80eb407cbffc7e54d364796f75f0c7f757c906f90f3c84fc262.css integrity="sha256-0LIL57qryA60B8v/x+VNNkeW918Mf3V8kG+Q88hPwmI=" crossorigin=anonymous></head><body id=page><header id=site-header class="animated slideInUp"><div class="hdr-wrapper section-inner"><div class=hdr-left><div class=site-branding><a href=https://blue-bird1.github.io/>青鸟的博客</a></div><nav class="site-nav hide-in-mobile"><a href=https://blue-bird1.github.io/posts/>Posts</a><a href=https://blue-bird1.github.io/about/>About</a><a href=https://blue-bird1.github.io/friends/>Friend</a></nav></div><div class="hdr-right hdr-icons"><button id=menu-btn class=hdr-btn title=Menu><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button></div></div></header><div id=mobile-menu class="animated fast"><ul><li><a href=https://blue-bird1.github.io/posts/>Posts</a></li><li><a href=https://blue-bird1.github.io/about/>About</a></li><li><a href=https://blue-bird1.github.io/friends/>Friend</a></li></ul></div><main class="site-main section-inner animated fadeIn faster"><article class=thin><header class=post-header><div class=post-meta><span>Jan 17, 2019</span></div><h1>think5审计与调试技巧1</h1></header><div class=post-info><p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-feather"><path d="M20.24 12.24a6 6 0 00-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" y1="8" x2="2" y2="22"/><line x1="17.5" y1="15" x2="9" y2="15"/></svg><a href target=_blank>bluebird</a></p><p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83.0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7" y2="7"/></svg><span class=tag><a href=https://blue-bird1.github.io/tags/%E5%AE%A1%E8%AE%A1>审计</a></span></p><p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-folder"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg><span class=category><a href=https://blue-bird1.github.io/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8>网络安全</a></span></p><p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6A2 2 0 004 4v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>1585 Words</p><p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2019-01-17 15:19 +0000</p></div><hr class=post-end><div class=content><h3 id=think5审计与调试技巧1>think5审计与调试技巧1<a href=#think5审计与调试技巧1 class=anchor aria-hidden=true><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 015 5 5 5 0 01-5 5h-3m-6 0H6a5 5 0 01-5-5 5 5 0 015-5h3"/><line x1="8" y1="12" x2="16" y2="12"/></svg></a></h3><p>think5是一个非常流行的框架, 现在的cms很多都采用了think5作为开发框架.这就带来一个问题, 没用过的安全人员审计的时候就非常懵逼了.</p><p>例如 程序入口在哪? orm操作都是这种函数 <code>Db::name($modeln['tablename'])->where('id',$id)->setInc('click');</code> 怎么操作才会出现sql注入?</p><p>这就需要框架知识了,但是学习整个框架又太多, 不学又不知道怎么审计.所以这个系列旨在带来足以审计的think5框架知识,而不太复杂</p><h4 id=整体目录结构>整体目录结构<a href=#整体目录结构 class=anchor aria-hidden=true><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 015 5 5 5 0 01-5 5h-3m-6 0H6a5 5 0 01-5-5 5 5 0 015-5h3"/><line x1="8" y1="12" x2="16" y2="12"/></svg></a></h4><p>think5 主要需要关注的目录如下</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>├── application 应用目录（可设置）
+</span></span><span class=line><span class=cl>├── config 配置目录 
+</span></span><span class=line><span class=cl>├── extend 扩展类库目录（可定义）
+</span></span><span class=line><span class=cl>├── public 网站目录
+</span></span><span class=line><span class=cl>├── route   路由
+</span></span><span class=line><span class=cl>├─- runtime  应用的运行时目录（可写，可设置）
+</span></span><span class=line><span class=cl>├── thinkphp 框架目录
+</span></span><span class=line><span class=cl>└── vendor 第三方库
+</span></span></code></pre></td></tr></table></div></div><p>我们审计主要看<code>application</code> 目录</p><p>5.0 官方给的目录参考是</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>├─application           应用目录（可设置）
+</span></span><span class=line><span class=cl>│  ├─common             公共模块目录（可更改）
+</span></span><span class=line><span class=cl>│  ├─index              模块目录(可更改)
+</span></span><span class=line><span class=cl>│  │  ├─config.php      模块配置文件
+</span></span><span class=line><span class=cl>│  │  ├─common.php      模块函数文件
+</span></span><span class=line><span class=cl>│  │  ├─controller      控制器目录
+</span></span><span class=line><span class=cl>│  │  ├─model           模型目录
+</span></span><span class=line><span class=cl>│  │  ├─view            视图目录
+</span></span><span class=line><span class=cl>│  │  └─ ...            更多类库目录
+</span></span><span class=line><span class=cl>│  ├─command.php        命令行工具配置文件
+</span></span><span class=line><span class=cl>│  ├─common.php         应用公共（函数）文件
+</span></span><span class=line><span class=cl>│  ├─config.php         应用（公共）配置文件
+</span></span><span class=line><span class=cl>│  ├─database.php       数据库配置文件
+</span></span><span class=line><span class=cl>│  ├─tags.php           应用行为扩展定义文件
+</span></span><span class=line><span class=cl>│  └─route.php          路由配置文件
+</span></span></code></pre></td></tr></table></div></div><p>但是事实可能缺失很多部分 例如<code>nonecms</code> 的目录是</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>├── admin
+</span></span><span class=line><span class=cl>│   ├── behavior
+</span></span><span class=line><span class=cl>│   ├── config
+</span></span><span class=line><span class=cl>│   ├── controller
+</span></span><span class=line><span class=cl>│   ├── rbac.php
+</span></span><span class=line><span class=cl>│   ├── tags.php
+</span></span><span class=line><span class=cl>│   ├── validate
+</span></span><span class=line><span class=cl>│   └── view
+</span></span><span class=line><span class=cl>├── command.php
+</span></span><span class=line><span class=cl>├── common
+</span></span><span class=line><span class=cl>│   ├── lib
+</span></span><span class=line><span class=cl>│   ├── model
+</span></span><span class=line><span class=cl>│   └── taglib
+</span></span><span class=line><span class=cl>├── common.php
+</span></span><span class=line><span class=cl>├── index
+</span></span><span class=line><span class=cl>│   ├── config
+</span></span><span class=line><span class=cl>│   └── controller
+</span></span><span class=line><span class=cl>├── mobile
+</span></span><span class=line><span class=cl>│   ├── config
+</span></span><span class=line><span class=cl>│   └── controller
+</span></span><span class=line><span class=cl>└── push
+</span></span><span class=line><span class=cl>    ├── controller
+</span></span><span class=line><span class=cl>    └── service
+</span></span></code></pre></td></tr></table></div></div><h4 id=think5-url>think5 url<a href=#think5-url class=anchor aria-hidden=true><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 015 5 5 5 0 01-5 5h-3m-6 0H6a5 5 0 01-5-5 5 5 0 015-5h3"/><line x1="8" y1="12" x2="16" y2="12"/></svg></a></h4><p>最常见的think5 url是</p><p><code>http://serverName/index.php（或者其它应用入口文件）/模块/控制器/操作/[参数名/参数值...]</code></p><p><code>http://serverName/index.php（或者其它应用入口文件）?s=/模块/控制器/操作/[参数名/参数值...]</code></p><p>像</p><p><code>index.php/index/blog/read</code> <code>index.php?s=/index/blog/read</code></p><p>其他方式也有 但是基本大同小异 例如<code>index/listing/index/cid/47.html</code></p><h4 id=配置文件>配置文件<a href=#配置文件 class=anchor aria-hidden=true><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 015 5 5 5 0 01-5 5h-3m-6 0H6a5 5 0 01-5-5 5 5 0 015-5h3"/><line x1="8" y1="12" x2="16" y2="12"/></svg></a></h4><p>think5.1 配置文件在config目录 5.0在<code>application/config.php</code></p><p>常见的配置文件</p><p><code>app.php cache.php cookie.php database.php log.php session.php template.php trace.php</code></p><p>最重要的配置文件是<code>app.php</code></p><p>主要需要关注的配置如下</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>// 应用调试模式
+</span></span><span class=line><span class=cl>&#39;app_debug&#39;              =&gt; true,
+</span></span><span class=line><span class=cl>// 应用Trace
+</span></span><span class=line><span class=cl>&#39;app_trace&#39;              =&gt; true,
+</span></span><span class=line><span class=cl>// 默认全局过滤方法 用逗号分隔多个
+</span></span><span class=line><span class=cl>&#39;default_filter&#39;         =&gt; &#39;&#39;,
+</span></span><span class=line><span class=cl>// 禁止访问模块
+</span></span><span class=line><span class=cl>&#39;deny_module_list&#39;       =&gt; [&#39;common&#39;],
+</span></span></code></pre></td></tr></table></div></div><p><code>app_debug</code> 和 <code>app_trace</code> 建议设置成true.</p><p>调试模式下异常会显示详细信息,而不是通用报错界面</p><p><code>app_trace</code> 则会在右下角显示一个按钮,根据设置可以显示执行路径,执行sql等等</p><p>如果没有显示,需要添加</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>// Trace信息
+</span></span><span class=line><span class=cl>&#39;trace&#39;     =&gt;  [
+</span></span><span class=line><span class=cl>    //支持Html,Console
+</span></span><span class=line><span class=cl>    &#39;type&#39;  =&gt;  &#39;html&#39;,
+</span></span><span class=line><span class=cl>] 
+</span></span></code></pre></td></tr></table></div></div><p>如果没有看到这个设置 可能在<code>trace.php</code>中设置</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>&lt;?php
+</span></span><span class=line><span class=cl>return [
+</span></span><span class=line><span class=cl>    // 内置Html Console 支持扩展
+</span></span><span class=line><span class=cl>    &#39;type&#39; =&gt; &#39;Html&#39;,
+</span></span><span class=line><span class=cl>];
+</span></span></code></pre></td></tr></table></div></div><p><code>xxx.php</code> 对应的是<code>app.php</code>里的<code>xxx</code>设置</p><p><code>default_filter</code> 可能的值是函数, 例如 <code>strip_tags</code> 等于对所有用户传入的参数执行过滤.</p><p><code>deny_module_list</code> 则是禁止访问的模块</p><h4 id=日志>日志<a href=#日志 class=anchor aria-hidden=true><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 015 5 5 5 0 01-5 5h-3m-6 0H6a5 5 0 01-5-5 5 5 0 015-5h3"/><line x1="8" y1="12" x2="16" y2="12"/></svg></a></h4><p><code>config/log.php</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>return [
+</span></span><span class=line><span class=cl>    // 日志记录方式，内置 file socket 支持扩展
+</span></span><span class=line><span class=cl>    &#39;type&#39;  =&gt; &#39;File&#39;,
+</span></span><span class=line><span class=cl>    // 日志保存目录
+</span></span><span class=line><span class=cl>    &#39;path&#39;  =&gt; &#39;&#39;,
+</span></span><span class=line><span class=cl>    // 日志记录级别
+</span></span><span class=line><span class=cl>    &#39;level&#39; =&gt; [],
+</span></span><span class=line><span class=cl>];
+</span></span></code></pre></td></tr></table></div></div><p>默认路径是在<code>runtime/log</code></p><h4 id=数据库trace>数据库trace<a href=#数据库trace class=anchor aria-hidden=true><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 015 5 5 5 0 01-5 5h-3m-6 0H6a5 5 0 01-5-5 5 5 0 015-5h3"/><line x1="8" y1="12" x2="16" y2="12"/></svg></a></h4><p><code>app_trace</code>设置后会发现并没有sql记录,这个需要在database.php添加</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>&#39;debug&#39;       =&gt; true,
+</span></span></code></pre></td></tr></table></div></div><p>不过就算你看到你的sql注入进入了显示的语句, 但是由于thinkphp5的参数绑定, 很可能并没有生效.</p><h4 id=路由>路由<a href=#路由 class=anchor aria-hidden=true><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 015 5 5 5 0 01-5 5h-3m-6 0H6a5 5 0 01-5-5 5 5 0 015-5h3"/><line x1="8" y1="12" x2="16" y2="12"/></svg></a></h4><p>路由对审计影响其实不大, 毕竟url怎么改, 真正的执行代码也不会变.建议扫描性的看一下,是否有开发不小心把调试用的路由留在上面了..</p></div></article><div class="post-nav thin"><a class=next-post href=https://blue-bird1.github.io/posts/iwebshopsql/><span class=post-nav-label><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>&nbsp;Newer</span><br><span>Iwebshop sql注入</span></a>
+<a class=prev-post href=https://blue-bird1.github.io/posts/statistics2/><span class=post-nav-label>Older&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span><br><span>统计学2:现代概率</span></a></div><div id=comments class=thin></div></main><footer id=site-footer class="section-inner thin animated fadeIn faster"><p>&copy; 2024 <a href=https://blue-bird1.github.io/></a>
+&#183;
+&#183; Made with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a>
+&#183; Theme <a href=https://github.com/1bl4z3r/hermit-V2 target=_blank rel=noopener>Hermit-V2</a>
+&#183; <a href=https://blue-bird1.github.io/posts/index.xml target=_blank title=rss><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 019 9"/><path d="M4 4a16 16 0 0116 16"/><circle cx="5" cy="19" r="1"/></svg></a></p></footer><script async src=https://blue-bird1.github.io/js/bundle.min.038214de9d568246fadcfeb06c69349925de3209f332ec123861b6aa031d63c6.js integrity="sha256-A4IU3p1Wgkb63P6wbGk0mSXeMgnzMuwSOGG2qgMdY8Y=" crossorigin=anonymous></script><script type=text/javascript async src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">MathJax.Hub.Config({tex2jax:{inlineMath:[["$","$"],["\\(","\\)"]],displayMath:[["$$","$$"],["[[","]]"]],processEscapes:!0,processEnvironments:!0,skipTags:["script","noscript","style","textarea","pre"],TeX:{equationNumbers:{autoNumber:"AMS"},extensions:["AMSmath.js","AMSsymbols.js"]}}}),MathJax.Hub.Queue(function(){var e,t=MathJax.Hub.getAllJax();for(e=0;t.length>e;e+=1)t[e].SourceElement().parentNode.className+=" has-jax"})</script><style>code.has-jax{font:inherit;font-size:100%;background:inherit;border:inherit;color:#515151}</style></body></html>
