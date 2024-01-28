@@ -1,0 +1,617 @@
+<!doctype html><html lang=zh-CN><head><script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(e,t,n,s,o,i,a){e.GoogleAnalyticsObject=o,e[o]=e[o]||function(){(e[o].q=e[o].q||[]).push(arguments)},e[o].l=1*new Date,i=t.createElement(n),a=t.getElementsByTagName(n)[0],i.async=1,i.src=s,a.parentNode.insertBefore(i,a)}(window,document,"script","https://www.google-analytics.com/analytics.js","ga"),ga("create","UA-110301700-1","auto"),ga("send","pageview"))</script><meta charset=utf-8><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="ie=edge"><meta name=robots content="index, follow"><meta name=revisit-after content="15 days"><link rel=author href=/humans.txt><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/site.webmanifest><meta name=msapplication-TileImage content="/mstile-144x144.png"><link rel="shortcut icon" href=/favicon.ico><meta name=author content><meta itemprop=name content="从零开始自定义安卓系统(4) product配置详解"><meta itemprop=description content="从零开始自定义安卓系统(4) product配置详解 前言 在学习修改一样东西时, 最好的方法之一就是搞懂他到底可以干什么. 而不是跟一个教程学一个选"><meta itemprop=datePublished content="2024-01-28T19:10:10+08:00"><meta itemprop=dateModified content="2024-01-28T19:10:10+08:00"><meta itemprop=wordCount content="1721"><meta itemprop=keywords content="aosp,tag2,"><meta property="og:title" content="从零开始自定义安卓系统(4) product配置详解"><meta property="og:description" content="从零开始自定义安卓系统(4) product配置详解 前言 在学习修改一样东西时, 最好的方法之一就是搞懂他到底可以干什么. 而不是跟一个教程学一个选"><meta property="og:type" content="article"><meta property="og:url" content="https://blue-bird1.github.io/posts/aosp-4/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2024-01-28T19:10:10+08:00"><meta property="article:modified_time" content="2024-01-28T19:10:10+08:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="从零开始自定义安卓系统(4) product配置详解"><meta name=twitter:description content="从零开始自定义安卓系统(4) product配置详解 前言 在学习修改一样东西时, 最好的方法之一就是搞懂他到底可以干什么. 而不是跟一个教程学一个选"><title>从零开始自定义安卓系统(4) product配置详解</title><link rel="stylesheet dns-prefetch preconnect preload prefetch" as=style href=https://blue-bird1.github.io/css/style.min.d0b20be7baabc80eb407cbffc7e54d364796f75f0c7f757c906f90f3c84fc262.css integrity="sha256-0LIL57qryA60B8v/x+VNNkeW918Mf3V8kG+Q88hPwmI=" crossorigin=anonymous></head><body id=page><header id=site-header class="animated slideInUp"><div class="hdr-wrapper section-inner"><div class=hdr-left><div class=site-branding><a href=https://blue-bird1.github.io/>青鸟的博客</a></div><nav class="site-nav hide-in-mobile"><a href=https://blue-bird1.github.io/posts/>Posts</a><a href=https://blue-bird1.github.io/about/>About</a><a href=https://blue-bird1.github.io/friends/>Friend</a></nav></div><div class="hdr-right hdr-icons"><button id=menu-btn class=hdr-btn title=Menu><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button></div></div></header><div id=mobile-menu class="animated fast"><ul><li><a href=https://blue-bird1.github.io/posts/>Posts</a></li><li><a href=https://blue-bird1.github.io/about/>About</a></li><li><a href=https://blue-bird1.github.io/friends/>Friend</a></li></ul></div><main class="site-main section-inner animated fadeIn faster"><article class=thin><header class=post-header><div class=post-meta><span>Jan 28, 2024</span></div><h1>从零开始自定义安卓系统(4) product配置详解</h1></header><div class=post-info><p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-feather"><path d="M20.24 12.24a6 6 0 00-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" y1="8" x2="2" y2="22"/><line x1="17.5" y1="15" x2="9" y2="15"/></svg><a href target=_blank></a></p><p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83.0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7" y2="7"/></svg><span class=tag><a href=https://blue-bird1.github.io/tags/aosp>aosp</a></span><span class=tag><a href=https://blue-bird1.github.io/tags/tag2>tag2</a></span></p><p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-folder"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg><span class=category><a href=https://blue-bird1.github.io/categories/android>android</a></span></p><p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6A2 2 0 004 4v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>1721 Words</p><p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2024-01-28 11:10 +0000</p></div><hr class=post-end><div class=content><h2 id=从零开始自定义安卓系统4-product配置详解>从零开始自定义安卓系统(4) product配置详解<a href=#从零开始自定义安卓系统4-product配置详解 class=anchor aria-hidden=true><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 015 5 5 5 0 01-5 5h-3m-6 0H6a5 5 0 01-5-5 5 5 0 015-5h3"/><line x1="8" y1="12" x2="16" y2="12"/></svg></a></h2><h3 id=前言>前言<a href=#前言 class=anchor aria-hidden=true><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 015 5 5 5 0 01-5 5h-3m-6 0H6a5 5 0 01-5-5 5 5 0 015-5h3"/><line x1="8" y1="12" x2="16" y2="12"/></svg></a></h3><p>在学习修改一样东西时, 最好的方法之一就是搞懂他到底可以干什么. 而不是跟一个教程学一个选项,再跟另一个教程再学一个选项, 结果问到可以做XX么, 还是无法回答.</p><p>当然,并不需要记住具体操作, 只需要对可以做什么有印象就可以了.</p><h3 id=androidproductsmk><code>AndroidProducts.mk</code><a href=#androidproductsmk class=anchor aria-hidden=true><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 015 5 5 5 0 01-5 5h-3m-6 0H6a5 5 0 01-5-5 5 5 0 015-5h3"/><line x1="8" y1="12" x2="16" y2="12"/></svg></a></h3><p>读取<code>product</code>的代码位于<code>build/make/core/product_config.mk</code> 和 <code>build/make/core/product.mk</code></p><p>其中只使用了这三个变量</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>PRODUCT_MAKEFILES
+</span></span><span class=line><span class=cl>COMMON_LUNCH_CHOICES
+</span></span><span class=line><span class=cl># 选择使用starlark配置 可以无视
+</span></span><span class=line><span class=cl>STARLARK_OPT_IN_PRODUCTS
+</span></span></code></pre></td></tr></table></div></div><h3 id=product_makefiles>PRODUCT_MAKEFILES<a href=#product_makefiles class=anchor aria-hidden=true><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 015 5 5 5 0 01-5 5h-3m-6 0H6a5 5 0 01-5-5 5 5 0 015-5h3"/><line x1="8" y1="12" x2="16" y2="12"/></svg></a></h3><p>然后根据选择读取对应的<code>mk</code>文件</p><p>在<code>build/make/core/product.mk</code>定义product自身的属性了</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl># 单个值的列表
+</span></span><span class=line><span class=cl>_product_single_value_vars
+</span></span><span class=line><span class=cl># 列表值的列表
+</span></span><span class=line><span class=cl>_product_list_vars
+</span></span></code></pre></td></tr></table></div></div><p>完整列表如下</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span><span class=lnt>103
+</span><span class=lnt>104
+</span><span class=lnt>105
+</span><span class=lnt>106
+</span><span class=lnt>107
+</span><span class=lnt>108
+</span><span class=lnt>109
+</span><span class=lnt>110
+</span><span class=lnt>111
+</span><span class=lnt>112
+</span><span class=lnt>113
+</span><span class=lnt>114
+</span><span class=lnt>115
+</span><span class=lnt>116
+</span><span class=lnt>117
+</span><span class=lnt>118
+</span><span class=lnt>119
+</span><span class=lnt>120
+</span><span class=lnt>121
+</span><span class=lnt>122
+</span><span class=lnt>123
+</span><span class=lnt>124
+</span><span class=lnt>125
+</span><span class=lnt>126
+</span><span class=lnt>127
+</span><span class=lnt>128
+</span><span class=lnt>129
+</span><span class=lnt>130
+</span><span class=lnt>131
+</span><span class=lnt>132
+</span><span class=lnt>133
+</span><span class=lnt>134
+</span><span class=lnt>135
+</span><span class=lnt>136
+</span><span class=lnt>137
+</span><span class=lnt>138
+</span><span class=lnt>139
+</span><span class=lnt>140
+</span><span class=lnt>141
+</span><span class=lnt>142
+</span><span class=lnt>143
+</span><span class=lnt>144
+</span><span class=lnt>145
+</span><span class=lnt>146
+</span><span class=lnt>147
+</span><span class=lnt>148
+</span><span class=lnt>149
+</span><span class=lnt>150
+</span><span class=lnt>151
+</span><span class=lnt>152
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl># _product_single_value_vars
+</span></span><span class=line><span class=cl># 定义产品名称和系统名称  如果没定义sytem会自动使用上面的值
+</span></span><span class=line><span class=cl>PRODUCT_NAME
+</span></span><span class=line><span class=cl>PRODUCT_MODEL
+</span></span><span class=line><span class=cl>PRODUCT_DEVICE
+</span></span><span class=line><span class=cl>PRODUCT_MANUFACTURER
+</span></span><span class=line><span class=cl>PRODUCT_BRAND
+</span></span><span class=line><span class=cl>PRODUCT_SYSTEM_NAME
+</span></span><span class=line><span class=cl>PRODUCT_SYSTEM_MODEL
+</span></span><span class=line><span class=cl>PRODUCT_SYSTEM_DEVICE
+</span></span><span class=line><span class=cl>PRODUCT_SYSTEM_BRAND
+</span></span><span class=line><span class=cl>PRODUCT_SYSTEM_MANUFACTURER
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl># aapt资源打包工具选项
+</span></span><span class=line><span class=cl>PRODUCT_AAPT_PREF_CONFIG
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl># 系统特性例如 电视/手表系统
+</span></span><span class=line><span class=cl>PRODUCT_CHARACTERISTICS
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl># 系统证书
+</span></span><span class=line><span class=cl>PRODUCT_DEFAULT_DEV_CERTIFICATE
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl># 系统支持的vboot选项 也就是常说的解锁bl锁 
+</span></span><span class=line><span class=cl>PRODUCT_SUPPORTS_BOOT_SIGNER
+</span></span><span class=line><span class=cl>PRODUCT_SUPPORTS_VBOOT
+</span></span><span class=line><span class=cl>PRODUCT_SUPPORTS_VERITY
+</span></span><span class=line><span class=cl>PRODUCT_SUPPORTS_VERITY_FEC
+</span></span><span class=line><span class=cl>PRODUCT_VBOOT_SIGNING_KEY
+</span></span><span class=line><span class=cl>PRODUCT_VBOOT_SIGNING_SUBKEY
+</span></span><span class=line><span class=cl>PRODUCT_VERITY_SIGNING_KEY
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl># system jar选项
+</span></span><span class=line><span class=cl>PRODUCT_BROKEN_SUBOPTIMAL_ORDER_OF_SYSTEM_SERVER_JARS
+</span></span><span class=line><span class=cl># 强制允许system jar
+</span></span><span class=line><span class=cl>PRODUCT_BROKEN_DEPRECATED_MK_SYSTEM_SERVER_JARS
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl># 顾名思义就是一大堆验证分区选项 
+</span></span><span class=line><span class=cl>PRODUCT_SYSTEM_VERITY_PARTITION
+</span></span><span class=line><span class=cl>PRODUCT_VENDOR_VERITY_PARTITION
+</span></span><span class=line><span class=cl>PRODUCT_PRODUCT_VERITY_PARTITION
+</span></span><span class=line><span class=cl>PRODUCT_SYSTEM_EXT_VERITY_PARTITION
+</span></span><span class=line><span class=cl>PRODUCT_ODM_VERITY_PARTITION
+</span></span><span class=line><span class=cl>PRODUCT_VENDOR_DLKM_VERITY_PARTITION
+</span></span><span class=line><span class=cl>PRODUCT_ODM_DLKM_VERITY_PARTITION
+</span></span><span class=line><span class=cl>PRODUCT_SYSTEM_DLKM_VERITY_PARTITION
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl># debug选项
+</span></span><span class=line><span class=cl>PRODUCT_SYSTEM_SERVER_DEBUG_INFO
+</span></span><span class=line><span class=cl>PRODUCT_OTHER_JAVA_DEBUG_INFO
+</span></span><span class=line><span class=cl>PRODUCT_MINIMIZE_JAVA_DEBUG_INFO
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl># dex优化选项
+</span></span><span class=line><span class=cl>PRODUCT_DEX_PREOPT_DEFAULT_COMPILER_FILTER
+</span></span><span class=line><span class=cl>PRODUCT_DEX_PREOPT_BOOT_FLAGS
+</span></span><span class=line><span class=cl>PRODUCT_DEX_PREOPT_PROFILE_DIR
+</span></span><span class=line><span class=cl>PRODUCT_DEX_PREOPT_GENERATE_DM_FILES
+</span></span><span class=line><span class=cl>PRODUCT_DEX_PREOPT_NEVER_ALLOW_STRIPPING
+</span></span><span class=line><span class=cl>PRODUCT_DEX_PREOPT_RESOLVE_STARTUP_STRINGS
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl># boot镜像选项
+</span></span><span class=line><span class=cl>PRODUCT_EXPORT_BOOT_IMAGE_TO_DIST
+</span></span><span class=line><span class=cl>PRODUCT_USE_PROFILE_FOR_BOOT_IMAGE
+</span></span><span class=line><span class=cl>PRODUCT_USES_DEFAULT_ART_CONFIG
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>PRODUCT_SYSTEM_SERVER_COMPILER_FILTER
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl># 文件系统选项
+</span></span><span class=line><span class=cl>PRODUCT_SYSTEM_BASE_FS_PATH
+</span></span><span class=line><span class=cl>PRODUCT_VENDOR_BASE_FS_PATH
+</span></span><span class=line><span class=cl>PRODUCT_PRODUCT_BASE_FS_PATH
+</span></span><span class=line><span class=cl>PRODUCT_SYSTEM_EXT_BASE_FS_PATH
+</span></span><span class=line><span class=cl>PRODUCT_ODM_BASE_FS_PATH
+</span></span><span class=line><span class=cl>PRODUCT_VENDOR_DLKM_BASE_FS_PATH
+</span></span><span class=line><span class=cl>PRODUCT_ODM_DLKM_BASE_FS_PATH
+</span></span><span class=line><span class=cl>PRODUCT_SYSTEM_DLKM_BASE_FS_PATH
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl># 系统支持的安卓 api lever
+</span></span><span class=line><span class=cl>PRODUCT_SHIPPING_API_LEVEL
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl># art 选项 (是一个dex运行技术)
+</span></span><span class=line><span class=cl>PRODUCT_ART_TARGET_INCLUDE_DEBUG_BUILD
+</span></span><span class=line><span class=cl>PRODUCT_ART_USE_READ_BARRIER
+</span></span><span class=line><span class=cl># 设置系统镜像预留空间
+</span></span><span class=line><span class=cl>PRODUCT_SYSTEM_HEADROOM
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl># adb  key
+</span></span><span class=line><span class=cl>PRODUCT_ADB_KEYS
+</span></span><span class=line><span class=cl># 一个内存分配器 参考 https://source.android.com/docs/security/test/scudo?hl=zh-cn
+</span></span><span class=line><span class=cl>PRODUCT_DISABLE_SCUDO
+</span></span><span class=line><span class=cl># apex压缩设置 参考 https://source.android.com/docs/core/ota/apex?hl=zh-cn
+</span></span><span class=line><span class=cl>PRODUCT_COMPRESSED_APEX
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl># ndk版本
+</span></span><span class=line><span class=cl>PRODUCT_PRODUCT_VNDK_VERSION
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl># 编译路径设置
+</span></span><span class=line><span class=cl>PRODUCT_ENFORCE_ARTIFACT_PATH_REQUIREMENTS
+</span></span><span class=line><span class=cl># 必须签名
+</span></span><span class=line><span class=cl>PRODUCT_ENFORCE_ARTIFACT_SYSTEM_CERTIFICATE_REQUIREMENT
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl># 分区API接口限制 简单来说就是 system分区允许使用内部api userdata分区不允许 
+</span></span><span class=line><span class=cl>PRODUCT_ENFORCE_PRODUCT_PARTITION_INTERFACE
+</span></span><span class=line><span class=cl># 必须执行分区sdk要求
+</span></span><span class=line><span class=cl>PRODUCT_ENFORCE_INTER_PARTITION_JAVA_SDK_LIBRARY
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl># 额外下载的apex包
+</span></span><span class=line><span class=cl>PRODUCT_INSTALL_EXTRA_FLATTENED_APEXES
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl># 动态分区
+</span></span><span class=line><span class=cl>PRODUCT_RETROFIT_DYNAMIC_PARTITIONS
+</span></span><span class=line><span class=cl>PRODUCT_SET_DEBUGFS_RESTRICTIONS
+</span></span><span class=line><span class=cl>PRODUCT_USE_DYNAMIC_PARTITIONS
+</span></span><span class=line><span class=cl>PRODUCT_USE_DYNAMIC_PARTITION_SIZE
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl># 编译镜像设置
+</span></span><span class=line><span class=cl>PRODUCT_BUILD_SUPER_PARTITION
+</span></span><span class=line><span class=cl>PRODUCT_BUILD_GENERIC_OTA_PACKAGE
+</span></span><span class=line><span class=cl>PRODUCT_BUILD_SYSTEM_IMAGE
+</span></span><span class=line><span class=cl>PRODUCT_BUILD_SYSTEM_OTHER_IMAGE
+</span></span><span class=line><span class=cl>PRODUCT_BUILD_VENDOR_IMAGE
+</span></span><span class=line><span class=cl>PRODUCT_BUILD_PRODUCT_IMAGE
+</span></span><span class=line><span class=cl>PRODUCT_BUILD_SYSTEM_EXT_IMAGE
+</span></span><span class=line><span class=cl>PRODUCT_BUILD_ODM_IMAGE
+</span></span><span class=line><span class=cl>PRODUCT_BUILD_VENDOR_DLKM_IMAGE
+</span></span><span class=line><span class=cl>PRODUCT_BUILD_ODM_DLKM_IMAGE
+</span></span><span class=line><span class=cl>PRODUCT_BUILD_SYSTEM_DLKM_IMAGE
+</span></span><span class=line><span class=cl>PRODUCT_BUILD_CACHE_IMAGE
+</span></span><span class=line><span class=cl>PRODUCT_BUILD_RAMDISK_IMAGE
+</span></span><span class=line><span class=cl>PRODUCT_BUILD_USERDATA_IMAGE
+</span></span><span class=line><span class=cl>PRODUCT_BUILD_RECOVERY_IMAGE
+</span></span><span class=line><span class=cl>PRODUCT_BUILD_BOOT_IMAGE
+</span></span><span class=line><span class=cl>PRODUCT_BUILD_INIT_BOOT_IMAGE
+</span></span><span class=line><span class=cl>PRODUCT_BUILD_DEBUG_BOOT_IMAGE
+</span></span><span class=line><span class=cl>PRODUCT_BUILD_VENDOR_BOOT_IMAGE
+</span></span><span class=line><span class=cl>PRODUCT_BUILD_VENDOR_KERNEL_BOOT_IMAGE
+</span></span><span class=line><span class=cl>PRODUCT_BUILD_DEBUG_VENDOR_BOOT_IMAGE
+</span></span><span class=line><span class=cl>PRODUCT_BUILD_VBMETA_IMAGE
+</span></span><span class=line><span class=cl>PRODUCT_BUILD_SUPER_EMPTY_IMAGE
+</span></span><span class=line><span class=cl>PRODUCT_BUILD_PVMFW_IMAGE
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl># AB分区设置
+</span></span><span class=line><span class=cl>PRODUCT_VIRTUAL_AB_OTA
+</span></span><span class=line><span class=cl>PRODUCT_VIRTUAL_AB_COMPRESSION
+</span></span><span class=line><span class=cl>PRODUCT_VIRTUAL_AB_OTA_RETROFIT
+</span></span><span class=line><span class=cl>PRODUCT_OTA_FORCE_NON_AB_PACKAGE
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl># 调试策略
+</span></span><span class=line><span class=cl>PRODUCT_INSTALL_DEBUG_POLICY_TO_SYSTEM_EXT
+</span></span><span class=line><span class=cl># 文件系统完整性设置
+</span></span><span class=line><span class=cl>PRODUCT_SYSTEM_FSVERITY_GENERATE_METADATA
+</span></span><span class=line><span class=cl># 建造模块时从源码建造
+</span></span><span class=line><span class=cl>PRODUCT_MODULE_BUILD_FROM_SOURCE
+</span></span></code></pre></td></tr></table></div></div><p>可以发现<code> _product_single_value_vars</code>大部分都是编译设置, 魔改最多修改个名字</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span><span class=lnt>103
+</span><span class=lnt>104
+</span><span class=lnt>105
+</span><span class=lnt>106
+</span><span class=lnt>107
+</span><span class=lnt>108
+</span><span class=lnt>109
+</span><span class=lnt>110
+</span><span class=lnt>111
+</span><span class=lnt>112
+</span><span class=lnt>113
+</span><span class=lnt>114
+</span><span class=lnt>115
+</span><span class=lnt>116
+</span><span class=lnt>117
+</span><span class=lnt>118
+</span><span class=lnt>119
+</span><span class=lnt>120
+</span><span class=lnt>121
+</span><span class=lnt>122
+</span><span class=lnt>123
+</span><span class=lnt>124
+</span><span class=lnt>125
+</span><span class=lnt>126
+</span><span class=lnt>127
+</span><span class=lnt>128
+</span><span class=lnt>129
+</span><span class=lnt>130
+</span><span class=lnt>131
+</span><span class=lnt>132
+</span><span class=lnt>133
+</span><span class=lnt>134
+</span><span class=lnt>135
+</span><span class=lnt>136
+</span><span class=lnt>137
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-makefile data-lang=makefile><span class=line><span class=cl><span class=c># _product_list_vars
+</span></span></span><span class=line><span class=cl><span class=c></span>
+</span></span><span class=line><span class=cl><span class=c># aapt (Android 资源打包工具) 配置 参考 https://developer.android.com/tools/aapt2?hl=zh-cn
+</span></span></span><span class=line><span class=cl><span class=c># 例如 := normal ldpi
+</span></span></span><span class=line><span class=cl><span class=c></span><span class=err>PRODUCT_LOCALES</span>
+</span></span><span class=line><span class=cl><span class=err>PRODUCT_AAPT_CONFIG</span>
+</span></span><span class=line><span class=cl><span class=c># aapt 预编译的dpi
+</span></span></span><span class=line><span class=cl><span class=c></span><span class=err>PRODUCT_AAPT_PREBUILT_DPI</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c># 产品自带的各种packages name
+</span></span></span><span class=line><span class=cl><span class=c># PRODUCT_PACKAGES := my_module
+</span></span></span><span class=line><span class=cl><span class=c></span><span class=err>PRODUCT_HOST_PACKAGES</span>
+</span></span><span class=line><span class=cl><span class=err>PRODUCT_PACKAGES</span>
+</span></span><span class=line><span class=cl><span class=err>PRODUCT_PACKAGES_DEBUG</span>
+</span></span><span class=line><span class=cl><span class=err>PRODUCT_PACKAGES_DEBUG_ASAN</span>
+</span></span><span class=line><span class=cl><span class=err>PRODUCT_PACKAGES_DEBUG_JAVA_COVERAGE</span>
+</span></span><span class=line><span class=cl><span class=err>PRODUCT_PACKAGES_ENG</span>
+</span></span><span class=line><span class=cl><span class=err>PRODUCT_PACKAGES_TESTS</span>
+</span></span><span class=line><span class=cl><span class=c># overlays层 覆盖package文件
+</span></span></span><span class=line><span class=cl><span class=c></span><span class=err>PRODUCT_PACKAGE_OVERLAYS</span>
+</span></span><span class=line><span class=cl><span class=err>DEVICE_PACKAGE_OVERLAYS</span>
+</span></span><span class=line><span class=cl><span class=c># 覆盖包名
+</span></span></span><span class=line><span class=cl><span class=c></span><span class=err>PRODUCT_MANIFEST_PACKAGE_NAME_OVERRIDES</span>
+</span></span><span class=line><span class=cl><span class=c># 强制指定包名 (默认是模块名)
+</span></span></span><span class=line><span class=cl><span class=c></span><span class=err>PRODUCT_PACKAGE_NAME_OVERRIDES</span>
+</span></span><span class=line><span class=cl><span class=err>PRODUCT_CERTIFICATE_OVERRIDES</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c># properties文件设置
+</span></span></span><span class=line><span class=cl><span class=c># 例如PRODUCT_SYSTEM_PROPERTIES += ro.bluebird = 0
+</span></span></span><span class=line><span class=cl><span class=c></span><span class=err>PRODUCT_SYSTEM_PROPERTIES</span>
+</span></span><span class=line><span class=cl><span class=err>PRODUCT_SYSTEM_EXT_PROPERTIES</span>
+</span></span><span class=line><span class=cl><span class=err>PRODUCT_VENDOR_PROPERTIES</span>
+</span></span><span class=line><span class=cl><span class=err>PRODUCT_ODM_PROPERTIES</span>
+</span></span><span class=line><span class=cl><span class=err>PRODUCT_PRODUCT_PROPERTIES</span>
+</span></span><span class=line><span class=cl><span class=c># 类似上面 但是弃用了
+</span></span></span><span class=line><span class=cl><span class=c></span><span class=err>PRODUCT_SYSTEM_DEFAULT_PROPERTIES</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c># 覆盖之前的写入
+</span></span></span><span class=line><span class=cl><span class=c></span><span class=err>PRODUCT_PROPERTY_OVERRIDES</span>
+</span></span><span class=line><span class=cl><span class=err>PRODUCT_DEFAULT_PROPERTY_OVERRIDES</span>
+</span></span><span class=line><span class=cl><span class=c># 删除之前的写入
+</span></span></span><span class=line><span class=cl><span class=c></span><span class=err>PRODUCT_SYSTEM_PROPERTY_BLACKLIST</span>
+</span></span><span class=line><span class=cl><span class=err>PRODUCT_VENDOR_PROPERTY_BLACKLIST</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c># 复制文件到系统里 
+</span></span></span><span class=line><span class=cl><span class=c># 例子 PRODUCT_COPY_FILES += $(LOCAL_PATH)/test.sh:system/bin/test.sh
+</span></span></span><span class=line><span class=cl><span class=c></span><span class=err>PRODUCT_COPY_FILES</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c># OTA密钥
+</span></span></span><span class=line><span class=cl><span class=c></span><span class=err>PRODUCT_OTA_PUBLIC_KEYS</span>
+</span></span><span class=line><span class=cl><span class=err>PRODUCT_EXTRA_OTA_KEYS</span>
+</span></span><span class=line><span class=cl><span class=err>PRODUCT_EXTRA_RECOVERY_KEYS</span>
+</span></span><span class=line><span class=cl><span class=c># 主线分区开发证书
+</span></span></span><span class=line><span class=cl><span class=c></span><span class=err>PRODUCT_MAINLINE_SEPOLICY_DEV_CERTIFICATES</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c># 资源替换选项
+</span></span></span><span class=line><span class=cl><span class=c></span><span class=err>PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS</span>
+</span></span><span class=line><span class=cl><span class=err>PRODUCT_ENFORCE_RRO_TARGETS</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c># sdk设置
+</span></span></span><span class=line><span class=cl><span class=c></span><span class=err>PRODUCT_SDK_ATREE_FILES</span>
+</span></span><span class=line><span class=cl><span class=err>PRODUCT_SDK_ADDON_NAME</span>
+</span></span><span class=line><span class=cl><span class=err>PRODUCT_SDK_ADDON_COPY_FILES</span>
+</span></span><span class=line><span class=cl><span class=err>PRODUCT_SDK_ADDON_COPY_MODULES</span>
+</span></span><span class=line><span class=cl><span class=err>PRODUCT_SDK_ADDON_DOC_MODULES</span>
+</span></span><span class=line><span class=cl><span class=err>PRODUCT_SDK_ADDON_SYS_IMG_SOURCE_PROP</span>
+</span></span><span class=line><span class=cl><span class=c># 默认wifi
+</span></span></span><span class=line><span class=cl><span class=c></span><span class=err>PRODUCT_DEFAULT_WIFI_CHANNELS</span>
+</span></span><span class=line><span class=cl><span class=c># sonng空间空间
+</span></span></span><span class=line><span class=cl><span class=c></span><span class=err>PRODUCT_SOONG_NAMESPACES</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c># 限制访问供应商文件
+</span></span></span><span class=line><span class=cl><span class=c></span><span class=err>PRODUCT_RESTRICT_VENDOR_FILES</span>
+</span></span><span class=line><span class=cl><span class=err>VENDOR_PRODUCT_RESTRICT_VENDOR_FILES</span>
+</span></span><span class=line><span class=cl><span class=c># 上述的例外
+</span></span></span><span class=line><span class=cl><span class=c></span><span class=err>VENDOR_EXCEPTION_MODULES</span>
+</span></span><span class=line><span class=cl><span class=err>VENDOR_EXCEPTION_PATHS</span>
+</span></span><span class=line><span class=cl><span class=c># 供应商内核头文件
+</span></span></span><span class=line><span class=cl><span class=c></span><span class=err>PRODUCT_VENDOR_KERNEL_HEADERS</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c># boot jar列表
+</span></span></span><span class=line><span class=cl><span class=c></span><span class=err>PRODUCT_BOOT_JARS</span>
+</span></span><span class=line><span class=cl><span class=err>PRODUCT_BOOT_JARS_EXTRA</span>
+</span></span><span class=line><span class=cl><span class=c># apex格式的
+</span></span></span><span class=line><span class=cl><span class=c></span><span class=err>PRODUCT_APEX_BOOT_JARS</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c># 系统服务设置 
+</span></span></span><span class=line><span class=cl><span class=c></span><span class=err>PRODUCT_SYSTEM_SERVER_APPS</span>
+</span></span><span class=line><span class=cl><span class=err>PRODUCT_SYSTEM_SERVER_JARS</span>
+</span></span><span class=line><span class=cl><span class=err>PRODUCT_STANDALONE_SYSTEM_SERVER_JARS</span>
+</span></span><span class=line><span class=cl><span class=err>PRODUCT_SYSTEM_SERVER_JARS_EXTRA</span>
+</span></span><span class=line><span class=cl><span class=c>#apex格式的
+</span></span></span><span class=line><span class=cl><span class=c></span><span class=err>PRODUCT_APEX_SYSTEM_SERVER_JARS</span>
+</span></span><span class=line><span class=cl><span class=err>PRODUCT_APEX_STANDALONE_SYSTEM_SERVER_JARS</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c># dex优化设置
+</span></span></span><span class=line><span class=cl><span class=c></span><span class=err>PRODUCT_DEXPREOPT_SPEED_APPS</span>
+</span></span><span class=line><span class=cl><span class=err>PRODUCT_DEX_PREOPT_MODULE_CONFIGS</span>
+</span></span><span class=line><span class=cl><span class=err>PRODUCT_DEX_PREOPT_DEFAULT_FLAGS</span>
+</span></span><span class=line><span class=cl><span class=c># dex 优化boot选项
+</span></span></span><span class=line><span class=cl><span class=c></span><span class=err>PRODUCT_DEX_PREOPT_BOOT_IMAGE_PROFILE_LOCATION</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c>#  库编译验证选项
+</span></span></span><span class=line><span class=cl><span class=c></span><span class=err>PRODUCT_BROKEN_VERIFY_USES_LIBRARIES</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c># 编译时使用的代码污点库 参考 https://source.android.com/docs/security/test/sanitizers?hl=zh-cn
+</span></span></span><span class=line><span class=cl><span class=c></span><span class=err>PRODUCT_SANITIZER_MODULE_CONFIGS</span>
+</span></span><span class=line><span class=cl><span class=c># 例外情况
+</span></span></span><span class=line><span class=cl><span class=c></span><span class=err>PRODUCT_INTEGER_OVERFLOW_EXCLUDE_PATHS</span>
+</span></span><span class=line><span class=cl><span class=c># CFI选项 参考 https://source.android.com/docs/security/test/cfi?hl=zh-cn
+</span></span></span><span class=line><span class=cl><span class=c></span><span class=err>PRODUCT_CFI_INCLUDE_PATHS</span>
+</span></span><span class=line><span class=cl><span class=err>PRODUCT_CFI_EXCLUDE_PATHS</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c># 需要预编译的系统apk文件
+</span></span></span><span class=line><span class=cl><span class=c></span><span class=err>PRODUCT_ALWAYS_PREOPT_EXTRACTED_APK</span>
+</span></span><span class=line><span class=cl><span class=c># 特权模块加载
+</span></span></span><span class=line><span class=cl><span class=c></span><span class=err>PRODUCT_LOADED_BY_PRIVILEGED_MODULES</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c># vndk选项
+</span></span></span><span class=line><span class=cl><span class=c></span><span class=err>PRODUCT_EXTRA_VNDK_VERSIONS</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c>#  系统证书白名单
+</span></span></span><span class=line><span class=cl><span class=c># 都与sing_var变量是否开启有关
+</span></span></span><span class=line><span class=cl><span class=c></span><span class=err>PRODUCT_ARTIFACT_SYSTEM_CERTIFICATE_REQUIREMENT_ALLOW_LIST</span>
+</span></span><span class=line><span class=cl><span class=c># 路径白名单
+</span></span></span><span class=line><span class=cl><span class=c></span><span class=err>PRODUCT_ARTIFACT_PATH_REQUIREMENT_HINT</span>
+</span></span><span class=line><span class=cl><span class=err>PRODUCT_ARTIFACT_PATH_REQUIREMENT_ALLOWED_LIST</span>
+</span></span><span class=line><span class=cl><span class=c># 强制放入系统分区
+</span></span></span><span class=line><span class=cl><span class=c></span><span class=err>PRODUCT_FORCE_PRODUCT_MODULES_TO_SYSTEM_PARTITION</span>
+</span></span><span class=line><span class=cl><span class=c># 强制vintf分区
+</span></span></span><span class=line><span class=cl><span class=c></span><span class=err>PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS</span>
+</span></span><span class=line><span class=cl><span class=c># tag列表 被bp文件使用
+</span></span></span><span class=line><span class=cl><span class=c></span><span class=err>PRODUCT_INCLUDE_TAGS</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c># 初始化分区的lib白名单
+</span></span></span><span class=line><span class=cl><span class=c></span><span class=err>PRODUCT_INTER_PARTITION_JAVA_LIBRARY_ALLOWLIST</span>
+</span></span></code></pre></td></tr></table></div></div><p>虽然设置很多, 但是常用的不多 主要就</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-makefile data-lang=makefile><span class=line><span class=cl><span class=c># 修改prop的 
+</span></span></span><span class=line><span class=cl><span class=c></span><span class=err>PRODUCT_SYSTEM_PROPERTIES</span>
+</span></span><span class=line><span class=cl><span class=err>PRODUCT_PROPERTY_OVERRIDES</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c># 添加自己的包
+</span></span></span><span class=line><span class=cl><span class=c></span><span class=err>PRODUCT_PACKAGES</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c># 添加系统服务
+</span></span></span><span class=line><span class=cl><span class=c></span><span class=err>PRODUCT_SYSTEM_SERVER_APPS</span>
+</span></span></code></pre></td></tr></table></div></div><p>当然可以设置的自定义选项远不止这些 例如 <code>TARGET_VENDOR_PROP</code> 来设置prop文件, 这些就是由其他<code>core/*.mk</code>文件添加的非产品级的设置了</p></div></article><div class="post-nav thin"><a class=prev-post href=https://blue-bird1.github.io/posts/aosp-3/><span class=post-nav-label>Older&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span><br><span>从零开始自定义安卓系统(3) 配置开发环境与新建product</span></a></div><div id=comments class=thin></div></main><footer id=site-footer class="section-inner thin animated fadeIn faster"><p>&copy; 2024 <a href=https://blue-bird1.github.io/></a>
+&#183;
+&#183; Made with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a>
+&#183; Theme <a href=https://github.com/1bl4z3r/hermit-V2 target=_blank rel=noopener>Hermit-V2</a>
+&#183; <a href=https://blue-bird1.github.io/posts/index.xml target=_blank title=rss><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 019 9"/><path d="M4 4a16 16 0 0116 16"/><circle cx="5" cy="19" r="1"/></svg></a></p></footer><script async src=https://blue-bird1.github.io/js/bundle.min.038214de9d568246fadcfeb06c69349925de3209f332ec123861b6aa031d63c6.js integrity="sha256-A4IU3p1Wgkb63P6wbGk0mSXeMgnzMuwSOGG2qgMdY8Y=" crossorigin=anonymous></script><script type=text/javascript async src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">MathJax.Hub.Config({tex2jax:{inlineMath:[["$","$"],["\\(","\\)"]],displayMath:[["$$","$$"],["[[","]]"]],processEscapes:!0,processEnvironments:!0,skipTags:["script","noscript","style","textarea","pre"],TeX:{equationNumbers:{autoNumber:"AMS"},extensions:["AMSmath.js","AMSsymbols.js"]}}}),MathJax.Hub.Queue(function(){var e,t=MathJax.Hub.getAllJax();for(e=0;t.length>e;e+=1)t[e].SourceElement().parentNode.className+=" has-jax"})</script><style>code.has-jax{font:inherit;font-size:100%;background:inherit;border:inherit;color:#515151}</style></body></html>
