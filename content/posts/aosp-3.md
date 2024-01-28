@@ -96,7 +96,7 @@ app运行时, 执行dex文件, 系统修改通常可以无视, 客户端岗位�
 
 参考`redroid` 
 
-```
+```makefile
 PRODUCT_MAKEFILES := \
     $(LOCAL_DIR)/redroid_x86_64.mk \
     $(LOCAL_DIR)/redroid_x86_64_only.mk \
@@ -116,14 +116,14 @@ COMMON_LUNCH_CHOICES := \
 
 然后创建一个``AndroidProducts.mk` ` 
 
-```
+```makefile
 # 这两个是一一对应关系,如果文件同名  `bluebird_redroid_x86_64.mk` 可以省略前面
 bluebird_redroid_x86_64:
 PRODUCT_MAKEFILES := \
-    bluebird_redroid_x86_64:$(LOCAL_DIR)/bluebird.mk 
+    bluebird_x86_64:$(LOCAL_DIR)/bluebird.mk 
 
 COMMON_LUNCH_CHOICES := \
-    bluebird_redroid_x86_64-userdebug 
+    bluebird_x86_64-userdebug 
     
 ```
 
