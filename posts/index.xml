@@ -1,4 +1,170 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 青鸟的博客</title><link>https://blue-bird1.github.io/posts/</link><description>Recent content in Posts on 青鸟的博客</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sun, 28 Jan 2024 19:10:10 +0800</lastBuildDate><atom:link href="https://blue-bird1.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>从零开始自定义安卓系统(4) product配置详解</title><link>https://blue-bird1.github.io/posts/aosp-4/</link><pubDate>Sun, 28 Jan 2024 19:10:10 +0800</pubDate><guid>https://blue-bird1.github.io/posts/aosp-4/</guid><description>从零开始自定义安卓系统(4) product配置详解 前言 在学习修改一样东西时, 最好的方法之一就是搞懂他到底可以干什么. 而不是跟一个教程学一个选</description><content type="html"><![CDATA[<h2 id="从零开始自定义安卓系统4-product配置详解">从零开始自定义安卓系统(4) product配置详解</h2>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 青鸟的博客</title><link>https://blue-bird1.github.io/posts/</link><description>Recent content in Posts on 青鸟的博客</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 30 Jan 2024 00:36:53 +0800</lastBuildDate><atom:link href="https://blue-bird1.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>从零开始自定义安卓系统(5) 修改prop属性</title><link>https://blue-bird1.github.io/posts/aosp-5/</link><pubDate>Tue, 30 Jan 2024 00:36:53 +0800</pubDate><guid>https://blue-bird1.github.io/posts/aosp-5/</guid><description>从零开始自定义安卓系统(5) 修改prop属性 从product.mk修改 在上一节已经知道 1 2 3 4 5 PRODUCT_SYSTEM_PROPERTIES PRODUCT_SYSTEM_EXT_PROPERTIES PRODUCT_VENDOR_PROPERTIES PRODUCT_ODM_PROPERTIES PRODUCT_PRODUCT_PROPERTIES 这些可以修改prop属性 只需要加一</description><content type="html"><![CDATA[<h2 id="从零开始自定义安卓系统5--修改prop属性">从零开始自定义安卓系统(5)  修改prop属性</h2>
+<h3 id="从productmk修改">从product.mk修改</h3>
+<p>在上一节已经知道</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">PRODUCT_SYSTEM_PROPERTIES
+</span></span><span class="line"><span class="cl">PRODUCT_SYSTEM_EXT_PROPERTIES
+</span></span><span class="line"><span class="cl">PRODUCT_VENDOR_PROPERTIES
+</span></span><span class="line"><span class="cl">PRODUCT_ODM_PROPERTIES
+</span></span><span class="line"><span class="cl">PRODUCT_PRODUCT_PROPERTIES
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这些可以修改prop属性</p>
+<p>只需要加一行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">PRODUCT_SYSTEM_PROPERTIES += ro.bluebird = 0
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>就可以在输出目录里的 <code>out/target/product/bluebird_x86_64_only/system/build.prop </code> 找到新属性.</p>
+<p>其他属性对应的是其他文件, 整体对应关系是</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">PRODUCT_SYSTEM_PROPERTIES: system/build.prop
+</span></span><span class="line"><span class="cl">PRODUCT_SYSTEM_EXT_PROPERTIES: system_ext/etc/build.prop
+</span></span><span class="line"><span class="cl">PRODUCT_VENDOR_PROPERTIES: vendor/build.prop
+</span></span><span class="line"><span class="cl">PRODUCT_PRODUCT_PROPERTIES: product/etc/build.prop
+</span></span><span class="line"><span class="cl">PRODUCT_ODM_PROPERTIES: odm/etc/build.prop
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>对应的文件级设置为</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">TARGET_SYSTEM_PROP: system/build.prop
+</span></span><span class="line"><span class="cl">TARGET_SYSTEM_EXT_PROP: system_ext/etc/build.prop
+</span></span><span class="line"><span class="cl">TARGET_VENDOR_PROP 默认值(/vendor.prop):  vendor/build.prop
+</span></span><span class="line"><span class="cl">TARGET_PRODUCT_PROP 默认(/product.prop): product/etc/build.prop
+</span></span><span class="line"><span class="cl">TARGET_ODM_PROP 默认(/odm.prop): odm/etc/build.prop
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>要删除就需要使用</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">PRODUCT_SYSTEM_PROPERTY_BLACKLIST : system
+</span></span><span class="line"><span class="cl">PRODUCT_VENDOR_PROPERTY_BLACKLIST : vendor
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>具体实现在<code>build/make/core/sysprop.mk</code> 里面</p>
+<p>拿一段举例就是</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="line"><span class="cl"><span class="c"># ----------------------------------------------------------------
+</span></span></span><span class="line"><span class="cl"><span class="c"># odm/etc/build.prop
+</span></span></span><span class="line"><span class="cl"><span class="c">#
+</span></span></span><span class="line"><span class="cl"><span class="c"></span>
+</span></span><span class="line"><span class="cl"><span class="c"># _prop_files_ 决定了文件级参数, 取TARGET_ODM_PROP or /odm.prop
+</span></span></span><span class="line"><span class="cl"><span class="c"></span><span class="nv">_prop_files_</span> <span class="o">:=</span> <span class="k">$(if</span> <span class="k">$(</span>TARGET_ODM_PROP<span class="k">)</span>,<span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    <span class="k">$(</span>TARGET_ODM_PROP<span class="k">)</span>,<span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    <span class="k">$(</span>wildcard <span class="k">$(</span>TARGET_DEVICE_DIR<span class="k">)</span>/odm.prop<span class="k">)</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl"><span class="c"># 参数级参数  PRODUCT_ODM_PROPERTIES
+</span></span></span><span class="line"><span class="cl"><span class="c"></span><span class="nv">_prop_vars_</span> <span class="o">:=</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    ADDITIONAL_ODM_PROPERTIES <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    PRODUCT_ODM_PROPERTIES
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl"><span class="c"># 输出路径
+</span></span></span><span class="line"><span class="cl"><span class="c"></span><span class="nv">INSTALLED_ODM_BUILD_PROP_TARGET</span> <span class="o">:=</span> <span class="k">$(</span>TARGET_OUT_ODM<span class="k">)</span>/etc/build.prop
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c"># 调用build prop文件的函数 参数位置与上述一直
+</span></span></span><span class="line"><span class="cl"><span class="c"></span><span class="k">$(</span><span class="nv">eval</span> <span class="k">$(</span><span class="nv">call</span> <span class="nv">build</span>-<span class="nv">properties</span>,\
+</span></span><span class="line"><span class="cl">    <span class="nv">odm</span>,\
+</span></span><span class="line"><span class="cl">    <span class="k">$(</span><span class="nv">INSTALLED_ODM_BUILD_PROP_TARGET</span><span class="k">)</span>,\
+</span></span><span class="line"><span class="cl">    <span class="k">$(</span><span class="nv">_prop_files_</span><span class="k">)</span>,\
+</span></span><span class="line"><span class="cl">    <span class="k">$(</span><span class="nv">_prop_vars_</span><span class="k">)</span>,\
+</span></span><span class="line"><span class="cl">    # 从上面删除的参数
+</span></span><span class="line"><span class="cl">    <span class="k">$(</span><span class="nv">empty</span><span class="k">)</span>,\
+</span></span><span class="line"><span class="cl">    <span class="k">$(</span><span class="nv">empty</span><span class="k">)</span>,\
+</span></span><span class="line"><span class="cl">    <span class="k">$(</span><span class="nv">empty</span><span class="k">)))</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>实际应用中就是 添加一个 product.prop</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">├── AndroidProducts.mk
+</span></span><span class="line"><span class="cl">├── README.md
+</span></span><span class="line"><span class="cl">├── bluebird.mk
+</span></span><span class="line"><span class="cl">├── bluebird_x86_64_only
+</span></span><span class="line"><span class="cl">│   └── BoardConfig.mk
+</span></span><span class="line"><span class="cl">└── product.prop
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>并在bluebird.mk中添加</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">PRODUCT_SYSTEM_PROPERTIES += ro.bluebird=1⏎ 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>编译运行后就能看到 自己新添加的prop属性了</p>
+]]></content></item><item><title>从零开始自定义安卓系统(4) product配置详解</title><link>https://blue-bird1.github.io/posts/aosp-4/</link><pubDate>Sun, 28 Jan 2024 19:10:10 +0800</pubDate><guid>https://blue-bird1.github.io/posts/aosp-4/</guid><description>从零开始自定义安卓系统(4) product配置详解 前言 在学习修改一样东西时, 最好的方法之一就是搞懂他到底可以干什么. 而不是跟一个教程学一个选</description><content type="html"><![CDATA[<h2 id="从零开始自定义安卓系统4-product配置详解">从零开始自定义安卓系统(4) product配置详解</h2>
 <h3 id="前言">前言</h3>
 <p>在学习修改一样东西时, 最好的方法之一就是搞懂他到底可以干什么. 而不是跟一个教程学一个选项,再跟另一个教程再学一个选项, 结果问到可以做XX么, 还是无法回答.</p>
 <p>当然,并不需要记住具体操作, 只需要对可以做什么有印象就可以了.</p>

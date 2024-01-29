@@ -1,0 +1,109 @@
+<!doctype html><html lang=zh-CN><head><script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(e,t,n,s,o,i,a){e.GoogleAnalyticsObject=o,e[o]=e[o]||function(){(e[o].q=e[o].q||[]).push(arguments)},e[o].l=1*new Date,i=t.createElement(n),a=t.getElementsByTagName(n)[0],i.async=1,i.src=s,a.parentNode.insertBefore(i,a)}(window,document,"script","https://www.google-analytics.com/analytics.js","ga"),ga("create","UA-110301700-1","auto"),ga("send","pageview"))</script><meta charset=utf-8><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="ie=edge"><meta name=robots content="index, follow"><meta name=revisit-after content="15 days"><link rel=author href=/humans.txt><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/site.webmanifest><meta name=msapplication-TileImage content="/mstile-144x144.png"><link rel="shortcut icon" href=/favicon.ico><meta name=author content><meta itemprop=name content="从零开始自定义安卓系统(5)  修改prop属性"><meta itemprop=description content="从零开始自定义安卓系统(5) 修改prop属性 从product.mk修改 在上一节已经知道 1 2 3 4 5 PRODUCT_SYSTEM_PROPERTIES PRODUCT_SYSTEM_EXT_PROPERTIES PRODUCT_VENDOR_PROPERTIES PRODUCT_ODM_PROPERTIES PRODUCT_PRODUCT_PROPERTIES 这些可以修改prop属性 只需要加一"><meta itemprop=datePublished content="2024-01-30T00:36:53+08:00"><meta itemprop=dateModified content="2024-01-30T00:36:53+08:00"><meta itemprop=wordCount content="491"><meta itemprop=keywords content="aosp,"><meta property="og:title" content="从零开始自定义安卓系统(5)  修改prop属性"><meta property="og:description" content="从零开始自定义安卓系统(5) 修改prop属性 从product.mk修改 在上一节已经知道 1 2 3 4 5 PRODUCT_SYSTEM_PROPERTIES PRODUCT_SYSTEM_EXT_PROPERTIES PRODUCT_VENDOR_PROPERTIES PRODUCT_ODM_PROPERTIES PRODUCT_PRODUCT_PROPERTIES 这些可以修改prop属性 只需要加一"><meta property="og:type" content="article"><meta property="og:url" content="https://blue-bird1.github.io/posts/aosp-5/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2024-01-30T00:36:53+08:00"><meta property="article:modified_time" content="2024-01-30T00:36:53+08:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="从零开始自定义安卓系统(5)  修改prop属性"><meta name=twitter:description content="从零开始自定义安卓系统(5) 修改prop属性 从product.mk修改 在上一节已经知道 1 2 3 4 5 PRODUCT_SYSTEM_PROPERTIES PRODUCT_SYSTEM_EXT_PROPERTIES PRODUCT_VENDOR_PROPERTIES PRODUCT_ODM_PROPERTIES PRODUCT_PRODUCT_PROPERTIES 这些可以修改prop属性 只需要加一"><title>从零开始自定义安卓系统(5) 修改prop属性</title><link rel="stylesheet dns-prefetch preconnect preload prefetch" as=style href=https://blue-bird1.github.io/css/style.min.d0b20be7baabc80eb407cbffc7e54d364796f75f0c7f757c906f90f3c84fc262.css integrity="sha256-0LIL57qryA60B8v/x+VNNkeW918Mf3V8kG+Q88hPwmI=" crossorigin=anonymous></head><body id=page><header id=site-header class="animated slideInUp"><div class="hdr-wrapper section-inner"><div class=hdr-left><div class=site-branding><a href=https://blue-bird1.github.io/>青鸟的博客</a></div><nav class="site-nav hide-in-mobile"><a href=https://blue-bird1.github.io/posts/>Posts</a><a href=https://blue-bird1.github.io/about/>About</a><a href=https://blue-bird1.github.io/friends/>Friend</a></nav></div><div class="hdr-right hdr-icons"><button id=menu-btn class=hdr-btn title=Menu><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button></div></div></header><div id=mobile-menu class="animated fast"><ul><li><a href=https://blue-bird1.github.io/posts/>Posts</a></li><li><a href=https://blue-bird1.github.io/about/>About</a></li><li><a href=https://blue-bird1.github.io/friends/>Friend</a></li></ul></div><main class="site-main section-inner animated fadeIn faster"><article class=thin><header class=post-header><div class=post-meta><span>Jan 30, 2024</span></div><h1>从零开始自定义安卓系统(5) 修改prop属性</h1></header><div class=post-info><p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-feather"><path d="M20.24 12.24a6 6 0 00-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" y1="8" x2="2" y2="22"/><line x1="17.5" y1="15" x2="9" y2="15"/></svg><a href target=_blank></a></p><p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83.0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7" y2="7"/></svg><span class=tag><a href=https://blue-bird1.github.io/tags/aosp>aosp</a></span></p><p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-folder"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg><span class=category><a href=https://blue-bird1.github.io/categories/android>android</a></span></p><p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6A2 2 0 004 4v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>491 Words</p><p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>2024-01-29 16:36 +0000</p></div><hr class=post-end><div class=content><h2 id=从零开始自定义安卓系统5--修改prop属性>从零开始自定义安卓系统(5) 修改prop属性<a href=#从零开始自定义安卓系统5--修改prop属性 class=anchor aria-hidden=true><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 015 5 5 5 0 01-5 5h-3m-6 0H6a5 5 0 01-5-5 5 5 0 015-5h3"/><line x1="8" y1="12" x2="16" y2="12"/></svg></a></h2><h3 id=从productmk修改>从product.mk修改<a href=#从productmk修改 class=anchor aria-hidden=true><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 015 5 5 5 0 01-5 5h-3m-6 0H6a5 5 0 01-5-5 5 5 0 015-5h3"/><line x1="8" y1="12" x2="16" y2="12"/></svg></a></h3><p>在上一节已经知道</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>PRODUCT_SYSTEM_PROPERTIES
+</span></span><span class=line><span class=cl>PRODUCT_SYSTEM_EXT_PROPERTIES
+</span></span><span class=line><span class=cl>PRODUCT_VENDOR_PROPERTIES
+</span></span><span class=line><span class=cl>PRODUCT_ODM_PROPERTIES
+</span></span><span class=line><span class=cl>PRODUCT_PRODUCT_PROPERTIES
+</span></span></code></pre></td></tr></table></div></div><p>这些可以修改prop属性</p><p>只需要加一行</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>PRODUCT_SYSTEM_PROPERTIES += ro.bluebird = 0
+</span></span></code></pre></td></tr></table></div></div><p>就可以在输出目录里的 <code>out/target/product/bluebird_x86_64_only/system/build.prop</code> 找到新属性.</p><p>其他属性对应的是其他文件, 整体对应关系是</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>PRODUCT_SYSTEM_PROPERTIES: system/build.prop
+</span></span><span class=line><span class=cl>PRODUCT_SYSTEM_EXT_PROPERTIES: system_ext/etc/build.prop
+</span></span><span class=line><span class=cl>PRODUCT_VENDOR_PROPERTIES: vendor/build.prop
+</span></span><span class=line><span class=cl>PRODUCT_PRODUCT_PROPERTIES: product/etc/build.prop
+</span></span><span class=line><span class=cl>PRODUCT_ODM_PROPERTIES: odm/etc/build.prop
+</span></span></code></pre></td></tr></table></div></div><p>对应的文件级设置为</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>TARGET_SYSTEM_PROP: system/build.prop
+</span></span><span class=line><span class=cl>TARGET_SYSTEM_EXT_PROP: system_ext/etc/build.prop
+</span></span><span class=line><span class=cl>TARGET_VENDOR_PROP 默认值(/vendor.prop):  vendor/build.prop
+</span></span><span class=line><span class=cl>TARGET_PRODUCT_PROP 默认(/product.prop): product/etc/build.prop
+</span></span><span class=line><span class=cl>TARGET_ODM_PROP 默认(/odm.prop): odm/etc/build.prop
+</span></span></code></pre></td></tr></table></div></div><p>要删除就需要使用</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>PRODUCT_SYSTEM_PROPERTY_BLACKLIST : system
+</span></span><span class=line><span class=cl>PRODUCT_VENDOR_PROPERTY_BLACKLIST : vendor
+</span></span></code></pre></td></tr></table></div></div><p>具体实现在<code>build/make/core/sysprop.mk</code> 里面</p><p>拿一段举例就是</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-makefile data-lang=makefile><span class=line><span class=cl><span class=c># ----------------------------------------------------------------
+</span></span></span><span class=line><span class=cl><span class=c># odm/etc/build.prop
+</span></span></span><span class=line><span class=cl><span class=c>#
+</span></span></span><span class=line><span class=cl><span class=c></span>
+</span></span><span class=line><span class=cl><span class=c># _prop_files_ 决定了文件级参数, 取TARGET_ODM_PROP or /odm.prop
+</span></span></span><span class=line><span class=cl><span class=c></span><span class=nv>_prop_files_</span> <span class=o>:=</span> <span class=k>$(if</span> <span class=k>$(</span>TARGET_ODM_PROP<span class=k>)</span>,<span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>    <span class=k>$(</span>TARGET_ODM_PROP<span class=k>)</span>,<span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>    <span class=k>$(</span>wildcard <span class=k>$(</span>TARGET_DEVICE_DIR<span class=k>)</span>/odm.prop<span class=k>)</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl><span class=c># 参数级参数  PRODUCT_ODM_PROPERTIES
+</span></span></span><span class=line><span class=cl><span class=c></span><span class=nv>_prop_vars_</span> <span class=o>:=</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>    ADDITIONAL_ODM_PROPERTIES <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>    PRODUCT_ODM_PROPERTIES
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl><span class=c># 输出路径
+</span></span></span><span class=line><span class=cl><span class=c></span><span class=nv>INSTALLED_ODM_BUILD_PROP_TARGET</span> <span class=o>:=</span> <span class=k>$(</span>TARGET_OUT_ODM<span class=k>)</span>/etc/build.prop
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c># 调用build prop文件的函数 参数位置与上述一直
+</span></span></span><span class=line><span class=cl><span class=c></span><span class=k>$(</span><span class=nv>eval</span> <span class=k>$(</span><span class=nv>call</span> <span class=nv>build</span>-<span class=nv>properties</span>,\
+</span></span><span class=line><span class=cl>    <span class=nv>odm</span>,\
+</span></span><span class=line><span class=cl>    <span class=k>$(</span><span class=nv>INSTALLED_ODM_BUILD_PROP_TARGET</span><span class=k>)</span>,\
+</span></span><span class=line><span class=cl>    <span class=k>$(</span><span class=nv>_prop_files_</span><span class=k>)</span>,\
+</span></span><span class=line><span class=cl>    <span class=k>$(</span><span class=nv>_prop_vars_</span><span class=k>)</span>,\
+</span></span><span class=line><span class=cl>    # 从上面删除的参数
+</span></span><span class=line><span class=cl>    <span class=k>$(</span><span class=nv>empty</span><span class=k>)</span>,\
+</span></span><span class=line><span class=cl>    <span class=k>$(</span><span class=nv>empty</span><span class=k>)</span>,\
+</span></span><span class=line><span class=cl>    <span class=k>$(</span><span class=nv>empty</span><span class=k>)))</span>
+</span></span></code></pre></td></tr></table></div></div><p>实际应用中就是 添加一个 product.prop</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>├── AndroidProducts.mk
+</span></span><span class=line><span class=cl>├── README.md
+</span></span><span class=line><span class=cl>├── bluebird.mk
+</span></span><span class=line><span class=cl>├── bluebird_x86_64_only
+</span></span><span class=line><span class=cl>│   └── BoardConfig.mk
+</span></span><span class=line><span class=cl>└── product.prop
+</span></span></code></pre></td></tr></table></div></div><p>并在bluebird.mk中添加</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>PRODUCT_SYSTEM_PROPERTIES += ro.bluebird=1⏎ 
+</span></span></code></pre></td></tr></table></div></div><p>编译运行后就能看到 自己新添加的prop属性了</p></div></article><div class="post-nav thin"><a class=prev-post href=https://blue-bird1.github.io/posts/aosp-4/><span class=post-nav-label>Older&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span><br><span>从零开始自定义安卓系统(4) product配置详解</span></a></div><div id=comments class=thin></div></main><footer id=site-footer class="section-inner thin animated fadeIn faster"><p>&copy; 2024 <a href=https://blue-bird1.github.io/></a>
+&#183;
+&#183; Made with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a>
+&#183; Theme <a href=https://github.com/1bl4z3r/hermit-V2 target=_blank rel=noopener>Hermit-V2</a>
+&#183; <a href=https://blue-bird1.github.io/posts/index.xml target=_blank title=rss><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 019 9"/><path d="M4 4a16 16 0 0116 16"/><circle cx="5" cy="19" r="1"/></svg></a></p></footer><script async src=https://blue-bird1.github.io/js/bundle.min.038214de9d568246fadcfeb06c69349925de3209f332ec123861b6aa031d63c6.js integrity="sha256-A4IU3p1Wgkb63P6wbGk0mSXeMgnzMuwSOGG2qgMdY8Y=" crossorigin=anonymous></script><script type=text/javascript async src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">MathJax.Hub.Config({tex2jax:{inlineMath:[["$","$"],["\\(","\\)"]],displayMath:[["$$","$$"],["[[","]]"]],processEscapes:!0,processEnvironments:!0,skipTags:["script","noscript","style","textarea","pre"],TeX:{equationNumbers:{autoNumber:"AMS"},extensions:["AMSmath.js","AMSsymbols.js"]}}}),MathJax.Hub.Queue(function(){var e,t=MathJax.Hub.getAllJax();for(e=0;t.length>e;e+=1)t[e].SourceElement().parentNode.className+=" has-jax"})</script><style>code.has-jax{font:inherit;font-size:100%;background:inherit;border:inherit;color:#515151}</style></body></html>
