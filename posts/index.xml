@@ -1,4 +1,94 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 青鸟的博客</title><link>https://blue-bird1.github.io/posts/</link><description>Recent content in Posts on 青鸟的博客</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 30 Jan 2024 18:26:01 +0800</lastBuildDate><atom:link href="https://blue-bird1.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>从零开始自定义安卓系统(6) 自定义模块 添加系统app</title><link>https://blue-bird1.github.io/posts/aosp-6/</link><pubDate>Tue, 30 Jan 2024 18:26:01 +0800</pubDate><guid>https://blue-bird1.github.io/posts/aosp-6/</guid><description>从零开始自定义安卓系统(6) 自定义模块 添加系统app 前言 在之前就知道可以通过PRODUCT_PACKAGES 添加自己的包, 具体操作是 新建一个</description><content type="html"><![CDATA[<h2 id="从零开始自定义安卓系统6--自定义模块-添加系统app">从零开始自定义安卓系统(6)  自定义模块 添加系统app</h2>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 青鸟的博客</title><link>https://blue-bird1.github.io/posts/</link><description>Recent content in Posts on 青鸟的博客</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 31 Jan 2024 19:07:48 +0800</lastBuildDate><atom:link href="https://blue-bird1.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>从零开始自定义安卓系统(7) 预装二进制文件和删除预装模块</title><link>https://blue-bird1.github.io/posts/aosp-7/</link><pubDate>Wed, 31 Jan 2024 19:07:48 +0800</pubDate><guid>https://blue-bird1.github.io/posts/aosp-7/</guid><description>从零开始自定义安卓系统(7) 预装二进制文件和删除预装模块 预编译二进制文件 操作上类似于预装系统app 不过变成了使用cc_prebuilt_bi</description><content type="html"><![CDATA[<h2 id="从零开始自定义安卓系统7--预装二进制文件和删除预装模块">从零开始自定义安卓系统(7)  预装二进制文件和删除预装模块</h2>
+<h3 id="预编译二进制文件">预编译二进制文件</h3>
+<p>操作上类似于预装系统<code>app</code> 不过变成了使用<code>cc_prebuilt_binary</code></p>
+<p>推荐在<code>external/</code> 目录新建一个文件夹,然后添加一个<code>Android.bp</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="err">cc_prebuilt_binary</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="err">name:</span><span class="nt">&#34;ecapture&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">   <span class="err">srcs:[</span><span class="nt">&#34;./ecapture&#34;</span><span class="err">]</span>
+</span></span><span class="line"><span class="cl">   <span class="err">strip</span><span class="p">:{</span>
+</span></span><span class="line"><span class="cl">     <span class="err">none:true</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>比起系统<code>app</code>, 二进制文件的一大问题是 预编译的架构不一样是无法运行的, 这个时候可以使用<code>arch</code>参数</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">cc_prebuilt_binary {
+</span></span><span class="line"><span class="cl">   name:&#34;ecapture&#34;,
+</span></span><span class="line"><span class="cl">   arch:{
+</span></span><span class="line"><span class="cl">     x86_64: {
+</span></span><span class="line"><span class="cl">       srcs:[&#34;./ecapture-v0.7.3-linux-x86_64/ecapture&#34;]
+</span></span><span class="line"><span class="cl">     },
+</span></span><span class="line"><span class="cl">     # 有四种架构 arm, x86,arm64, x86_64
+</span></span><span class="line"><span class="cl">   },
+</span></span><span class="line"><span class="cl">   strip:{none:true}
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>为每个不同的架构指定不同的二进制文件.</p>
+<p>另一个问题就是未必想要放到<code>/system/bin</code>, 在<code>soong</code>大部分模块都具有以下两个属性</p>
+<p><code>vendor</code> 和<code>product_specific</code>  , 设置为true后 会放到<code>/vendor</code> 和 <code>/product </code> 分区, 如果没有将会放入<code>/system/vendor</code> 和 <code>/system/product</code></p>
+<h3 id="删除模块">删除模块</h3>
+<h4 id="如何查看目标文件的对应代码路径">如何查看目标文件的对应代码路径</h4>
+<p>很多情况下都是要删除一个系统<code>apk</code>,但是要删除一个文件,首先要知道他对应的源码路径.  在<code>out/target/product/&lt;产品名&gt;</code>  路径下有个<code>module-info.json</code></p>
+<p>里面包含了模块与其对应的路径, 直接搜索对应的文件名, 会看到类似这样的<code>json</code>格式</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"> <span class="s2">&#34;ActivityManagerPerfTestsUtils&#34;</span><span class="err">:</span> <span class="p">{</span> <span class="nt">&#34;class&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;JAVA_LIBRARIES&#34;</span><span class="p">],</span>  <span class="nt">&#34;path&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;frameworks/base/tests/ActivityManagerPerfTests/utils&#34;</span><span class="p">],</span>  <span class="nt">&#34;tags&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;tests&#34;</span><span class="p">],</span>  <span class="nt">&#34;installed&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;out/target/product/test/testcases/ActivityManagerPerfTestsUtils/x86_64/ActivityManagerPerfTestsUtils.jar&#34;</span><span class="p">],</span>  <span class="nt">&#34;compatibility_suites&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;null-suite&#34;</span><span class="p">],</span>   <span class="nt">&#34;module_name&#34;</span><span class="p">:</span> <span class="s2">&#34;ActivityManagerPerfTestsUtils&#34;</span><span class="p">,</span>  <span class="nt">&#34;supported_variants&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;DEVICE&#34;</span><span class="p">]</span> <span class="p">}</span><span class="err">,</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>installled</code> 对应的就是路径, 而<code>module_name</code> 则是对应的名字, <code>path</code>对应源码路径. 之后再根据模块名</p>
+<p>去删除.</p>
+<h4 id="删除和替换模块">删除和替换模块</h4>
+<p>如果要删除的话,需要修改对应产品的<code>Android.mk</code> 或者 系统app定义在<code>/build/make/core.mk</code> .移除对应的<code>PRODUCT_PACKAGES</code> 属性, 就是添加模块的反向操作.</p>
+<p>另一种更可维护的方法就是使用替换.  <code>aosp</code> 实际上没有编译时删除模块的概念, 实际上使用的是<code>替换</code></p>
+<p>因为版本问题, 以前博客都是使用<code>.mk</code>的形式, 例如 <a href="https://qiushao.net/2019/12/12/Android%E7%B3%BB%E7%BB%9F%E5%BC%80%E5%8F%91%E5%85%A5%E9%97%A8/6-%E5%88%A0%E9%99%A4%E5%8E%9F%E7%94%9F%E5%86%85%E7%BD%AEAPK/">秋少的博客</a>.</p>
+<p>不过<code>soong</code>实际上也有类似的功能, 实际上也是填写了<code>LOCAL_OVERRIDES_PACKAGES</code>这个值</p>
+<p>在部分模块下, 具有<code>overrides</code>属性, 可以通过这个属性后覆盖替换掉 其他模块.</p>
+<p>例子</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">android_app_import {
+</span></span><span class="line"><span class="cl">    # 省略
+</span></span><span class="line"><span class="cl">    overrides: [&#34;Email&#34;,&#34;Music&#34;]
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>拥有这个属性的主要集中在<code>android</code> 模块, 在源码中主要用于替换<code>apk</code></p>
+]]></content></item><item><title>从零开始自定义安卓系统(6) 自定义模块 添加系统app</title><link>https://blue-bird1.github.io/posts/aosp-6/</link><pubDate>Tue, 30 Jan 2024 18:26:01 +0800</pubDate><guid>https://blue-bird1.github.io/posts/aosp-6/</guid><description>从零开始自定义安卓系统(6) 自定义模块 添加系统app 前言 在之前就知道可以通过PRODUCT_PACKAGES 添加自己的包, 具体操作是 新建一个</description><content type="html"><![CDATA[<h2 id="从零开始自定义安卓系统6--自定义模块-添加系统app">从零开始自定义安卓系统(6)  自定义模块 添加系统app</h2>
 <h3 id="前言">前言</h3>
 <p>在之前就知道可以通过<code>PRODUCT_PACKAGES</code> 添加自己的包, 具体操作是 新建一个模块,然后</p>
 <div class="highlight"><div class="chroma">
