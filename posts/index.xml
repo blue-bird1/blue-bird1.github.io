@@ -1,4 +1,235 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 青鸟的博客</title><link>https://blue-bird1.github.io/posts/</link><description>Recent content in Posts on 青鸟的博客</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 31 Jan 2024 19:07:48 +0800</lastBuildDate><atom:link href="https://blue-bird1.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>从零开始自定义安卓系统(7) 预装二进制文件和删除预装模块</title><link>https://blue-bird1.github.io/posts/aosp-7/</link><pubDate>Wed, 31 Jan 2024 19:07:48 +0800</pubDate><guid>https://blue-bird1.github.io/posts/aosp-7/</guid><description>从零开始自定义安卓系统(7) 预装二进制文件和删除预装模块 预编译二进制文件 操作上类似于预装系统app 不过变成了使用cc_prebuilt_bi</description><content type="html"><![CDATA[<h2 id="从零开始自定义安卓系统7--预装二进制文件和删除预装模块">从零开始自定义安卓系统(7)  预装二进制文件和删除预装模块</h2>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 青鸟的博客</title><link>https://blue-bird1.github.io/posts/</link><description>Recent content in Posts on 青鸟的博客</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 31 Jan 2024 22:48:00 +0800</lastBuildDate><atom:link href="https://blue-bird1.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>从零开始自定义安卓系统(8) 用复制文件与叠加层自定义系统</title><link>https://blue-bird1.github.io/posts/aosp-8/</link><pubDate>Wed, 31 Jan 2024 22:48:00 +0800</pubDate><guid>https://blue-bird1.github.io/posts/aosp-8/</guid><description>从零开始自定义安卓系统(8) 用复制文件与叠加层自定义系统 复制文件 产品级拥有一个选项可以直接复制文件到系统 1 PRODUCT_COPY_FILES += test.sh:$(TARGET_COPY_OUT_VENDOR)/bin/test.sh \ 格式上很简单, 一个:分割的</description><content type="html"><![CDATA[<h2 id="从零开始自定义安卓系统8--用复制文件与叠加层自定义系统">从零开始自定义安卓系统(8)  用复制文件与叠加层自定义系统</h2>
+<h3 id="复制文件">复制文件</h3>
+<p>产品级拥有一个选项可以直接复制文件到系统</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="line"><span class="cl"><span class="nv">PRODUCT_COPY_FILES</span> <span class="o">+=</span> test.sh:<span class="k">$(</span>TARGET_COPY_OUT_VENDOR<span class="k">)</span>/bin/test.sh <span class="se">\
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>格式上很简单, 一个<code>:</code>分割的对应关系. 比较特殊的是使用<code>$(TARGET_COPY_OUT_VENDOR)</code>来获取指定目录.</p>
+<p>这样有利于后续维护,这些常用的全局变量位于<code>build/core/envsetup.sh</code></p>
+<p>里面定义了全局变量,  如</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="line"><span class="cl"><span class="nv">TARGET_COPY_OUT_SYSTEM</span> <span class="o">:=</span> system
+</span></span><span class="line"><span class="cl"><span class="nv">TARGET_COPY_OUT_SYSTEM_DLKM</span> <span class="o">:=</span> system_dlkm
+</span></span><span class="line"><span class="cl"><span class="nv">TARGET_COPY_OUT_SYSTEM_OTHER</span> <span class="o">:=</span> system_other
+</span></span><span class="line"><span class="cl"><span class="nv">TARGET_COPY_OUT_DATA</span> <span class="o">:=</span> data
+</span></span><span class="line"><span class="cl"><span class="nv">TARGET_COPY_OUT_ASAN</span> <span class="o">:=</span> <span class="k">$(</span>TARGET_COPY_OUT_DATA<span class="k">)</span>/asan
+</span></span><span class="line"><span class="cl"><span class="nv">TARGET_COPY_OUT_OEM</span> <span class="o">:=</span> oem
+</span></span><span class="line"><span class="cl"><span class="nv">TARGET_COPY_OUT_ROOT</span> <span class="o">:=</span> root
+</span></span><span class="line"><span class="cl"><span class="nv">TARGET_COPY_OUT_RECOVERY</span> <span class="o">:=</span> recovery
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c"># 节选 全列表在此文件中搜索 `TARGET_OUT`即可
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果要复制到<code> /system/xxx</code> 可以使用<code>$(TARGET_COPY_OUT_SYSTEM)/xxx</code></p>
+<p>一般用于放一些配置文件 例如<code>init.rc</code></p>
+<h3 id="叠加层">叠加层</h3>
+<p>叠加层也叫<code>overlay</code>层, 比起直接复制文件的区别在于. 复制文件是面向最终输出, 会复制到输出目录,  支持任意文件.</p>
+<p>叠加层是面向编译系统, 可以实现在编译时替换资源文件. 但是也只能修改资源文件.</p>
+<p>但是可以实现修改已有代码的配置,而无需修改安卓源代码.</p>
+<p>要使用叠加层只需要</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">PRODUCT_PACKAGE_OVERLAYS += ${LOCAL_PATH}/overlay 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后根据要修改的文件路径新建对应的目录</p>
+<p>例如要修改<code>frameworks/base/core/res/res/values/config.xml</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mkdir -p overlay/frameworks/base/core/res/res/values
+</span></span><span class="line"><span class="cl">touch overlay/frameworks/base/core/res/res/values/config.xml
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后按照<code>xml</code>格式 写上需要修改的内容</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;resouce&gt;</span>
+</span></span><span class="line"><span class="cl">     <span class="nt">&lt;bool</span> <span class="na">name=</span><span class="s">&#34;config_disableLockscreenByDefault&#34;</span><span class="nt">&gt;</span>false<span class="nt">&lt;/bool&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/resouce&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>只会影响所写的值,不影响其他默认值.</p>
+<p>要使用叠加层并不容易, 首先要知道到底有什么配置项,和在哪个路径.  而在了解这些之前几乎没什么用,  需要先阅读源码中的<code>framework/base/core/res/</code>里的<code>xml</code>文件中的注释.</p>
+<h3 id="动态叠加层">动态叠加层</h3>
+<p>也称为<code>运行时资源覆盖</code>(RRO),  其实就是从编译时覆盖变成了系统运行时覆盖,为了加入系统, 实际上安装形式是<code>apk</code></p>
+<p>要想使用<code>RRO</code>,首先需要新建一个模块目录,然后添加<code>Android.bp</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">runtime_resource_overlay {
+</span></span><span class="line"><span class="cl">    name: &#34;ExampleOverlay&#34;,
+</span></span><span class="line"><span class="cl">    sdk_version: &#34;current&#34;,
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后添加<code>app</code>必要的<code>AndroidManifest.xml</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;manifest</span> <span class="na">xmlns:android=</span><span class="s">&#34;http://schemas.android.com/apk/res/android&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="na">package=</span><span class="s">&#34;com.example.overlay&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;application</span> <span class="na">android:hasCode=</span><span class="s">&#34;false&#34;</span> <span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;overlay</span> <span class="na">android:targetPackage=</span><span class="s">&#34;com.android.contacts&#34;</span>
+</span></span><span class="line"><span class="cl">                   <span class="na">android:targetName=</span><span class="s">&#34;OverlayableResources&#34;</span>
+</span></span><span class="line"><span class="cl">             	   <span class="na">android:resourcesMap=</span><span class="s">&#34;@xml/overlays&#34;</span>
+</span></span><span class="line"><span class="cl">             <span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/manifest&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>targetPackage</code> 是想要覆盖的apk名, 这里是<code>aosp</code>自带的联系人应用</p>
+<p><code>@xml/overlays</code>是覆盖资源文件名 实际路径是<code>res/xml/overlays.xml</code></p>
+<p>实际内容像这样</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="cp">&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;overlay</span> <span class="na">xmlns:android=</span><span class="s">&#34;http://schemas.android.com/apk/res/android&#34;</span> <span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">     <span class="c">&lt;!-- Overlays string/config1 and string/config2 with the same resource. --&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;item</span> <span class="na">target=</span><span class="s">&#34;string/config1&#34;</span> <span class="na">value=</span><span class="s">&#34;@string/overlay1&#34;</span> <span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;item</span> <span class="na">target=</span><span class="s">&#34;string/config2&#34;</span> <span class="na">value=</span><span class="s">&#34;@string/overlay1&#34;</span> <span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c">&lt;!-- Overlays string/config3 with the string &#34;yes&#34;. --&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;item</span> <span class="na">target=</span><span class="s">&#34;string/config3&#34;</span> <span class="na">value=</span><span class="s">&#34;@android:string/yes&#34;</span> <span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c">&lt;!-- Overlays string/config4 with the string &#34;Hardcoded string&#34;. --&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;item</span> <span class="na">target=</span><span class="s">&#34;string/config4&#34;</span> <span class="na">value=</span><span class="s">&#34;Hardcoded string&#34;</span> <span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c">&lt;!-- Overlays integer/config5 with the integer &#34;42&#34;. --&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;item</span> <span class="na">target=</span><span class="s">&#34;integer/config5&#34;</span> <span class="na">value=</span><span class="s">&#34;42&#34;</span> <span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/overlay&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>value的格式与<code>apk</code> 定义资源格式没有区别, target是需要替换的资源id, 需要查看源码或反编译目标app读取资源文件.</p>
+<p>安卓自带的联系人资源文件位于<code>packages/apps/Contacts/res/</code> 然后默认的英语在<code>values</code>, 如果要修改字符串在<code>strings.xml</code></p>
+<p>如果想要修改开屏显示的<code>Add account , 搜索这个文件可以看到是</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;string</span> <span class="na">name=</span><span class="s">&#34;contacts_unavailable_add_account&#34;</span><span class="nt">&gt;</span>Add account<span class="nt">&lt;/string&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后在覆盖层文件添加一行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"> <span class="nt">&lt;item</span> <span class="na">target=</span><span class="s">&#34;string/contacts_unavailable_add_account&#34;</span> <span class="na">value=</span><span class="s">&#34;Add account by code&#34;</span> <span class="nt">/&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>添加到产品</p>
+<p><code>PRODUCT_PACKAGES += rro</code></p>
+<p>然后执行<code>mm</code>编译 后会出现在<code>system/product/overlay</code></p>
+<h3 id="动态覆盖层管理">动态覆盖层管理</h3>
+<p>更新完系统后可以用<code>adb shell cmd overlay</code> 查看动态叠加层状态</p>
+<p><code> cmd overlay list</code>查看当前的<code>rro</code>  apk</p>
+<p>可以看到这种输出</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">android
+</span></span><span class="line"><span class="cl">[ ] com.android.internal.display.cutout.emulation.corner
+</span></span><span class="line"><span class="cl">[ ] com.android.internal.display.cutout.emulation.double
+</span></span><span class="line"><span class="cl">[ ] com.android.internal.systemui.navbar.gestural_wide_back
+</span></span><span class="line"><span class="cl">[ ] com.android.internal.display.cutout.emulation.hole
+</span></span><span class="line"><span class="cl">[ ] com.android.internal.display.cutout.emulation.tall
+</span></span><span class="line"><span class="cl">[ ] com.android.internal.systemui.navbar.threebutton
+</span></span><span class="line"><span class="cl">[ ] com.android.internal.systemui.navbar.gestural_extra_wide_back
+</span></span><span class="line"><span class="cl">[ ] com.android.theme.font.notoserifsource
+</span></span><span class="line"><span class="cl">[ ] com.android.internal.display.cutout.emulation.waterfall
+</span></span><span class="line"><span class="cl">[ ] com.android.internal.systemui.navbar.gestural
+</span></span><span class="line"><span class="cl">[ ] com.android.internal.systemui.navbar.gestural_narrow_back
+</span></span><span class="line"><span class="cl">[x] com.android.systemui:neutral
+</span></span><span class="line"><span class="cl">[x] com.android.systemui:accent
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">com.android.contacts
+</span></span><span class="line"><span class="cl">[ ] com.example.overlay
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>包出现在列表但是没有启用, 需要使用 <code>cmd overlay enable com.example.overlay  </code> 启用.</p>
+<p>执行后可以看到
+<img src="/images/image_2024-01-31_22-42-48.png" alt="contacts"></p>
+]]></content></item><item><title>从零开始自定义安卓系统(7) 预装二进制文件和删除预装模块</title><link>https://blue-bird1.github.io/posts/aosp-7/</link><pubDate>Wed, 31 Jan 2024 19:07:48 +0800</pubDate><guid>https://blue-bird1.github.io/posts/aosp-7/</guid><description>从零开始自定义安卓系统(7) 预装二进制文件和删除预装模块 预编译二进制文件 操作上类似于预装系统app 不过变成了使用cc_prebuilt_bi</description><content type="html"><![CDATA[<h2 id="从零开始自定义安卓系统7--预装二进制文件和删除预装模块">从零开始自定义安卓系统(7)  预装二进制文件和删除预装模块</h2>
 <h3 id="预编译二进制文件">预编译二进制文件</h3>
 <p>操作上类似于预装系统<code>app</code> 不过变成了使用<code>cc_prebuilt_binary</code></p>
 <p>推荐在<code>external/</code> 目录新建一个文件夹,然后添加一个<code>Android.bp</code></p>
