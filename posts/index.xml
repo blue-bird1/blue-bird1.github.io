@@ -1,4 +1,94 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 青鸟的博客</title><link>https://blue-bird1.github.io/posts/</link><description>Recent content in Posts on 青鸟的博客</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 31 Jan 2024 22:48:00 +0800</lastBuildDate><atom:link href="https://blue-bird1.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>从零开始自定义安卓系统(8) 用复制文件与叠加层自定义系统</title><link>https://blue-bird1.github.io/posts/aosp-8/</link><pubDate>Wed, 31 Jan 2024 22:48:00 +0800</pubDate><guid>https://blue-bird1.github.io/posts/aosp-8/</guid><description>从零开始自定义安卓系统(8) 用复制文件与叠加层自定义系统 复制文件 产品级拥有一个选项可以直接复制文件到系统 1 PRODUCT_COPY_FILES += test.sh:$(TARGET_COPY_OUT_VENDOR)/bin/test.sh \ 格式上很简单, 一个:分割的</description><content type="html"><![CDATA[<h2 id="从零开始自定义安卓系统8--用复制文件与叠加层自定义系统">从零开始自定义安卓系统(8)  用复制文件与叠加层自定义系统</h2>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 青鸟的博客</title><link>https://blue-bird1.github.io/posts/</link><description>Recent content in Posts on 青鸟的博客</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Fri, 02 Feb 2024 00:31:04 +0800</lastBuildDate><atom:link href="https://blue-bird1.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>从零开始自定义安卓系统(9) 初始化脚本</title><link>https://blue-bird1.github.io/posts/aosp-9/</link><pubDate>Fri, 02 Feb 2024 00:31:04 +0800</pubDate><guid>https://blue-bird1.github.io/posts/aosp-9/</guid><description>从零开始自定义安卓系统(9) 初始化脚本 init.rc init.rc是安卓用于定义系统启动时操作的格式, 安卓启动会尝试读取 /{system,system_ext,vendor,odm,product}/etc/init/ 目录下的rc文件 如果要实现开机</description><content type="html"><![CDATA[<h2 id="从零开始自定义安卓系统9--初始化脚本">从零开始自定义安卓系统(9)  初始化脚本</h2>
+<h3 id="initrc">init.rc</h3>
+<p><code>init.rc</code>是安卓用于定义系统启动时操作的格式, 安卓启动会尝试读取</p>
+<p><code>/{system,system_ext,vendor,odm,product}/etc/init/</code> 目录下的rc文件</p>
+<p>如果要实现开机时运行一个自定义脚本, 只需要在产品的mk文件里添加</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-makefile" data-lang="makefile"><span class="line"><span class="cl"><span class="nv">PRODUCT_COPY_FILES</span> <span class="o">+=</span>                  <span class="k">$(</span>LOCAL_PATH<span class="k">)</span>/init.bluebird.rc:<span class="k">$(</span>TARGET_COPY_OUT_VENDOR<span class="k">)</span>/etc/init/init.bluebird.rc
+</span></span><span class="line"><span class="cl"> <span class="k">$(</span>LOCAL_PATH<span class="k">)</span>/autostart.sh:<span class="k">$(</span>TARGET_COPY_OUT_SYSTEM<span class="k">)</span>/bin/autostart.sh
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后在<code>init.bluebird.rc</code> 里编辑即可</p>
+<p>如果出于测试目的可以选择直接在系统内编辑,上述文件然后重启</p>
+<h3 id="rc文件语法">rc文件语法</h3>
+<p><code>rc</code>文件语法有两块 一块是定义服务, 一块是定义触发动作.</p>
+<p><a href="https://android.googlesource.com/platform/system/core/+/master/init/README.md">完整参考</a></p>
+<p>服务定义语法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># 格式
+</span></span><span class="line"><span class="cl"># service &lt;name&gt; &lt;pathname&gt; [ &lt;argument&gt; ]*
+</span></span><span class="line"><span class="cl">#   &lt;option&gt;
+</span></span><span class="line"><span class="cl">#   &lt;option&gt;
+</span></span><span class="line"><span class="cl"># 参考
+</span></span><span class="line"><span class="cl">service test_bluebird /system/bin/autostart.sh
+</span></span><span class="line"><span class="cl">       user root 
+</span></span><span class="line"><span class="cl">       disabled
+</span></span><span class="line"><span class="cl">       oneshot
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>disabled</code> 禁止自启, 直到被调用. <code>oneshot</code> 使得服务不会被重复调用和重启, 用于只执行一次的脚本</p>
+<p>然后定义什么时候触发</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"># on &lt;trigger&gt; [&amp;&amp; &lt;trigger&gt;]*
+</span></span><span class="line"><span class="cl">#   &lt;command&gt;
+</span></span><span class="line"><span class="cl">#   &lt;command&gt;
+</span></span><span class="line"><span class="cl">#   &lt;command&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>aosp</code>定义的阶段触发器有</p>
+<ol>
+<li><code>early-fs</code> - Start vold.</li>
+<li><code>fs</code> - Vold is up. Mount partitions not marked as first-stage or latemounted.</li>
+<li><code>post-fs</code> - Configure anything dependent on early mounts.</li>
+<li><code>late-fs</code> - Mount partitions marked as latemounted.</li>
+<li><code>post-fs-data</code> - Mount and configure <code>/data</code>; set up encryption. <code>/metadata</code> is reformatted here if it couldn&rsquo;t mount in first-stage init.</li>
+<li><code>zygote-start</code> - Start the zygote.</li>
+<li><code>early-boot</code> - After zygote has started.</li>
+<li><code>boot</code> - After <code>early-boot</code> actions have completed.</li>
+</ol>
+<p>也可以通过<code>prop</code>属性方式控制触发, 例如 <code>dev.bootcomplete</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">on property:dev.bootcomplete=1
+</span></span><span class="line"><span class="cl">   start test_bluebird
+</span></span><span class="line"><span class="cl">   # 也可以 exec -- /system/bin/test.sh
+</span></span><span class="line"><span class="cl">   # setprop ro.test 1 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>如果使用服务形式,可能需要修改<code>selinux</code> 策略, 以增加服务权限以进行操作 如文件操作  参考 <a href="https://source.android.com/docs/security/features/selinux?hl=zh-cn">https://source.android.com/docs/security/features/selinux?hl=zh-cn</a></p>
+</blockquote>
+]]></content></item><item><title>从零开始自定义安卓系统(8) 用复制文件与叠加层自定义系统</title><link>https://blue-bird1.github.io/posts/aosp-8/</link><pubDate>Wed, 31 Jan 2024 22:48:00 +0800</pubDate><guid>https://blue-bird1.github.io/posts/aosp-8/</guid><description>从零开始自定义安卓系统(8) 用复制文件与叠加层自定义系统 复制文件 产品级拥有一个选项可以直接复制文件到系统 1 PRODUCT_COPY_FILES += test.sh:$(TARGET_COPY_OUT_VENDOR)/bin/test.sh \ 格式上很简单, 一个:分割的</description><content type="html"><![CDATA[<h2 id="从零开始自定义安卓系统8--用复制文件与叠加层自定义系统">从零开始自定义安卓系统(8)  用复制文件与叠加层自定义系统</h2>
 <h3 id="复制文件">复制文件</h3>
 <p>产品级拥有一个选项可以直接复制文件到系统</p>
 <div class="highlight"><div class="chroma">
