@@ -1,4 +1,76 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 青鸟的博客</title><link>https://blue-bird1.github.io/posts/</link><description>Recent content in Posts on 青鸟的博客</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Fri, 02 Feb 2024 00:31:04 +0800</lastBuildDate><atom:link href="https://blue-bird1.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>从零开始自定义安卓系统(9) 初始化脚本</title><link>https://blue-bird1.github.io/posts/aosp-9/</link><pubDate>Fri, 02 Feb 2024 00:31:04 +0800</pubDate><guid>https://blue-bird1.github.io/posts/aosp-9/</guid><description>从零开始自定义安卓系统(9) 初始化脚本 init.rc init.rc是安卓用于定义系统启动时操作的格式, 安卓启动会尝试读取 /{system,system_ext,vendor,odm,product}/etc/init/ 目录下的rc文件 如果要实现开机</description><content type="html"><![CDATA[<h2 id="从零开始自定义安卓系统9--初始化脚本">从零开始自定义安卓系统(9)  初始化脚本</h2>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 青鸟的博客</title><link>https://blue-bird1.github.io/posts/</link><description>Recent content in Posts on 青鸟的博客</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 30 Dec 2025 08:59:32 +0800</lastBuildDate><atom:link href="https://blue-bird1.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>代码审计中的GO应用内存分配 DOS问题</title><link>https://blue-bird1.github.io/posts/codeql-go-dos/</link><pubDate>Tue, 30 Dec 2025 08:59:32 +0800</pubDate><guid>https://blue-bird1.github.io/posts/codeql-go-dos/</guid><description>前言 马上要到2026年了，我之前向codeql的github规则仓库提交的某个pr在审核人员表示投入到新的项目后，到现在依然没有回来。 想到今</description><content type="html"><![CDATA[<h2 id="前言">前言</h2>
+<p>马上要到2026年了，我之前向codeql的github规则仓库提交的某个pr在审核人员表示投入到新的项目后，到现在依然没有回来。</p>
+<p>想到今年还没有写博客，在关闭pr之时顺便水一篇。</p>
+<h3 id="关于codeql">关于codeql</h3>
+<p>2023年，作为ai爆发的几年，个人认为大概是投入到ai那边去了。</p>
+<p>现在很流行用LLM找漏洞，实际上codeql现在也很尴尬，如果要编写追踪漏洞的复杂查询代码，学习和编写成本都很高，也容易没适配漏掉。</p>
+<p>同样都是通过漏洞模式去找问题，LLM有很大的优势。</p>
+<p>这种趋势下安全人员更多的是发现问题模式，而非去找具体的漏洞。</p>
+<p>所以并不想说具体的codeql代码（当然肯定不是太久了我忘光了 细节可见https://github.com/github/codeql/pull/12663）</p>
+<h3 id="关于这种dos漏洞">关于这种DOS漏洞</h3>
+<p>当时我编写这种查询，是受到当时查看的一些漏洞报告的影响。</p>
+<p>它们或是通过前端展示代码或者后端处理代码的不当处理，通过特定内容能造成性能上的极端不利导致崩溃。</p>
+<p>我编写的就是最简单的情况，外部参数直接影响到了内存分配函数。</p>
+<p>例子代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">serve_bad</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">http</span><span class="p">.</span><span class="nf">HandleFunc</span><span class="p">(</span><span class="s">&#34;/user&#34;</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">		<span class="nx">c</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">strconv</span><span class="p">.</span><span class="nf">Atoi</span><span class="p">(</span><span class="nx">r</span><span class="p">.</span><span class="nx">Form</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="s">&#34;count&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">_</span> <span class="p">=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">c</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">		<span class="nx">d</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">strconv</span><span class="p">.</span><span class="nf">Atoi</span><span class="p">(</span><span class="nx">r</span><span class="p">.</span><span class="nx">Form</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="s">&#34;count2&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span><span class="p">(</span><span class="nx">d</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">d</span> <span class="p">=</span> <span class="mi">20</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">_</span> <span class="p">=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">d</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">		<span class="nx">e</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">strconv</span><span class="p">.</span><span class="nf">Atoi</span><span class="p">(</span><span class="nx">r</span><span class="p">.</span><span class="nx">Form</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="s">&#34;count3&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span><span class="p">(</span><span class="nx">e</span> <span class="p">&gt;</span> <span class="mi">0</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">			<span class="c1">// some extra operation
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">_</span> <span class="p">=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">e</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="p">})</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">http</span><span class="p">.</span><span class="nf">ListenAndServe</span><span class="p">(</span><span class="s">&#34;:80&#34;</span><span class="p">,</span> <span class="kc">nil</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>当然现实并没有那么简单，但是这种问题是很难避免的，我当时查询top200 go库就能查到快10个。</p>
+<p>我当时就在gog中提交了一个，作者也没有发安全公告。</p>
+<p>只是对于大部分web应用而言，dos本身并不是很关键，大不了重启，所以除了能水十个cve外没有任何意义。</p>
+<p>对于物联网，汽车等硬件难以重启的软件影响会更明显。</p>
+<h3 id="漏洞原理与计算性dos">漏洞原理与计算性DOS</h3>
+<p>原理上很明显只是 不可控的参数流入了内存分配函数<code>make</code>，分配不出来会直接炸掉程序，大部分错误处理程序都无法防止oom杀掉程序。</p>
+<p>很显然，不只是make，任何直接影响到内存分配的函数都存在这种问题。 例如对于某些特别大的数据库，如果没有对pagenum 单页查询数量限制，强制把所有数据查询出来不仅是数据全出来，大概会崩溃。</p>
+<p>但实际上这很难预防，普通漏洞是不可信数据作为数据流向危险函数，这是很容易看出来防御地方的，毕竟危险函数就那么多。</p>
+<p>但是任何数据都可能作为函数参数使用，而应用性能受参数影响。而要预防这个只能处处防御性编程，这几乎不可能。</p>
+<p>但是除了对战这种dos意义不大，毕竟损人不利己。</p>
+]]></content></item><item><title>从零开始自定义安卓系统(9) 初始化脚本</title><link>https://blue-bird1.github.io/posts/aosp-9/</link><pubDate>Fri, 02 Feb 2024 00:31:04 +0800</pubDate><guid>https://blue-bird1.github.io/posts/aosp-9/</guid><description>从零开始自定义安卓系统(9) 初始化脚本 init.rc init.rc是安卓用于定义系统启动时操作的格式, 安卓启动会尝试读取 /{system,system_ext,vendor,odm,product}/etc/init/ 目录下的rc文件 如果要实现开机</description><content type="html"><![CDATA[<h2 id="从零开始自定义安卓系统9--初始化脚本">从零开始自定义安卓系统(9)  初始化脚本</h2>
 <h3 id="initrc">init.rc</h3>
 <p><code>init.rc</code>是安卓用于定义系统启动时操作的格式, 安卓启动会尝试读取</p>
 <p><code>/{system,system_ext,vendor,odm,product}/etc/init/</code> 目录下的rc文件</p>
