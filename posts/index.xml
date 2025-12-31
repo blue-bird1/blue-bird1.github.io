@@ -1,4 +1,58 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 青鸟的博客</title><link>https://blue-bird1.github.io/posts/</link><description>Recent content in Posts on 青鸟的博客</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 30 Dec 2025 08:59:32 +0800</lastBuildDate><atom:link href="https://blue-bird1.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>代码审计中的GO应用内存分配 DOS问题</title><link>https://blue-bird1.github.io/posts/codeql-go-dos/</link><pubDate>Tue, 30 Dec 2025 08:59:32 +0800</pubDate><guid>https://blue-bird1.github.io/posts/codeql-go-dos/</guid><description>前言 马上要到2026年了，我之前向codeql的github规则仓库提交的某个pr在审核人员表示投入到新的项目后，到现在依然没有回来。 想到今</description><content type="html"><![CDATA[<h2 id="前言">前言</h2>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 青鸟的博客</title><link>https://blue-bird1.github.io/posts/</link><description>Recent content in Posts on 青鸟的博客</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 31 Dec 2025 17:04:21 +0800</lastBuildDate><atom:link href="https://blue-bird1.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>2025 年度总结</title><link>https://blue-bird1.github.io/posts/2025-end/</link><pubDate>Wed, 31 Dec 2025 17:04:21 +0800</pubDate><guid>https://blue-bird1.github.io/posts/2025-end/</guid><description>2025年度总结 年度感想 今年投入在娱乐的时间非常多，没有做什么正事，混吃等死状态。 娱乐 游戏 今年主要玩了steam单机，买了一些慈善包，还玩了</description><content type="html"><![CDATA[<h2 id="2025年度总结">2025年度总结</h2>
+<h3 id="年度感想">年度感想</h3>
+<p>今年投入在娱乐的时间非常多，没有做什么正事，混吃等死状态。</p>
+<h3 id="娱乐">娱乐</h3>
+<h4 id="游戏">游戏</h4>
+<p>今年主要玩了steam单机，买了一些慈善包，还玩了玩steampy的买卖key功能。</p>
+<p>steam的<a href="https://store.steampowered.com/replay/76561198847358473/2025?l=schinese">年度总结</a></p>
+<p><img src="/images/2025-end-1.png" alt="image-20251231171854672"></p>
+<h4 id="动漫视频">动漫/视频</h4>
+<p>补了不少番，从18年开始补到了25年，紧随潮流。 比较喜欢的几部番是辉夜小姐想让我表白，总之就是非常可爱，中间管理路利根川，魔女之旅，齐木楠雄的灾难</p>
+<p><img src="/images/image-20251231173800900.png" alt="image-20251231173800900"></p>
+<p><img src="/images/image-20251231173724942.png" alt="image-20251231173724942"></p>
+<h4 id="读书">读书</h4>
+<p>今年小说看的蛮少，主要是追更吧，主要看了 在美漫当心灵导师的日子，库洛牌的魔法使，我被困在方块之中。</p>
+<p>另外因为写了个下载就是读了的同步到豆瓣脚本导致豆瓣统计也被污染了</p>
+<p><img src="/images/image-20251231175818203.png" alt="image-20251231175818203"></p>
+<p>因为我很喜欢下载</p>
+<p><img src="/images/image-20251231175843879.png" alt="image-20251231175843879"></p>
+<h4 id="音乐">音乐</h4>
+<p><img src="/images/image-20251231173539312.png" alt="image-20251231173539312"></p>
+<p>其实主要是听听每日推荐，当背景音用的，没有真的认真听</p>
+<h4 id="社交">社交</h4>
+<p>今天在社交上花的时间挺多，而且某次让朋友伤心后更注重于自己主动和展示自己生活了，还弄了个专门展示生活的频道。</p>
+<p>并不是展示欲很强，但是希望朋友们能觉得自己更活生生的，能够有话题和自己聊。 毕竟自己也不是那种有事情就喜欢和朋友说的人。</p>
+<h3 id="创作">创作</h3>
+<h4 id="github">Github</h4>
+<p>今年没写多少代码</p>
+<p><img src="/images/image-20251231174853507.png" alt="image-20251231174853507"></p>
+<h4 id="油猴脚本">油猴脚本</h4>
+<p>主要维护了</p>
+<p><img src="/images/image-20251231175028013.png" alt="image-20251231175028013"></p>
+<p>以及让ai写了一些自用的油猴脚本</p>
+<h4 id="pixiv">pixiv</h4>
+<p><img src="/images/image-20251231175940435.png" alt="image-20251231175940435"></p>
+<p>下半年一直在摸鱼，不过关注还是在涨，已经有600粉丝了</p>
+<h4 id="网络安全">网络安全</h4>
+<p>几乎没有产出，除了偶尔发现自己在用的软件有问题外没有主动行为。不仅是感觉到某种疲倦了，更是觉得缺乏真正意义的产出。</p>
+<p>正所谓安全的价值依赖于黑客的破坏大小，内部消耗而不能让任何人获得更多的东西。并且安全产出不具有积累性，修了就没了，令人疲倦。</p>
+<h3 id="telegram频道">telegram频道</h3>
+<p><img src="/images/image-20251231180932525.png" alt="image-20251231180932525"></p>
+<p>今年没有写很多，但是在惯性下关注还是在稳步增长，虽然似乎体现在阅读量的真粉数量实际上没多</p>
+<h3 id="经济">经济</h3>
+<p><img src="/images/image-20251231181100145.png" alt="image-20251231181100145"></p>
+<p>实际上去除掉刷gdp的，我年度支出大概在5000, 这种躺平节约让我可以依靠不稳定的低收入依然贫困的活着。</p>
+<p>好处是只挑想做的做，而且可以一直玩，但是随着ai侵蚀各种技术领域和自己技术洁癖逐渐上升，经济情况逐渐恶化了。</p>
+<p>这么穷的我，当然也没有其他人所能写的投资啥的了。</p>
+<h3 id="今年发生了什么">今年发生了什么</h3>
+<p>好像什么都没有，都没去过外地旅游。也没有购买大件物品，也没有什么值得留念的成就。</p>
+<p>比较值得一提的可能是 给家里人在内存涨价的前半年买了台pc，以及和群友面了一次。</p>
+<p>因为一些原因不想出门，只能群友来乡下找我，也就只能见一下附近的群友，导致面基这种别人多的不想提的事情都成为我的记忆点了。</p>
+<h3 id="明年的期望">明年的期望</h3>
+<p>跟进一下AI写代码，让ai写一些自己懒得写的脚本什么的，多产出一些对自己有用的东西。</p>
+<p>找个渠道获取一些稳定收入吧，即使很低。</p>
+<p>另外就是希望自己有规划一些，少单线程生活，能平衡读书，娱乐，产出等。而不是一下玩两个月又不玩了和上半年猛写下半年一个字没写这种只能同时做一件事</p>
+]]></content></item><item><title>代码审计中的GO应用内存分配 DOS问题</title><link>https://blue-bird1.github.io/posts/codeql-go-dos/</link><pubDate>Tue, 30 Dec 2025 08:59:32 +0800</pubDate><guid>https://blue-bird1.github.io/posts/codeql-go-dos/</guid><description>前言 马上要到2026年了，我之前向codeql的github规则仓库提交的某个pr在审核人员表示投入到新的项目后，到现在依然没有回来。 想到今</description><content type="html"><![CDATA[<h2 id="前言">前言</h2>
 <p>马上要到2026年了，我之前向codeql的github规则仓库提交的某个pr在审核人员表示投入到新的项目后，到现在依然没有回来。</p>
 <p>想到今年还没有写博客，在关闭pr之时顺便水一篇。</p>
 <h3 id="关于codeql">关于codeql</h3>
